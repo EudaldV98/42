@@ -4,7 +4,13 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-int		ft_atoi(const char *str);
+typedef struct	    s_list
+{
+    void	    *content;
+    struct s_list   *next;
+}		    t_list;
+
+int	ft_atoi(const char *str);
 
 size_t	ft_strlen(const char *str);
 
