@@ -28,16 +28,16 @@ char			*ft_itoa(int nbr)
 	}
 	nbr = i;
 	if (!(nb = (char *)malloc(sizeof(char) * len + 2)))
-		return (NULL);
+	    return (NULL);
 	i = 0;
 	while (nbr > 9 || nbr < -9)
 	{
-		nb[i++] = nbr > 0 ? 48 + nbr % 10 : 48 + -(nbr % 10);
-		nbr = nbr / 10;
+	    nb[i++] = nbr > 0 ? 48 + nbr % 10 : 48 + -(nbr % 10);
+	    nbr = nbr / 10;
 	}
 	nb[i++] = nbr > 0 ? 48 + nbr : 48 + (-nbr);
 	if (nbr < 0)
-		nb[i++] = '-';
+	    nb[i++] = '-';
 	nb[i++] = '\0';
 	return (ft_strrev(nb));
 }
