@@ -102,7 +102,7 @@ char	*ft_strtrim(char const *s1, char const *set);
 
 t_list	*ft_lstnew(void *content);
 
-void	*ft_lstadd_front(t_list **alst, t_list *new);
+void	ft_lstadd_front(t_list **alst, t_list *new);
 
 int		ft_lstsize(t_list *lst);
 

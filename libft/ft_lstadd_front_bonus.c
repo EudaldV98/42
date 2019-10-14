@@ -6,13 +6,13 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 09:00:34 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/10/14 09:16:39 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/10/14 11:11:59 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_stdadd_front(t_list **alst, t_list *new)
+void	ft_lstadd_front(t_list **alst, t_list *new)
 {
 	new->next = *alst;
 	*alst = new;
