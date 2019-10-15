@@ -11,30 +11,24 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*str;
+	char		*str;
+	unsigned int	i;
 
-	if (!(str = (char *)malloc(sizeof(char) * len + 1)))
+	i = 0;
+	while (s[i])
+	    i++;
+	if (i < start || len == 0)
+	    return (NULL);
+	else if (i < len + start)
+	    len = i - start;
+	if (!(str = (char *)malloc(sizeof(char) * (len + 1))))
 		return (NULL);
-	if (start < ft_strlen(s))
-		return (ft_strncpy(str, &s[start], len));
-	return ((char *)s);
+	i = 0;
+	while (len-- > 0)
+	    str[i++] = s[start++];
+	str[i] = '\0';
+	return (str);
 }
-/*
-#include <stdio.h>
-
-int main(int ac, char **av)
-{
-	if (ac == 4)
-		printf("%s", ft_strsub(av[1], atoi(av[2]), atoi(av[3])));
-	return (0);
-}
-
-
-si len es 0 ?
-
-
-*/

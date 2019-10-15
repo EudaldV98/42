@@ -11,23 +11,22 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
 char			*ft_itoa(int nbr)
 {
 	char	*nb;
-	int		len;
-	int		i;
+	int	len;
+	int	i;
 
 	i = nbr;
 	len = 1;
 	while (nbr > 9 || nbr < -9)
 	{
-		nbr = nbr / 10;
-		len += 1;
+	    nbr = nbr / 10;
+	    len += 1;
 	}
 	nbr = i;
-	if (!(nb = (char *)malloc(sizeof(char) * len + 2)))
+	if (!(nb = (char *)malloc(sizeof(char) * (nbr < 0 ? len + 2 : len + 1))))
 	    return (NULL);
 	i = 0;
 	while (nbr > 9 || nbr < -9)
