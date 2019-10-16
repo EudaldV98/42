@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 09:00:34 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/10/14 11:11:59 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/10/16 21:00:59 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	ft_lstadd_front(t_list **alst, t_list *new)
 {
-    if (alst)
-	new->next = *alst;
-    else
-	new->next = NULL;
-    *alst = new;
+	if (alst)
+		new->next = *alst;
+	else
+		new->next = NULL;
+	*alst = new;
 }

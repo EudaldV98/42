@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 09:37:58 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/10/14 10:38:47 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/10/16 21:03:40 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ void	ft_lstadd_back(t_list **alst, t_list *new)
 	list = *alst;
 	if (list)
 	{
-	    while (list->next)
-	    list = list->next;
-	    list->next = new;
-	    new->next = NULL;
+		while (list->next)
+			list = list->next;
+		list->next = new;
+		new->next = NULL;
 	}
 	else
-	    *alst = new;
+		*alst = new;
 }
