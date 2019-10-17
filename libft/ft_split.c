@@ -6,14 +6,13 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 11:09:27 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/10/09 11:26:12 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/10/17 15:46:49 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
-int		ft_custom_strlen(const char *str, char sep)
+static int		ft_custom_strlen(const char *str, char sep)
 {
 	int i;
 
@@ -23,7 +22,7 @@ int		ft_custom_strlen(const char *str, char sep)
 	return (i);
 }
 
-int		ft_count_words(const char *str, char sep)
+static int		ft_count_words(const char *str, char sep)
 {
 	int words;
 
@@ -40,7 +39,7 @@ int		ft_count_words(const char *str, char sep)
 	return (words);
 }
 
-char	*ft_custom_strdup(const char *src, int len, char sep)
+static char		*ft_custom_strdup(const char *src, int len, char sep)
 {
 	char	*dup;
 	int		i;
@@ -54,7 +53,7 @@ char	*ft_custom_strdup(const char *src, int len, char sep)
 	return (dup);
 }
 
-char	**ft_split(char const *s, char c)
+char			**ft_split(char const *s, char c)
 {
 	char	**tab;
 	int		words;
