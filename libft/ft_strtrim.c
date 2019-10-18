@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 14:19:04 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/10/16 21:12:15 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/10/18 15:03:34 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ char			*ft_strtrim(char const *s1, char const *set)
 	int		i;
 	int		j;
 
+	if (!s1 || !set)
+		return (NULL);
 	i = 0;
 	while (s1[i] && is_charset(set, s1[i]))
 		i++;

@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 11:09:27 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/10/17 15:46:49 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/10/18 14:54:50 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ char			**ft_split(char const *s, char c)
 	int		len;
 	int		i;
 
+	if (!s)
+		return (NULL);
 	words = ft_count_words(s, c);
 	if (!(tab = (char **)malloc(sizeof(char *) * (words + 1))))
 		return (NULL);

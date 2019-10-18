@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 11:28:10 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/10/17 14:41:53 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/10/18 13:28:42 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char			*ft_itoa(int nbr)
 	while (nbr > 9 || nbr < -9)
 	{
 		nbr = nbr / 10;
-		len += 1;
+		len++;
 	}
 	nbr = i;
 	if (!(nb = (char *)malloc(sizeof(char) * (nbr < 0 ? len + 2 : len + 1))))
