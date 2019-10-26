@@ -6,28 +6,11 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:36:36 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/10/26 12:07:41 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/10/26 13:59:05 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-char		*readfile(char *str, int fd)
-{
-	char	buf[BUFFER_SIZE + 1];
-	char	*ptr;
-	int		ret;
-
-	while ((ret = read(fd, buf, BUFFER_SIZE)) > 0)
-	{
-		ptr = str;
-		buf[ret] = '\0';
-		if (!(str = ft_strjoin(str, buf)))
-			return (NULL);
-		free(ptr);
-	}
-	return (str);
-}
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {

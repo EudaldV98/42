@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:48:10 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/10/26 12:08:59 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/10/26 14:30:41 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <fcntl.h>
 //#include <sys/stat.h>
 
-#define BUFFER_SIZE 1
+#define BUFFER_SIZE 100
 
 int		get_next_line(int fd, char **line);
 
