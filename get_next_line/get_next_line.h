@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:48:10 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/10/26 14:30:41 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/10/26 21:30:03 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <fcntl.h>
 //#include <sys/stat.h>
 
-#define BUFFER_SIZE 100
+#define BUFFER_SIZE 10000
 
 int		get_next_line(int fd, char **line);
 
@@ -30,5 +30,7 @@ char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *str);
 
 char	*ft_strcat(char *dest, const char *src);
+
+char	*ft_realloc(char *str, size_t size);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:36:36 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/10/26 13:59:05 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/10/26 21:25:27 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,15 @@ char	*ft_strcat(char *dest, const char *src)
 		dest[i++] = *src++;
 	dest[i] = '\0';
 	return (dest);
+}
+
+char	*ft_realloc(char *str, size_t size)
+{
+	char *ptr;
+	char *tmp;
+
+	ptr = (char*)malloc(sizeof(char) * (ft_strlen(str) + size));
+	ptr[0] = '\0';
+	ft_strcat(ptr, str);
+	return (ptr);
 }

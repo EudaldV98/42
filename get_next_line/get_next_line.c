@@ -6,48 +6,43 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:45:15 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/10/26 14:30:20 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/10/26 21:29:13 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-/*
-char		*readfile(char *str, int fd)
-{
-	char	buf[BUFFER_SIZE + 1];
-	char	*ptr;
-	int		ret;
 
-	while ((ret = read(fd, buf, BUFFER_SIZE)) > 0)
-	{
-		ptr = str;
-		buf[ret] = '\0';
-		if (!(str = ft_strjoin(str, buf)))
-			return (NULL);
-		free(ptr);
-	}
-	return (str);
-}
-*/
 int		get_next_line(int fd, char **line)
-{
-	static char		buf[BUFFER_SIZE + 1];
-	char			*ptr;
-	int				ret;
+{		
+	static char		buf[BUFFER_SIZE];
+	static int		i = BUFFER_SIZE;
+	static int		j;
 	char			*str;
-
-	buf[0] = '\0';
-	if (buf[0] == '\0')
+	int				ret;
 	
-	if ((ret = read(fd, buf, BUFFER_SIZE)) > 0)
+	if (i == BUFFER_SIZE)
 	{
-		ptr = str;
-		buf[ret] = '\0';
-		if (!(str = ft_strjoin(str, buf)))
-			return (NULL);
-		free(ptr);
+		if (!((ret = read(fd, buf, BUFFER_SIZE)) > 0))
+			return (0);
+		i = 0;
 	}
-	   *line = str;
+	if (j == 0)
+		str = (char*)malloc(sizeof(char) * (BUFFER_SIZE - i + 1));
+	else
+		str = ft_realloc(str, BUFFER_SIZE - i + 1);
+	while (buf[i] != '\n' && i < BUFFER_SIZE)
+		str[j++] = buf[i++];
+	if (buf[i] == '\n')
+	{
+		str[j] = '\0';
+		*line = str;
+		j = 0;
+		i++;
+		return (1);
+	}
+	else if (i == BUFFER_SIZE)
+		return (get_next_line(fd, line));
+	return (-1);
 }
 
 int main(int ac, char **av)
@@ -58,12 +53,17 @@ int main(int ac, char **av)
 	if (ac == 2)
 	{
 		fd = open(av[1], O_RDWR, 0);
-		get_next_line(fd, &str);
-		printf("%s", str);
-		get_next_line(fd, &str);
-		printf("%s", str);
-		get_next_line(fd, &str);
-		printf("%s", str);
+		/*printf("%i\n", get_next_line(fd, &str));
+		printf("%s\n", str);
+		printf("%i\n", get_next_line(fd, &str));
+		printf("%s\n", str);
+		printf("%i\n", get_next_line(fd, &str));
+		printf("%s\n", str);
+		printf("%i\n", get_next_line(fd, &str));
+		printf("%s\n", str);
+		printf("%i\n", get_next_line(fd, &str));*/
+		if (get_next_line(fd, &str))
+			printf("%s\n", str);
 		close(fd);
 	}
 	return 0;			
