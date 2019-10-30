@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:48:10 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/10/26 21:30:03 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/10/30 20:39:16 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,14 @@
 #include <fcntl.h>
 //#include <sys/stat.h>
 
-#define BUFFER_SIZE 10000
+#define BUFFER_SIZE 1000000
+
+typedef struct		s_list
+{
+	int				fd;
+	char			*data;
+	struct s_list	*next;
+}					t_list;
 
 int		get_next_line(int fd, char **line);
 
@@ -31,6 +38,14 @@ size_t	ft_strlen(const char *str);
 
 char	*ft_strcat(char *dest, const char *src);
 
-char	*ft_realloc(char *str, size_t size);
+t_list	*ft_lstnew(int fd, char *data);
+
+void	ft_lstadd_back(t_list **alst, t_list *new);
+
+char	*ft_strdup(char *src);
+
+int		ft_strchr(const char *s, int c);
+
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 #endif
