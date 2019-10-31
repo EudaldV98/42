@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:45:15 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/10/31 17:40:47 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/10/31 18:19:36 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,10 @@ int		check_list(int *init, t_list **lst, char **line)
 				*line = ft_substr((*lst)->data, 0, n);
 				*init = 1;
 			}
+			else if (n == 0)
+				*line = ft_strjoin("", "", 0);
 			(*lst)->data = (BUFFER_SIZE - n > 1) ?
-				ft_substr((*lst)->data, n + 1, BUFFER_SIZE - n - 1) : NULL;
+					ft_substr((*lst)->data, n + 1, BUFFER_SIZE - n - 1) : NULL;
 			return (1);
 		}
 		else
@@ -71,8 +73,10 @@ int		read_fd(int init, int fd, char **line, t_list *lst)
 				*line = ft_substr(buf, 0, n);
 			else if (n > 0)
 				*line = ft_strjoin(*line, ft_substr(buf, 0, n), 2);
+			else if (n == 0 && init == 0)
+				*line = ft_strjoin("", "", 0);
 			lst->data = BUFFER_SIZE - n > 1 ?
-				ft_substr(buf, n + 1, BUFFER_SIZE - n - 1) : NULL;
+							ft_substr(buf, n + 1, BUFFER_SIZE - n - 1) : NULL;
 			return (1);
 		}
 		*line = init == 0 ? ft_strjoin(buf, "", 0) : ft_strjoin(*line, buf, 1);
@@ -80,7 +84,7 @@ int		read_fd(int init, int fd, char **line, t_list *lst)
 	}
 	if (init == 0)
 		*line = ft_strjoin("", "", 0);
-	return (0);
+	return (ret);
 }
 
 int		get_next_line(int fd, char **line)
