@@ -6,20 +6,21 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:48:10 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/10/30 20:39:16 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/10/31 15:56:02 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <fcntl.h>
-//#include <sys/stat.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <fcntl.h>
 
-#define BUFFER_SIZE 1000000
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10000
+# endif
 
 typedef struct		s_list
 {
@@ -28,24 +29,18 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
-int		get_next_line(int fd, char **line);
+int					get_next_line(int fd, char **line);
 
-char	*readfile(char *str, int fd);
+size_t				ft_strlen(const char *str);
 
-char	*ft_strjoin(char const *s1, char const *s2);
+char				*ft_strcat(char *dest, const char *src);
 
-size_t	ft_strlen(const char *str);
+char				*ft_strjoin(char const *s1, char const *s2, int f);
 
-char	*ft_strcat(char *dest, const char *src);
+int					ft_addnewlst_back(t_list **alst, int fd);
 
-t_list	*ft_lstnew(int fd, char *data);
+int					ft_strchr(const char *s, int c);
 
-void	ft_lstadd_back(t_list **alst, t_list *new);
-
-char	*ft_strdup(char *src);
-
-int		ft_strchr(const char *s, int c);
-
-char	*ft_substr(char const *s, unsigned int start, size_t len);
+char				*ft_substr(char const *s, unsigned int start, size_t len);
 
 #endif
