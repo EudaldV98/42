@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:45:15 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/10/31 17:02:13 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/10/31 17:40:47 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,11 @@ int		read_fd(int init, int fd, char **line, t_list *lst)
 				*line = ft_substr(buf, 0, n);
 			else if (n > 0)
 				*line = ft_strjoin(*line, ft_substr(buf, 0, n), 2);
-			lst->data = BUFFER_SIZE - n > 1 ? ft_substr(buf, n + 1, BUFFER_SIZE - n - 1) : NULL;
+			lst->data = BUFFER_SIZE - n > 1 ?
+				ft_substr(buf, n + 1, BUFFER_SIZE - n - 1) : NULL;
 			return (1);
 		}
-		else if (init == 0)
-			*line = ft_strjoin(buf, "", 0);
-		else
-			*line = ft_strjoin(*line, buf, 1);
+		*line = init == 0 ? ft_strjoin(buf, "", 0) : ft_strjoin(*line, buf, 1);
 		init = 1;
 	}
 	if (init == 0)
