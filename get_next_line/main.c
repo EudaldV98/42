@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:52:10 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/10/31 16:19:29 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/05 17:41:59 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ int main(int ac, char **av)
 	n = 0;
 	if (ac == 2 || ac == 3)
 	{
+		
 		fd = open(av[1], O_RDWR, 0);
 		fd2 = open(av[2], O_RDWR, 0);
-		printf("%i - ", get_next_line(fd, &str));
+		printf("%i - ", get_next_line(-3, &str));
 		printf("%s\n", str);
 		printf("%i - ", get_next_line(fd, &str));
 		printf("%s\n", str);
@@ -37,8 +38,7 @@ int main(int ac, char **av)
 		printf("%i - ", get_next_line(fd, &str));
 		printf("%s\n", str);
 
-
-		//while ((n = get_next_line(fd, &str)) > 0)
+		//while ((n = get_next_line(-2, &str)) > 0)
 		//	printf("%s\n", str);
 		/*	
 		if ((n = get_next_line(fd, &str)) > -2)

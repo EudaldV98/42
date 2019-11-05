@@ -6,13 +6,13 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:45:15 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/10/31 18:19:36 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/05 16:37:58 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int		unread_fd(int fd, t_list **alst)
+static int			unread_fd(int fd, t_list **alst)
 {
 	t_list			*lst;
 
@@ -29,7 +29,7 @@ int		unread_fd(int fd, t_list **alst)
 	return (1);
 }
 
-int		check_list(int *init, t_list **lst, char **line)
+static int			check_list(int *init, t_list **lst, char **line)
 {
 	int		n;
 
@@ -58,7 +58,7 @@ int		check_list(int *init, t_list **lst, char **line)
 	return (0);
 }
 
-int		read_fd(int init, int fd, char **line, t_list *lst)
+static int			read_fd(int init, int fd, char **line, t_list *lst)
 {
 	char		buf[BUFFER_SIZE + 1];
 	int			ret;
@@ -87,7 +87,7 @@ int		read_fd(int init, int fd, char **line, t_list *lst)
 	return (ret);
 }
 
-int		get_next_line(int fd, char **line)
+int					get_next_line(int fd, char **line)
 {
 	static t_list	*alst;
 	t_list			*lst;
