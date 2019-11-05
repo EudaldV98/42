@@ -45,7 +45,7 @@ static int			check_list(int *init, t_list **lst, char **line)
 			else if (n == 0)
 				*line = ft_strjoin("", "", 0);
 			(*lst)->data = (BUFFER_SIZE - n > 1) ?
-					ft_substr((*lst)->data, n + 1, BUFFER_SIZE - n - 1) : NULL;
+				    ft_substr((*lst)->data, n + 1, BUFFER_SIZE - n - 1) : NULL;
 			return (1);
 		}
 		else

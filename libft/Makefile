@@ -27,7 +27,7 @@ ${NAME}:	${OBJS}
 
 all:		${NAME}
 
-bonus:		${OBJS} ${BOBJS}
+bonus:	     ${BOBJS} ${NAME}
 			ar rc ${NAME} ${OBJS} ${BOBJS}
 			ranlib ${NAME}
 
