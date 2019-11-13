@@ -6,11 +6,40 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:45:15 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/07 15:44:48 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/13 15:01:08 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+static void			free_lst(int fd, t_list **begin_list)
+{
+	t_list *current;
+	t_list *last;
+	t_list *tmp;
+
+	tmp = NULL;
+	current = *begin_list;
+	while (current)
+	{
+		if (current->fd == fd)
+		{
+			if (current == *begin_list)
+				*begin_list = current->next;
+			else
+				last->next = current->next;
+			tmp = current;
+			current = current->next;
+			free(tmp->data);
+			free(tmp);
+		}
+		else
+		{
+			last = current;
+			current = current->next;
+		}
+	}
+}
 
 static int			unread_fd(int fd, t_list **alst)
 {
@@ -45,7 +74,7 @@ static int			check_list(int *init, t_list **lst, char **line)
 			else if (n == 0)
 				*line = ft_strjoin("", "", 0);
 			(*lst)->data = (BUFFER_SIZE - n > 1) ?
-				    ft_substr((*lst)->data, n + 1, BUFFER_SIZE - n - 1) : NULL;
+				ft_substr((*lst)->data, n + 1, BUFFER_SIZE - n - 1) : NULL;
 			return (1);
 		}
 		else
@@ -76,7 +105,7 @@ static int			read_fd(int init, int fd, char **line, t_list *lst)
 			else if (n == 0 && init == 0)
 				*line = ft_strjoin("", "", 0);
 			lst->data = BUFFER_SIZE - n > 1 ?
-							ft_substr(buf, n + 1, BUFFER_SIZE - n - 1) : NULL;
+				ft_substr(buf, n + 1, BUFFER_SIZE - n - 1) : NULL;
 			return (1);
 		}
 		*line = init == 0 ? ft_strjoin(buf, "", 0) : ft_strjoin(*line, buf, 1);
@@ -92,9 +121,10 @@ int					get_next_line(int fd, char **line)
 	static t_list	*alst;
 	t_list			*lst;
 	int				init;
+	int				r;
 
 	init = 0;
-	if (unread_fd(fd, &alst) == 1)
+	if (unread_fd(fd, &alst))
 	{
 		if (!(ft_addnewlst_back(&alst, fd)))
 			return (-1);
@@ -104,5 +134,8 @@ int					get_next_line(int fd, char **line)
 		lst = lst->next;
 	if (check_list(&init, &lst, line))
 		return (1);
-	return (read_fd(init, fd, line, lst));
+	r = read_fd(init, fd, line, lst);
+	if (r == 0)
+		free_lst(fd, &lst);
+	return (r);
 }
