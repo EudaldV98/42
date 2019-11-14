@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:45:15 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/13 15:01:08 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/14 16:28:45 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ static void			free_lst(int fd, t_list **begin_list)
 				last->next = current->next;
 			tmp = current;
 			current = current->next;
-			free(tmp->data);
+			if (tmp->data != NULL)
+				free(tmp->data);
 			free(tmp);
 		}
 		else
@@ -60,6 +61,7 @@ static int			unread_fd(int fd, t_list **alst)
 
 static int			check_list(int *init, t_list **lst, char **line)
 {
+	char	*tmp;
 	int		n;
 
 	if ((*lst)->data)
@@ -73,8 +75,10 @@ static int			check_list(int *init, t_list **lst, char **line)
 			}
 			else if (n == 0)
 				*line = ft_strjoin("", "", 0);
+			tmp = (*lst)->data;
 			(*lst)->data = (BUFFER_SIZE - n > 1) ?
 				ft_substr((*lst)->data, n + 1, BUFFER_SIZE - n - 1) : NULL;
+			free(tmp);
 			return (1);
 		}
 		else
@@ -124,6 +128,8 @@ int					get_next_line(int fd, char **line)
 	int				r;
 
 	init = 0;
+	if (fd < 0 || BUFFER_SIZE < 1 || !line)
+		return (-1);
 	if (unread_fd(fd, &alst))
 	{
 		if (!(ft_addnewlst_back(&alst, fd)))

@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:52:10 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/07 15:44:55 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/14 15:00:00 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ int main(int ac, char **av)
 		while ((n = get_next_line(fd, &str)) > 0)
 		{
 			printf("%s\n", str);
-			//free(str);
+			free(str);
 		}
-		while (1);
+		//while (1);
 		/*		
 		if ((n = get_next_line(fd, &str)) > -2)
 			printf("fd = %d, return = %d, line = %s\n", fd, n, str);
@@ -81,6 +81,6 @@ int main(int ac, char **av)
 		close(fd);
 		close(fd2);*/
 	}
-	while (1);
+	//while (1);
 	return 0;
 }
