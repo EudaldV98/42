@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:45:15 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/14 19:49:52 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/14 20:10:35 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ static void			free_lst(int fd, t_list **begin_list)
 {
 	t_list *current;
 	t_list *last;
-	t_list *tmp;
 
-	tmp = NULL;
 	current = *begin_list;
 	while (current)
 	{
@@ -28,10 +26,9 @@ static void			free_lst(int fd, t_list **begin_list)
 				*begin_list = current->next;
 			else
 				last->next = current->next;
-			tmp = current;
-			if (tmp->data != NULL)
-				free(tmp->data);
-			free(tmp);
+			if (current->data != NULL)
+				free(current->data);
+			free(current);
 			return ;
 		}
 		else
