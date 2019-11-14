@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 11:45:15 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/14 17:04:51 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/14 18:01:21 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,13 @@ static int			check_list(int *init, t_list **lst, char **line)
 	{
 		if ((n = ft_strchr((*lst)->data, 10)) >= 0)
 		{
-			*line = n > 0 ? ft_substr((*lst)->data, 0, n) : ft_strjoin("", "", 0);
+			*line = n > 0 ? ft_substr((*lst)->data, 0, n)
+				: ft_strjoin("", "", 0);
 			if (n > 0)
 				*init = 1;
 			tmp = (*lst)->data;
-			(*lst)->data = (BUFFER_SIZE - n > 1) ? ft_substr((*lst)->data, n + 1, BUFFER_SIZE - n - 1) : NULL;
+			(*lst)->data = (BUFFER_SIZE - n > 1)
+				? ft_substr((*lst)->data, n + 1, BUFFER_SIZE - n - 1) : NULL;
 			free(tmp);
 			return (1);
 		}
