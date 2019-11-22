@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/20 16:53:01 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/22 15:03:07 by mgarcia-         ###   ########.fr       */
+/*   Created: 2019/10/07 14:24:11 by mgarcia-          #+#    #+#             */
+/*   Updated: 2019/10/11 15:10:29 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int ft_printf(const char *format, ...)
+char		*ft_strdup(const char *s1)
 {
-	va_list	arg;
-	int		done;
+	char *dup;
 
-	va_start(arg, format);
-	done = ft_vprintf(format, arg);
-	va_end(arg);
-
-	return (done);
+	if (!(dup = (char*)malloc(sizeof(char) * (ft_strlen(s1) + 1))))
+		return (NULL);
+	ft_strcpy(dup, s1);
+	return (dup);
 }

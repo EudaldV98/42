@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/20 16:53:01 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/22 15:03:07 by mgarcia-         ###   ########.fr       */
+/*   Created: 2019/10/09 13:35:17 by mgarcia-          #+#    #+#             */
+/*   Updated: 2019/10/18 15:27:02 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int ft_printf(const char *format, ...)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	va_list	arg;
-	int		done;
+	unsigned int	i;
+	char			*str;
 
-	va_start(arg, format);
-	done = ft_vprintf(format, arg);
-	va_end(arg);
-
-	return (done);
+	if (!s)
+		return (NULL);
+	if (!(str = (char *)malloc(sizeof(char) * (len + 1))))
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		str[i] = s[start + i];
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
 }

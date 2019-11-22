@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:52:56 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/22 18:05:26 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/22 12:28:28 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,5 @@ void			eval_precision(const char **format, t_flags *f, va_list ap);
 void			eval_length(const char **format, t_flags *f);
 
 void			format_string(t_flags *f, va_list ap);
-
-void			format_character(t_flags *f, va_list ap);
-
-char			*ft_itoa_base(int nbr, char *base);
-
-void			format_integer(char fmt, t_flags *f, va_list ap);
 
 #endif

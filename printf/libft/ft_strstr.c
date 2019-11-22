@@ -1,25 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/20 16:53:01 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/22 15:03:07 by mgarcia-         ###   ########.fr       */
+/*   Created: 2019/10/07 14:25:52 by mgarcia-          #+#    #+#             */
+/*   Updated: 2019/10/07 15:30:39 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int ft_printf(const char *format, ...)
+char	*ft_strstr(const char *haystack, const char *needle)
 {
-	va_list	arg;
-	int		done;
+	int i;
+	int j;
 
-	va_start(arg, format);
-	done = ft_vprintf(format, arg);
-	va_end(arg);
-
-	return (done);
+	i = 0;
+	if (!*needle)
+		return ((char*)haystack);
+	while (haystack[i])
+	{
+		j = 0;
+		if (haystack[i] == needle[j])
+		{
+			while (haystack[i + j] == needle[j])
+			{
+				if (needle[j + 1] == '\0')
+					return ((char*)&haystack[i]);
+				j++;
+			}
+		}
+		i++;
+	}
+	return (0);
 }

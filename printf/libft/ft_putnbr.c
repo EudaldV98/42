@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/20 16:53:01 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/22 15:03:07 by mgarcia-         ###   ########.fr       */
+/*   Created: 2019/10/08 14:15:29 by mgarcia-          #+#    #+#             */
+/*   Updated: 2019/10/18 11:41:48 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int ft_printf(const char *format, ...)
+void	ft_putnbr(int nb)
 {
-	va_list	arg;
-	int		done;
-
-	va_start(arg, format);
-	done = ft_vprintf(format, arg);
-	va_end(arg);
-
-	return (done);
+	if (nb > 9 || nb < -9)
+		ft_putnbr(nb / 10);
+	else if (nb < 0)
+		ft_putchar('-');
+	ft_putchar(nb > 0 ? nb % 10 + 48 : -(nb % 10) + 48);
 }

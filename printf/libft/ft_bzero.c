@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/20 16:53:01 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/22 15:03:07 by mgarcia-         ###   ########.fr       */
+/*   Created: 2019/10/09 17:14:03 by mgarcia-          #+#    #+#             */
+/*   Updated: 2019/10/17 17:08:30 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int ft_printf(const char *format, ...)
+void	ft_bzero(void *s, size_t n)
 {
-	va_list	arg;
-	int		done;
-
-	va_start(arg, format);
-	done = ft_vprintf(format, arg);
-	va_end(arg);
-
-	return (done);
+	ft_memset(s, 0, n);
 }

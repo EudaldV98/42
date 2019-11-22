@@ -6,61 +6,80 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:38:23 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/21 20:57:59 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/22 18:05:25 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-int		is_digit(char c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
-}
 
 int		_atoi(const char **str)
 {
 	int i;
    
 	i = 0;
-	while (is_digit(**str))
+	while (ft_isdigit(**str))
     	i = i * 10 + (*((*str)++) - '0');
   return i;
 }
 
-void	print_specifier(char **format, t_info *data)
+void	print_specifier(const char **format, t_flags *f, va_list ap)
 {
-	//TO_DO
+	if (**format == 'd' || **format == 'i' || **format == 'u' || **format == 'x' || **format == 'X')
+	{
+		format_integer(**format, f, ap)
+	}
+	else if (**format == 'f')
+	{
+		//a pastar
+	}
+	else if (**format == 'e' || **format == 'g')
+	{
+		//jeje
+	}
+	else if (**format == 'c')
+	{
+		format_character(f, ap);
+	}
+	else if (**format == 's')
+	{
+		format_string(f, ap);
+	}
+	else if (**format == 'n')
+	{
+		//esta es la mia mike
+	}
+	else
+		ft_putchar(**format);
+	(*format)++;
 }
 
 #include <stdio.h>
 
 int	ft_vprintf(const char *format, va_list ap)
 {
-	t_info	data;
+	t_flags		f;
 
 	while (*format)
 	{
 		if	(*format != '%')
 		{
 			ft_putchar(*format++);
-			data.idx++;
+			f.idx++;
 			continue;
 		}
 		else
 		{
 			format++;
-			eval_flags(&format, &data);
-			eval_width(&format, &data, ap);
-			eval_precision(&format, &data, ap);
-			eval_length(&format, &data);
-			//print_specifier(&format, &data);
+			eval_flags(&format, &f);
+			eval_width(&format, &f, ap);
+			eval_precision(&format, &f, ap);
+			eval_length(&format, &f);
+			print_specifier(&format, &f, ap);
 		}
 	}
-	printf("\n\nflags are: %d\n", data.flags);
-	printf("width is : %d\n", data.width);
-	printf("precision is : %d\n", data.precision);
+	printf("\n\n\nflags are: %d\n", f.flags);
+	printf("width is : %d\n", f.width);
+	printf("precision is : %d\n", f.precision);
 	ft_putchar('\0');
-	return (data.idx);
+	return (f.idx);
 }

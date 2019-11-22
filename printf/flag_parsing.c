@@ -6,89 +6,89 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 17:32:11 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/21 21:01:29 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/22 17:26:47 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	eval_flags(const char **format, t_info *data)
+void	eval_flags(const char **format, t_flags *f)
 {
-	data->flags = 0U;
+	f->flags = 0U;
 
 	while (**format == '#' || **format == '+' || **format == '-' || **format == ' ' || **format == '0')
 	{
 		if (**format == '#')
-			data->flags |= FLAG_HASH;
+			f->flags |= FLAG_HASH;
 		else if (**format == '+')
-			data->flags |= FLAG_PLUS;
+			f->flags |= FLAG_PLUS;
 		else if (**format == '-')
-			data->flags |= FLAG_LEFT;
+			f->flags |= FLAG_LEFT;
 		else if (**format == ' ')
-			data->flags |= FLAG_SPACE;
+			f->flags |= FLAG_SPACE;
 		else if (**format == '0')
-			data->flags |= FLAG_ZEROPAD;
+			f->flags |= FLAG_ZEROPAD;
 		(*format)++;
 	}
 }
 
-void	eval_width(const char **format, t_info *data, va_list ap)
+void	eval_width(const char **format, t_flags *f, va_list ap)
 {
-	data->width = 0U;
+	f->width = 0U;
 
-	if (is_digit(**format))
-		data->width = _atoi(format);
+	if (ft_isdigit(**format))
+		f->width = _atoi(format);
 	else if (**format == '*')
 	{
-		data->width = va_arg(ap, int);
-		if (data->width < 0)
+		f->width = va_arg(ap, int);
+		if (f->width < 0)
 		{
-			data->width = -(data->width);
-			data->flags |= FLAG_LEFT;
+			f->width = -(f->width);
+			f->flags |= FLAG_LEFT;
 		}
 		(*format)++;
 	}
 }
 
-void	eval_precision(const char **format, t_info *data, va_list ap)
+void	eval_precision(const char **format, t_flags *f, va_list ap)
 {
-	data->precision = 0U;
+	f->precision = 0U;
 
 	if (**format == '.')
 	{
-		data->flags |= FLAG_PRECISION;
+		f->flags |= FLAG_PRECISION;
 		(*format)++;
-		if (is_digit(**format))
-			data->precision = _atoi(format);
+		if (ft_isdigit(**format))
+			f->precision = _atoi(format);
 		else if (**format == '*')
 		{
-			data->precision = va_arg(ap, int);
-			if (data->precision < 0)
-				data->precision = 0;
+			f->precision = va_arg(ap, int);
+			if (f->precision < 0)
+				f->precision = 0;
 			(*format)++;
 		}
 	}
 }
 
-void	eval_length(const char **format, t_info *data)
+void	eval_length(const char **format, t_flags *f)
 {
 	if (**format == 'l')
 	{
-		data->flags |= FLAG_LONG;
+		f->flags |= FLAG_LONG;
 		(*format)++;
 		if (**format == 'l')
 		{
-			data->flags |= FLAG_LONG_LONG;
+			f->flags |= FLAG_LONG_LONG;
 			(*format)++;
 		}
 	}
 	else if (**format == 'h')
 	{
-		data->flags |= FLAG_SHORT;
+		f->flags |= FLAG_SHORT;
 		(*format)++;
 		if (**format == 'h')
 		{
-			data->flags |= FLAG_CHAR;
+			f->flags |= FLAG_CHAR;
 			(*format)++;
 		}
 	}
