@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 11:51:44 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/22 14:50:41 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/23 16:33:40 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,16 @@ void		format_string(t_flags *f, va_list ap)
 	{
 		i = 0;
 		while (i++ < (f->width - len))
-		{
-			ft_putchar(32);
-			f->idx++;
-		}
+			_putchar(32, f);
 	}
 	i = 0;
 	while (*str && i++ < len)
-	{
-		ft_putchar(*str++);
-		f->idx++;
-	}
+		_putchar(*str++, f);
 	if (f->flags & FLAG_LEFT)
 	{
 		i = 0;
 		while (i++ < (f->width - len))
-		{
-			ft_putchar(32);
-			f->idx++;
-		}
+			_putchar(32, f);
 	}
 }
 
@@ -56,20 +47,13 @@ void		format_character(t_flags *f, va_list ap)
 	if (!(f->flags & FLAG_LEFT))
 	{
 		while (--(f->width))
-		{
-			ft_putchar(32);
-			f->idx++;
-		}
+			_putchar(32, f);
 	}
-	ft_putchar(c);
-	f->idx++;
+	_putchar(c, f);
 	if (f->flags & FLAG_LEFT)
 	{
 		while (--(f->width))
-		{
-			ft_putchar(32);
-			f->idx++;
-		}
+			_putchar(32, f);
 	
 	}
 	

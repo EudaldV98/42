@@ -6,27 +6,17 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:38:23 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/22 18:05:25 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/23 18:19:37 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		_atoi(const char **str)
-{
-	int i;
-   
-	i = 0;
-	while (ft_isdigit(**str))
-    	i = i * 10 + (*((*str)++) - '0');
-  return i;
-}
-
 void	print_specifier(const char **format, t_flags *f, va_list ap)
 {
 	if (**format == 'd' || **format == 'i' || **format == 'u' || **format == 'x' || **format == 'X')
 	{
-		format_integer(**format, f, ap)
+		format_integer(**format, f, ap);
 	}
 	else if (**format == 'f')
 	{
@@ -49,7 +39,7 @@ void	print_specifier(const char **format, t_flags *f, va_list ap)
 		//esta es la mia mike
 	}
 	else
-		ft_putchar(**format);
+		_putchar(**format, f);
 	(*format)++;
 }
 
@@ -63,8 +53,7 @@ int	ft_vprintf(const char *format, va_list ap)
 	{
 		if	(*format != '%')
 		{
-			ft_putchar(*format++);
-			f.idx++;
+			_putchar(*format++, &f);
 			continue;
 		}
 		else

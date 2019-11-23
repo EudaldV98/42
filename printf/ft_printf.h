@@ -6,15 +6,20 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:52:56 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/22 18:05:26 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/23 16:31:19 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
+
 # include <stdarg.h>
 # include <unistd.h>
+#include <stdlib.h>
+
+#include <stdio.h>
+
 # include "libft.h"
 
 # define FLAG_ZEROPAD   (1U << 0U)
@@ -38,9 +43,7 @@ typedef struct	s_flags
 	int				precision;
 }				t_flags;
 
-void			ft_putchar(char c);
-
-int				is_digit(char c);
+void			_putchar(char c, t_flags *f);
 
 int				_atoi(const char **str);
 
@@ -60,7 +63,7 @@ void			format_string(t_flags *f, va_list ap);
 
 void			format_character(t_flags *f, va_list ap);
 
-char			*ft_itoa_base(int nbr, char *base);
+char			*_itoa_base(size_t nbr, int neg, int base, t_flags *f);
 
 void			format_integer(char fmt, t_flags *f, va_list ap);
 

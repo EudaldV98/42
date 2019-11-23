@@ -1,6 +1,6 @@
 NAME	= libftprintf.a
 
-FILES = ft_printf.c ft_vprintf.c flag_parsing.c text_format.c
+FILES = ft_printf.c ft_vprintf.c flag_parsing.c text_format.c integer_format.c _itoa_base.c utils.c
 
 BFILES = 
 
