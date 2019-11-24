@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 11:34:01 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/24 20:39:53 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/24 22:08:24 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,6 @@ char			*itoa_base(size_t nbr, int neg, int base, t_flags *f)
 	int		len;
 	int		i;
 
-	if (!(f->flags & (FLAG_LONG_LONG | FLAG_LONG | FLAG_SHORT | FLAG_CHAR)))
-		nbr = (unsigned int)nbr;
-	else if (f->flags & FLAG_SHORT)
-		nbr = (short)nbr;
-	else if (f->flags & FLAG_CHAR)
-		nbr = (char)nbr;
 	if (f->flags & FLAG_PRECISION && f->precision == 0 && !nbr)
 	{
 		if (!(nb = (char *)malloc(sizeof(char) * 1)))

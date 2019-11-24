@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:38:23 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/24 14:44:54 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/24 22:08:23 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	print_specifier(const char **format, t_flags *f, va_list ap)
 	{
 		//esta es la mia mike
 	}
-	else
+	else if (**format)
 		_putchar(**format, f);
 	(*format)++;
 }

@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 15:41:58 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/24 20:39:52 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/24 22:08:25 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ ssize_t			signed_cast(t_flags *f, va_list ap)
 {
 	if (f->flags & (FLAG_LONG_LONG | FLAG_LONG))
 		return (va_arg(ap, ssize_t));
+	if (f->flags & FLAG_CHAR)
+		return ((signed char)va_arg(ap, int));
 	if (f->flags & FLAG_SHORT)
 		return ((short)va_arg(ap, int));
-	if (f->flags & FLAG_CHAR)
-		return ((char)va_arg(ap, int));
 	return (va_arg(ap, int));
 }
 
@@ -27,10 +27,10 @@ size_t			unsigned_cast(t_flags *f, va_list ap)
 {
 	if (f->flags & (FLAG_LONG_LONG | FLAG_LONG))
 		return (va_arg(ap, size_t));
-	if (f->flags & FLAG_SHORT)
-		return ((unsigned short)va_arg(ap, int));
 	if (f->flags & FLAG_CHAR)
 		return ((unsigned char)va_arg(ap, int));
+	if (f->flags & FLAG_SHORT)
+		return ((unsigned short)va_arg(ap, int));
 	return ((unsigned int)va_arg(ap, int));
 }
 
@@ -102,15 +102,14 @@ void			format_integer(char fmt, t_flags *f, va_list ap)
 	else
 		base = 10;
 	if (fmt == 'X')
-		f->flags != FLAG_UPPERCASE;
+		f->flags |= FLAG_UPPERCASE;
 	if (f->flags & FLAG_PRECISION || f->flags & FLAG_LEFT)
 		f->flags &= ~FLAG_ZEROPAD;
 	if (fmt == 'i' || fmt == 'd')
 	{
 		f->flags &= ~FLAG_HASH;
-		
+	
 		val = signed_cast(f, ap);
-		printf("\nval iss %d\n", val);
 		nb = itoa_base((val > 0 ? val : -val), val < 0, base, f);
 		format_number(nb, val < 0, fmt, f);
 	}

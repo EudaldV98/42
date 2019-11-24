@@ -9,9 +9,9 @@ int main(int ac, char **av)
 
 	f.flags |= FLAG_UPPERCASE;
 
-   	r = ft_printf("%hd", 32768);
+   	r = ft_printf(":% :");
 	printf("\n");
-	r2d2 = printf("%hd", 32768);
+	r2d2 = printf(":% :");
 	printf("\n  my ret is %d\n", r);
 	printf("\nRIAL ret is %d\n", r2d2);
 	return (0);
