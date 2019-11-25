@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/20 16:53:01 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/25 13:07:49 by mgarcia-         ###   ########.fr       */
+/*   Created: 2019/10/09 17:45:43 by mgarcia-          #+#    #+#             */
+/*   Updated: 2019/10/16 21:06:26 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int ft_printf(const char *format, ...)
+void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 {
-	va_list	arg;
-	int		done;
+	unsigned char		*s;
+	unsigned char		*d;
 
-	va_start(arg, format);
-	done = ft_vprintf(format, arg);
-	va_end(arg);
-
-	return (done);
+	s = (unsigned char*)src;
+	d = (unsigned char*)dst;
+	while (n-- > 0)
+	{
+		*d++ = *s++;
+		if (*(s - 1) == (unsigned char)c)
+			return ((void*)d);
+	}
+	return (NULL);
 }

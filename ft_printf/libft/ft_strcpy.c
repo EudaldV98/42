@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/20 16:53:01 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/25 13:07:49 by mgarcia-         ###   ########.fr       */
+/*   Created: 2019/10/07 14:22:57 by mgarcia-          #+#    #+#             */
+/*   Updated: 2019/10/07 14:26:27 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int ft_printf(const char *format, ...)
+char	*ft_strcpy(char *dest, const char *src)
 {
-	va_list	arg;
-	int		done;
+	int i;
 
-	va_start(arg, format);
-	done = ft_vprintf(format, arg);
-	va_end(arg);
-
-	return (done);
+	i = 0;
+	while (*src)
+		dest[i++] = *src++;
+	dest[i] = '\0';
+	return (dest);
 }

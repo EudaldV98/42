@@ -1,6 +1,6 @@
 #include "ft_printf.h"
 #include <stdio.h>
-
+/*
 int main(int ac, char **av)
 {
 	t_flags				f;
@@ -16,25 +16,43 @@ int main(int ac, char **av)
 	printf("\nRIAL ret is %d\n", r2d2);
 	return (0);
 }
-
+*/
 /*
 int main()
 {
 	int a=10;
 	int* ptr =&a;
-	size_t		je;
-	char		*str;
-	t_flags		f;
 
-	f.flags = 0;
-
-	je = (size_t)ptr;
-	f.flags |= FLAG_HASH;
-
-	//ft_printf("%p\n", ptr);
-	printf("%p\n", ptr);
-	str = itoa_base(je, 0, 16, &f);
-	format_number(str, 0, 'x', &f);
+	ft_printf("%d\n", "hola");
+	//printf("%d\n", "hola");
 	return (0);
 }
 */
+
+#include <stdio.h>
+
+// bit returned at location
+int bit_return(int a, int loc)   
+{
+    int buf = a & 1<<loc;
+
+    if (buf == 0) return 0;
+    else return 1; 
+}
+
+int main() 
+{
+    //11000010111011010100000000000000  
+    // 1 sign bit | 8 exponent bit | 23 fraction bits
+    float a = 17.25/*118.625*/; 
+    int *b;
+    b = &a;
+
+    int i;
+    for (i = 31; i >= 0; i--)
+    {
+        printf("%d",bit_return(*b,i));
+    }
+
+    return 0;
+}

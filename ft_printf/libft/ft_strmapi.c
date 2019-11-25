@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/20 16:53:01 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/25 13:07:49 by mgarcia-         ###   ########.fr       */
+/*   Created: 2019/10/09 10:35:14 by mgarcia-          #+#    #+#             */
+/*   Updated: 2019/10/18 14:24:41 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int ft_printf(const char *format, ...)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	va_list	arg;
-	int		done;
+	char			*str;
+	unsigned int	i;
 
-	va_start(arg, format);
-	done = ft_vprintf(format, arg);
-	va_end(arg);
-
-	return (done);
+	if (!s)
+		return (NULL);
+	if (!(str = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1))))
+		return (NULL);
+	i = 0;
+	while (*s)
+	{
+		str[i] = (*f)(i, *s++);
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
 }

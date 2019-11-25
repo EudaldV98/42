@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/20 16:53:01 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/25 13:07:49 by mgarcia-         ###   ########.fr       */
+/*   Created: 2019/10/07 14:25:28 by mgarcia-          #+#    #+#             */
+/*   Updated: 2019/10/07 14:57:02 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int ft_printf(const char *format, ...)
+char	*ft_strncpy(char *dst, const char *src, size_t len)
 {
-	va_list	arg;
-	int		done;
+	size_t i;
 
-	va_start(arg, format);
-	done = ft_vprintf(format, arg);
-	va_end(arg);
-
-	return (done);
+	i = 0;
+	if (len > 0)
+	{
+		while (src[i] && i < len)
+		{
+			dst[i] = src[i];
+			i++;
+		}
+		while (i < len)
+		{
+			dst[i] = '\0';
+			i++;
+		}
+	}
+	return (dst);
 }

@@ -6,11 +6,20 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 15:41:58 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/24 22:08:25 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/25 13:19:57 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+void			format_ptr(t_flags *f, va_list ap)
+{
+	char		*s;
+
+	f->flags |= FLAG_HASH;
+	s = itoa_base(va_arg(ap, size_t), 0, 16, f);
+	format_number(s, 0, 'x', f);
+}
 
 ssize_t			signed_cast(t_flags *f, va_list ap)
 {
@@ -33,7 +42,6 @@ size_t			unsigned_cast(t_flags *f, va_list ap)
 		return ((unsigned short)va_arg(ap, int));
 	return ((unsigned int)va_arg(ap, int));
 }
-
 
 static void		add_prefix(int len, int negative, t_flags *f)
 {
@@ -67,14 +75,14 @@ static void		add_padding(int len, t_flags *f)
 	}
 }
 
-void		format_number(char *nb, int negative, char fmt, t_flags *f)
+void		format_number(char *nb, int negative, int base, t_flags *f)
 {
 	int		len;
 
 	len = ft_strlen(nb);
 	if (f->width && (negative || f->flags & (FLAG_PLUS | FLAG_SPACE)))
 		f->width--;
-	if (f->width && (f->flags & FLAG_HASH) && (fmt == 'x' || fmt == 'X'))
+	if (f->width && (f->flags & FLAG_HASH) && base == 16)
 		f->width -= (f->width == 1) ? 1 : 2;
 	if (!(f->flags & FLAG_LEFT))
 	{
@@ -111,7 +119,7 @@ void			format_integer(char fmt, t_flags *f, va_list ap)
 	
 		val = signed_cast(f, ap);
 		nb = itoa_base((val > 0 ? val : -val), val < 0, base, f);
-		format_number(nb, val < 0, fmt, f);
+		format_number(nb, val < 0, base, f);
 	}
 	else
 	{
@@ -119,6 +127,6 @@ void			format_integer(char fmt, t_flags *f, va_list ap)
 		
 		uval = unsigned_cast(f, ap);
 		nb = itoa_base(uval, 0, base, f);
-		format_number(nb, 0, fmt, f);
+		format_number(nb, 0, base, f);
 	}
 }

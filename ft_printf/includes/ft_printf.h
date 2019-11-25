@@ -6,20 +6,15 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:52:56 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/25 13:07:15 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/22 12:28:28 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-
 # include <stdarg.h>
 # include <unistd.h>
-#include <stdlib.h>
-
-#include <stdio.h>
-
 # include "libft.h"
 
 # define FLAG_ZEROPAD   (1U << 0U)
@@ -43,11 +38,13 @@ typedef struct	s_flags
 	int				precision;
 }				t_flags;
 
-void			_putchar(char c, t_flags *f);
+void			ft_putchar(char c);
+
+int				is_digit(char c);
 
 int				_atoi(const char **str);
 
-int				ft_printf(const char *format, ...) __attribute__((format(printf, 1, 2)));
+int				ft_printf(const char *format, ...);
 
 int				ft_vprintf(const char *format, va_list ap);
 
@@ -59,16 +56,6 @@ void			eval_precision(const char **format, t_flags *f, va_list ap);
 
 void			eval_length(const char **format, t_flags *f);
 
-void			format_number(char *nb, int negative, int base, t_flags *f);
-
-void			format_ptr(t_flags *f, va_list ap);
-
 void			format_string(t_flags *f, va_list ap);
-
-void			format_character(t_flags *f, va_list ap);
-
-char			*itoa_base(size_t nbr, int neg, int base, t_flags *f);
-
-void			format_integer(char fmt, t_flags *f, va_list ap);
 
 #endif

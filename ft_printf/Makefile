@@ -18,7 +18,7 @@ CC		= gcc
 
 RM		= rm -f
 
-CFLAGS	= -I ${INCLUDES}
+CFLAGS	= -Wall -I ${INCLUDES}
 
 .c.o:
 		${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
