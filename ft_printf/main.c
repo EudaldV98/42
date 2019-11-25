@@ -32,9 +32,9 @@ int main()
 #include <stdio.h>
 
 // bit returned at location
-int bit_return(int a, int loc)   
+int bit_return(size_t a, int idx)   
 {
-    int buf = a & 1<<loc;
+    int buf = a & 1<<idx;
 
     if (buf == 0) return 0;
     else return 1; 
@@ -44,14 +44,13 @@ int main()
 {
     //11000010111011010100000000000000  
     // 1 sign bit | 8 exponent bit | 23 fraction bits
-    float a = 17.25/*118.625*/; 
-    int *b;
-    b = &a;
+    float a = 17.01525/*118.625*/; 
+    size_t b =(size_t)a;
 
     int i;
     for (i = 31; i >= 0; i--)
     {
-        printf("%d",bit_return(*b,i));
+        printf("%d",bit_return(b,i));
     }
 
     return 0;
