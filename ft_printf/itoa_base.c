@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 11:34:01 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/24 22:08:24 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/26 15:05:19 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ char			*itoa_base(size_t nbr, int neg, int base, t_flags *f)
 		if (!(nb = (char *)malloc(sizeof(char) * 1)))
 		return (0);
 		nb[0] = '\0';
-		f->flags &= ~FLAG_HASH;
+		if (base == 16)
+			f->flags &= ~FLAG_HASH;
 		return (nb);
 	}
 	len = nbrlen(nbr, base);

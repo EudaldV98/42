@@ -6,19 +6,19 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 15:41:58 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/25 13:19:57 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/26 21:18:55 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void			format_ptr(t_flags *f, va_list ap)
+void			format_ptr(char *buf, t_flags *f, va_list ap)
 {
 	char		*s;
 
 	f->flags |= FLAG_HASH;
 	s = itoa_base(va_arg(ap, size_t), 0, 16, f);
-	format_number(s, 0, 'x', f);
+	format_number(s, buf, 0, 16, f);
 }
 
 ssize_t			signed_cast(t_flags *f, va_list ap)
@@ -43,62 +43,66 @@ size_t			unsigned_cast(t_flags *f, va_list ap)
 	return ((unsigned int)va_arg(ap, int));
 }
 
-static void		add_prefix(int len, int negative, t_flags *f)
+static void		add_prefix(int len, int negative, int base, char *buf, t_flags *f)
 {
 	if (negative || f->flags & (FLAG_PLUS | FLAG_SPACE))
 	{
 		if (negative)
-			_putchar('-', f);
+			putchar_buff('-', buf, f);
 		else if (f->flags & FLAG_PLUS)
-			_putchar('+', f);
+			putchar_buff('+', buf, f);
 		else if (f->flags & FLAG_SPACE)
-			_putchar(' ', f);
+			putchar_buff(' ', buf, f);
 	}
 	else if (f->flags & FLAG_HASH)
 	{
-		_putchar('0', f);
+		putchar_buff('0', buf, f);
 		if (f->flags & FLAG_UPPERCASE)
-			_putchar('X', f);
-		else
-			_putchar('x', f);
+			putchar_buff('X', buf, f);
+		else if (base == 16)
+			putchar_buff('x', buf, f);
 	}
 }
 
-static void		add_padding(int len, t_flags *f)
+static void		add_padding(int len, char *buf, t_flags *f)
 {
 	while (len++ < f->width)
 	{
 		if (f->flags & FLAG_ZEROPAD)
-			_putchar('0', f);
+			putchar_buff('0', buf, f);
 		else
-			_putchar(32, f);
+			putchar_buff(32, buf, f);
 	}
 }
 
-void		format_number(char *nb, int negative, int base, t_flags *f)
+void		format_number(char *nb, char *buf, int negative, int base, t_flags *f)
 {
 	int		len;
 
 	len = ft_strlen(nb);
 	if (f->width && (negative || f->flags & (FLAG_PLUS | FLAG_SPACE)))
 		f->width--;
-	if (f->width && (f->flags & FLAG_HASH) && base == 16)
-		f->width -= (f->width == 1) ? 1 : 2;
+	if (f->width && (f->flags & FLAG_HASH) && (base == 16 || base == 8))
+	{
+		if (base == 16)
+			f->width -= (f->width == 1) ? 1 : 2;
+		else if (base == 8)
+			f->width -= 1;
+	}
 	if (!(f->flags & FLAG_LEFT))
 	{
 		if (f->flags & FLAG_ZEROPAD)
-			add_prefix(len, negative, f);
-		add_padding(len, f);
+			add_prefix(len, negative, base, buf, f);
+		add_padding(len, buf, f);
 	}
 	if (!(f->flags & FLAG_ZEROPAD))
-		add_prefix(len, negative, f);
-	while (*nb)
-		_putchar(*nb++, f);
+		add_prefix(len, negative, base, buf, f);
+	putstr_buff(nb, buf, f);
 	if (f->flags & FLAG_LEFT)
-		add_padding(len, f);
+		add_padding(len, buf, f);
 }
 
-void			format_integer(char fmt, t_flags *f, va_list ap)
+void			format_integer(char fmt, char *buf, t_flags *f, va_list ap)
 {
 	ssize_t		val;
 	size_t		uval;
@@ -107,6 +111,8 @@ void			format_integer(char fmt, t_flags *f, va_list ap)
 
 	if (fmt == 'x' || fmt == 'X')
 		base = 16;
+	else if (fmt == 'o')
+		base = 8;
 	else
 		base = 10;
 	if (fmt == 'X')
@@ -119,7 +125,7 @@ void			format_integer(char fmt, t_flags *f, va_list ap)
 	
 		val = signed_cast(f, ap);
 		nb = itoa_base((val > 0 ? val : -val), val < 0, base, f);
-		format_number(nb, val < 0, base, f);
+		format_number(nb, buf, val < 0, base, f);
 	}
 	else
 	{
@@ -127,6 +133,6 @@ void			format_integer(char fmt, t_flags *f, va_list ap)
 		
 		uval = unsigned_cast(f, ap);
 		nb = itoa_base(uval, 0, base, f);
-		format_number(nb, 0, base, f);
+		format_number(nb, buf, 0, base, f);
 	}
 }

@@ -6,23 +6,23 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 11:51:44 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/24 17:02:46 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/26 21:18:56 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void		format_string(t_flags *f, va_list ap)
+void		format_string(t_flags *f, char *buf, va_list ap)
 {
 	char	*str;
 	int		len;
 	int		i;
 
+	i = 0;
 	str = va_arg(ap, char *);
 	if (!str)
 	{
-		ft_putstr("(null)");
-		f->idx += 6;
+		putstr_buff("(null)", buf, f);
 		return ;
 	}
 	len = ft_strlen(str);
@@ -32,35 +32,31 @@ void		format_string(t_flags *f, va_list ap)
 	{
 		i = 0;
 		while (i++ < (f->width - len))
-			_putchar(32, f);
+			putchar_buff(32, buf, f);
 	}
 	i = 0;
 	while (*str && i++ < len)
-		_putchar(*str++, f);
+		putchar_buff(*str++, buf, f);
 	if (f->flags & FLAG_LEFT)
 	{
 		i = 0;
 		while (i++ < (f->width - len))
-			_putchar(32, f);
+			putchar_buff(32, buf, f);
 	}
 }
 
-void		format_character(t_flags *f, va_list ap)
+void		format_character(char c, char *buf, t_flags *f)
 {
-	char	c;
-
-	c = va_arg(ap, int);
 	if (!(f->flags & FLAG_LEFT))
 	{
 		while (--(f->width) > 0)
-			_putchar(32, f);
+			putchar_buff(32, buf, f);
 	}
-	_putchar(c, f);
+	putchar_buff(c, buf, f);
 	if (f->flags & FLAG_LEFT)
 	{
 		while (--(f->width) > 0)
-			_putchar(32, f);
+			putchar_buff(32, buf, f);
 	
 	}
-	
 }

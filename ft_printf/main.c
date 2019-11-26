@@ -1,19 +1,11 @@
 #include "ft_printf.h"
 #include <stdio.h>
+
 /*
-int main(int ac, char **av)
+int main()
 {
-	t_flags				f;
-	int					r;
-	int					r2d2;
-
-	f.flags |= FLAG_UPPERCASE;
-
-   	r = ft_printf(":% :");
-	printf("\n");
-	r2d2 = printf(":% :");
-	printf("\n  my ret is %d\n", r);
-	printf("\nRIAL ret is %d\n", r2d2);
+	ft_printf("%10.2d\n", 789);
+	printf("%10.2d\n", 789);
 	return (0);
 }
 */
@@ -21,37 +13,31 @@ int main(int ac, char **av)
 int main()
 {
 	int a=10;
-	int* ptr =&a;
+	int* ptr = &a;
 
-	ft_printf("%d\n", "hola");
-	//printf("%d\n", "hola");
+	ft_printf("%p\n", ptr);
+	printf("%p\n", ptr);
 	return (0);
 }
 */
 
-#include <stdio.h>
-
-// bit returned at location
-int bit_return(size_t a, int idx)   
+int main()
 {
-    int buf = a & 1<<idx;
-
-    if (buf == 0) return 0;
-    else return 1; 
+	int r1 = ft_printf("%10s is a string", "this");
+	ft_printf("\n");
+	int r2 = printf("%10s is a string", "this");
+	
+	printf("\nMi printf devuelve %d\n", r1);
+	printf("El printf de vdad devuelve %d", r2);
+	
+	return (0);
 }
 
-int main() 
+/*
+int main()
 {
-    //11000010111011010100000000000000  
-    // 1 sign bit | 8 exponent bit | 23 fraction bits
-    float a = 17.01525/*118.625*/; 
-    size_t b =(size_t)a;
-
-    int i;
-    for (i = 31; i >= 0; i--)
-    {
-        printf("%d",bit_return(b,i));
-    }
-
-    return 0;
+	ft_printf("%k", NULL);
+	printf("%s", NULL);
+	return (0);
 }
+*/

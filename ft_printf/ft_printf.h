@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:52:56 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/25 13:07:15 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/26 21:18:57 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 #include <stdio.h>
 
 # include "libft.h"
+
+# define BUFFSIZE 64
 
 # define FLAG_ZEROPAD   (1U << 0U)
 # define FLAG_LEFT      (1U << 1U)
@@ -37,6 +39,7 @@
 
 typedef struct	s_flags
 {
+	unsigned int	i;
 	size_t			idx;
 	unsigned int	flags;
 	int				width;
@@ -45,9 +48,13 @@ typedef struct	s_flags
 
 void			_putchar(char c, t_flags *f);
 
+void			putchar_buff(char c, char *buf, t_flags *f);
+
+void			putstr_buff(char *s, char *buf, t_flags *f);
+
 int				_atoi(const char **str);
 
-int				ft_printf(const char *format, ...) __attribute__((format(printf, 1, 2)));
+int				ft_printf(const char *format, ...) __attribute__((format(printf,1,2)));
 
 int				ft_vprintf(const char *format, va_list ap);
 
@@ -59,16 +66,16 @@ void			eval_precision(const char **format, t_flags *f, va_list ap);
 
 void			eval_length(const char **format, t_flags *f);
 
-void			format_number(char *nb, int negative, int base, t_flags *f);
+void			format_number(char *nb, char *buf, int negative, int base, t_flags *f);
 
-void			format_ptr(t_flags *f, va_list ap);
+void			format_ptr(char *buf, t_flags *f, va_list ap);
 
-void			format_string(t_flags *f, va_list ap);
+void			format_string(t_flags *f, char *buf, va_list ap);
 
-void			format_character(t_flags *f, va_list ap);
+void			format_character(char c, char *buf, t_flags *f);
 
 char			*itoa_base(size_t nbr, int neg, int base, t_flags *f);
 
-void			format_integer(char fmt, t_flags *f, va_list ap);
+void			format_integer(char fmt, char *buf, t_flags *f, va_list ap);
 
 #endif
