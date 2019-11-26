@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:38:23 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/26 21:18:54 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/26 22:06:26 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,21 @@ void			putchar_buff(char c, char *buf, t_flags *f)
 		buf[f->i] = c;
 		(f->i)++;
 	}
+}
+
+void			write_ptr(t_flags *f, va_list ap)
+{
+	long	*ptr;;
+
+	if (f->flags & (FLAG_LONG_LONG | FLAG_LONG))
+		ptr = (long *)va_arg(ap, size_t);
+	else if (f->flags & FLAG_SHORT)
+		ptr = (short *)va_arg(ap, size_t);
+	else if (f->flags & FLAG_CHAR)
+		ptr = (signed char *)va_arg(ap, size_t);
+	else
+		ptr = (int *)va_arg(ap, size_t);
+	*ptr = f->idx + f->i;
 }
 
 void			putstr_buff(char *s, char *buf, t_flags *f)
@@ -71,6 +86,10 @@ static void		print_specifier(const char **format, char *buf, t_flags *f, va_list
 	else if (**format == 'p')
 	{
 		format_ptr(buf, f, ap);
+	}
+	else if (**format == 'n')
+	{
+		write_ptr(f, ap);
 	}
 	else if (**format)
 		format_character(**format, buf, f);

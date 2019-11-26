@@ -20,7 +20,7 @@ int main()
 	return (0);
 }
 */
-
+/*
 int main()
 {
 	int r1 = ft_printf("%10s is a string", "this");
@@ -32,7 +32,7 @@ int main()
 	
 	return (0);
 }
-
+*/
 /*
 int main()
 {
@@ -41,3 +41,21 @@ int main()
 	return (0);
 }
 */
+
+int main()
+{
+	signed char a = 0;
+	signed char b = 0;
+	char s1[] = "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss";
+    char s2[] = "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss";
+
+	
+	signed char *p1 = &a;
+	signed char *p2 = &b;
+
+    ft_printf("%s%hhn\n", s1, p1);
+    printf("%d\n\n", a);
+	printf("%s%hhn\n", s2, p2);
+    printf("%d\n\n", b);
+	return (0);
+}
