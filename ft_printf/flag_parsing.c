@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 17:32:11 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/22 17:26:47 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/27 15:39:16 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	eval_flags(const char **format, t_flags *f)
 {
 	f->flags = 0U;
-
-	while (**format == '#' || **format == '+' || **format == '-' || **format == ' ' || **format == '0')
+	while (**format == '#' || **format == '+' || **format == '-' ||
+			**format == ' ' || **format == '0')
 	{
 		if (**format == '#')
 			f->flags |= FLAG_HASH;
@@ -34,10 +34,9 @@ void	eval_flags(const char **format, t_flags *f)
 
 void	eval_width(const char **format, t_flags *f, va_list ap)
 {
-	f->width = 0U;
-
+	f->width = 0;
 	if (ft_isdigit(**format))
-		f->width = _atoi(format);
+		f->width = stoi(format);
 	else if (**format == '*')
 	{
 		f->width = va_arg(ap, int);
@@ -52,14 +51,13 @@ void	eval_width(const char **format, t_flags *f, va_list ap)
 
 void	eval_precision(const char **format, t_flags *f, va_list ap)
 {
-	f->precision = 0U;
-
+	f->precision = 0;
 	if (**format == '.')
 	{
 		f->flags |= FLAG_PRECISION;
 		(*format)++;
 		if (ft_isdigit(**format))
-			f->precision = _atoi(format);
+			f->precision = stoi(format);
 		else if (**format == '*')
 		{
 			f->precision = va_arg(ap, int);

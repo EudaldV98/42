@@ -1,6 +1,5 @@
 #include "ft_printf.h"
 #include <stdio.h>
-
 /*
 int main()
 {
@@ -41,7 +40,7 @@ int main()
 	return (0);
 }
 */
-
+/*
 int main()
 {
 	signed char a = 0;
@@ -57,5 +56,16 @@ int main()
     printf("%d\n\n", a);
 	printf("%s%hhn\n", s2, p2);
     printf("%d\n\n", b);
+	return (0);
+}
+*/
+
+int main()
+{
+	printf("%f\n", 456.789);
+	ft_printf("%f\n", 456.789);
+	//ft_printf("%s", "abc");
+	//printf("%s", "abc");
+	
 	return (0);
 }
