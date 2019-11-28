@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 16:05:54 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/27 16:07:50 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/28 15:33:42 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,16 @@ size_t			unsigned_cast(t_flags *f, va_list ap)
 	if (f->flags & FLAG_SHORT)
 		return ((unsigned short)va_arg(ap, int));
 	return ((unsigned int)va_arg(ap, int));
+}
+
+void			*pointer_cast(t_flags *f, va_list ap)
+{
+	if (f->flags & (FLAG_LONG_LONG | FLAG_LONG))
+		return ((long *)va_arg(ap, size_t));
+	else if (f->flags & FLAG_SHORT)
+		return ((short *)va_arg(ap, size_t));
+	else if (f->flags & FLAG_CHAR)
+		return ((signed char *)va_arg(ap, size_t));
+	else
+		return ((int *)va_arg(ap, size_t));
 }

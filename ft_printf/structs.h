@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 15:06:15 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/27 16:28:23 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/28 14:32:34 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define FLAG_PRECISION (1U << 10U)
 # define FLAG_ADAPT_EXP (1U << 11U)
 
-typedef struct		s_flags
+typedef struct	s_flags
 {
 	unsigned int	i;
 	size_t			idx;
@@ -34,6 +34,15 @@ typedef struct		s_flags
 	unsigned int	flags;
 	int				width;
 	int				precision;
-}					t_flags;
+}				t_flags;
+
+typedef struct	s_float
+{
+	int				neg;
+	int				whole;
+	double			diff;
+	double			tmp;
+	size_t			frac;
+}				t_float;
 
 #endif

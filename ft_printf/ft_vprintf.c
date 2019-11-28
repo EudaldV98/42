@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:38:23 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/27 18:40:49 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/28 15:40:58 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,7 @@ static void		print_specifier(const char **format, char *buf, t_flags *f,
 			|| **format == 'o' || **format == 'x' || **format == 'X')
 		format_integer(**format, buf, f, ap);
 	else if (**format == 'f')
-	{
-		float_format(f, buf, ap);
-	}
-	else if (**format == 'e' || **format == 'g')
-	{
-		//jeje
-	}
+		format_float(va_arg(ap, double), buf, f);
 	else if (**format == 'c')
 		format_character((char)va_arg(ap, int), buf, f);
 	else if (**format == 's')
@@ -45,11 +39,12 @@ int				ft_vprintf(const char *format, va_list ap)
 	t_flags		f;
 
 	f.i = 0;
+	f.idx = 0;
 	while (*format)
 	{
 		if (*format != '%')
 		{
-			putchar_buff(*format++, &buf, &f);
+			putchar_buff(*format++, buf, &f);
 			continue;
 		}
 		else
@@ -58,7 +53,7 @@ int				ft_vprintf(const char *format, va_list ap)
 		eval_width(&format, &f, ap);
 		eval_precision(&format, &f, ap);
 		eval_length(&format, &f);
-		print_specifier(&format, &buf, &f, ap);
+		print_specifier(&format, buf, &f, ap);
 	}
 	write(1, buf, (f.i));
 	return (f.idx + f.i);

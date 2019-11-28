@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 16:22:38 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/27 18:05:23 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/28 15:22:14 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int			stoi(const char **str)
 	return (i);
 }
 
-int				nbrlen(size_t nb, int base)
+int			nbrlen(size_t nb, int base)
 {
 	int		len;
 

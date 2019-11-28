@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 11:51:44 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/27 16:44:40 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/28 15:40:59 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,18 @@ void			format_character(char c, char *buf, t_flags *f)
 
 void			write_ptr(t_flags *f, va_list ap)
 {
-	long	*ptr;
+	int		*ptr;
 
-	if (f->flags & (FLAG_LONG_LONG | FLAG_LONG))
-		ptr = (long *)va_arg(ap, size_t);
-	else if (f->flags & FLAG_SHORT)
-		ptr = (short *)va_arg(ap, size_t);
-	else if (f->flags & FLAG_CHAR)
-		ptr = (signed char *)va_arg(ap, size_t);
-	else
-		ptr = (int *)va_arg(ap, size_t);
+	ptr = pointer_cast(f, ap);
 	*ptr = f->idx + f->i;
+}
+
+void			format_address(char *buf, t_flags *f, va_list ap)
+{
+	if (f->flags & FLAG_PRECISION || f->flags & FLAG_LEFT)
+		f->flags &= ~FLAG_ZEROPAD;
+	f->flags &= ~(FLAG_PLUS | FLAG_SPACE);
+	f->flags |= FLAG_HASH;
+	f->base = 16;
+	format_number(va_arg(ap, size_t), 0, buf, f);
 }

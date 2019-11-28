@@ -62,8 +62,16 @@ int main()
 
 int main()
 {
-	printf("%f\n", 456.789);
-	ft_printf("%f\n", 456.789);
+	double fl = 456.78987654321;
+	int	ip = 0;
+	int	ia = 0;
+	int *p = &ip;
+	int *a = &ia;
+
+	printf("%13f, %n%.12f\n", fl, p, -2.5);
+	printf("%d\n", ip);
+	ft_printf("%13f, %n%.12f\n", fl, a, -2.5);
+	printf("%d\n", ia);
 	//ft_printf("%s", "abc");
 	//printf("%s", "abc");
 	

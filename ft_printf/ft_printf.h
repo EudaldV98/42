@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:52:56 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/27 18:40:49 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/28 15:40:29 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "libft.h"
 # include "structs.h"
 
+# define DEFAULT_FLOAT_PRECISION 6
 # define BUFFSIZE 64
 
 int		ft_printf(const char *format, ...) __attribute__((format(printf,1,2)));
@@ -46,6 +47,10 @@ void	format_string(t_flags *f, char *buf, va_list ap);
 
 void	format_integer(char fmt, char *buf, t_flags *f, va_list ap);
 
+void	format_number(size_t nb, int negative, char *buf, t_flags *f);
+
+void	format_float(double value, char *buf, t_flags *f);
+
 void	format_address(char *buf, t_flags *f, va_list ap);
 
 void	write_ptr(t_flags *f, va_list ap);
@@ -57,6 +62,8 @@ void	write_ptr(t_flags *f, va_list ap);
 ssize_t	signed_cast(t_flags *f, va_list ap);
 
 size_t	unsigned_cast(t_flags *f, va_list ap);
+
+void	*pointer_cast(t_flags *f, va_list ap);
 
 /*
 **      help functions

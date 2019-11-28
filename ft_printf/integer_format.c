@@ -6,11 +6,30 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 15:41:58 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/27 18:12:17 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/28 15:40:57 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+static void		set_flags(size_t nb, int negative, int *len, t_flags *f)
+{
+	*len = nbrlen(nb, f->base);
+	*len = *len < f->precision ? f->precision : *len;
+	if (!nb && f->flags & FLAG_PRECISION && !f->precision)
+		*len = 0;
+	if (!nb && (f->base == 10 || f->base == 16))
+		f->flags &= ~FLAG_HASH;
+	if (f->width && (negative || f->flags & (FLAG_PLUS | FLAG_SPACE)))
+		f->width--;
+	if (f->width && (f->flags & FLAG_HASH) && (f->base == 16 || f->base == 8))
+	{
+		if (f->base == 16)
+			f->width -= (f->width == 1) ? 1 : 2;
+		else if (f->base == 8)
+			f->width -= 1;
+	}
+}
 
 static void		add_prefix(int len, int negative, char *buf, t_flags *f)
 {
@@ -44,25 +63,11 @@ static void		add_padding(int len, char *buf, t_flags *f)
 	}
 }
 
-static void		format_number(size_t nb, int negative, char *buf, t_flags *f)
+void			format_number(size_t nb, int negative, char *buf, t_flags *f)
 {
 	int		len;
 
-	len = nbrlen(nb, f->base);
-	len = len < f->precision ? f->precision : len;
-	if (!nb && f->flags & FLAG_PRECISION && !f->precision)
-		len = 0;
-	if (!nb && (f->base == 10 || f->base == 16))
-		f->flags &= ~FLAG_HASH;
-	if (f->width && (negative || f->flags & (FLAG_PLUS | FLAG_SPACE)))
-		f->width--;
-	if (f->width && (f->flags & FLAG_HASH) && (f->base == 16 || f->base == 8))
-	{
-		if (f->base == 16)
-			f->width -= (f->width == 1) ? 1 : 2;
-		else if (f->base == 8)
-			f->width -= 1;
-	}
+	set_flags(nb, negative, &len, f);
 	if (!(f->flags & FLAG_LEFT))
 	{
 		if (f->flags & FLAG_ZEROPAD)
@@ -104,11 +109,4 @@ void			format_integer(char fmt, char *buf, t_flags *f, va_list ap)
 		uval = unsigned_cast(f, ap);
 		format_number(uval, 0, buf, f);
 	}
-}
-
-void			format_address(char *buf, t_flags *f, va_list ap)
-{
-	f->flags |= FLAG_HASH;
-	f->base = 16;
-	format_number(va_arg(ap, size_t), 0, buf, f);
 }
