@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 16:05:54 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/28 15:33:42 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/29 16:32:34 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,12 @@ void			*pointer_cast(t_flags *f, va_list ap)
 		return ((signed char *)va_arg(ap, size_t));
 	else
 		return ((int *)va_arg(ap, size_t));
+}
+
+long double		float_cast(t_flags *f, va_list ap)
+{
+	if (f->flags & FLAG_LONG_DBL)
+		return (va_arg(ap, long double));
+	else
+		return (va_arg(ap, double));	
 }

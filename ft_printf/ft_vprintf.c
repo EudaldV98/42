@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:38:23 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/28 15:40:58 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/29 13:08:47 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void		print_specifier(const char **format, char *buf, t_flags *f,
 			|| **format == 'o' || **format == 'x' || **format == 'X')
 		format_integer(**format, buf, f, ap);
 	else if (**format == 'f')
-		format_float(va_arg(ap, double), buf, f);
+		format_float(float_cast(f, ap), buf, f);
 	else if (**format == 'c')
 		format_character((char)va_arg(ap, int), buf, f);
 	else if (**format == 's')

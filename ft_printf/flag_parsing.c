@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 17:32:11 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/27 15:39:16 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/29 13:15:34 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,10 @@ void	eval_length(const char **format, t_flags *f)
 			f->flags |= FLAG_CHAR;
 			(*format)++;
 		}
+	}
+	else if (**format == 'L')
+	{
+		f->flags |= FLAG_LONG_DBL;
+		(*format)++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 15:06:15 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/28 14:32:34 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/29 18:51:15 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # define FLAG_LONG_LONG (1U << 9U)
 # define FLAG_PRECISION (1U << 10U)
 # define FLAG_ADAPT_EXP (1U << 11U)
+# define FLAG_LONG_DBL	(1U << 12U)
+# define HEX_ADDR		(1U << 13U)
 
 typedef struct	s_flags
 {
@@ -38,11 +40,13 @@ typedef struct	s_flags
 
 typedef struct	s_float
 {
-	int				neg;
-	int				whole;
-	double			diff;
-	double			tmp;
+	ssize_t			neg;
+	ssize_t			whole;
+	long double		diff;
+	long double		tmp;
 	size_t			frac;
 }				t_float;
+
+long double		float_cast(t_flags *f, va_list ap);
 
 #endif

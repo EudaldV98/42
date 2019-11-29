@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 15:41:58 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/28 15:40:57 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/29 18:51:13 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static void		set_flags(size_t nb, int negative, int *len, t_flags *f)
 {
 	*len = nbrlen(nb, f->base);
 	*len = *len < f->precision ? f->precision : *len;
-	if (!nb && f->flags & FLAG_PRECISION && !f->precision)
+	if (!nb && f->flags & FLAG_PRECISION && f->precision == 0)
 		*len = 0;
-	if (!nb && (f->base == 10 || f->base == 16))
+	if (!nb && (f->base == 10 || f->base == 16) && !(f->flags & HEX_ADDR))
 		f->flags &= ~FLAG_HASH;
 	if (f->width && (negative || f->flags & (FLAG_PLUS | FLAG_SPACE)))
 		f->width--;
@@ -29,6 +29,7 @@ static void		set_flags(size_t nb, int negative, int *len, t_flags *f)
 		else if (f->base == 8)
 			f->width -= 1;
 	}
+	//if (f->flags & FLAG_HASH && f->base == 8)
 }
 
 static void		add_prefix(int len, int negative, char *buf, t_flags *f)
@@ -44,7 +45,10 @@ static void		add_prefix(int len, int negative, char *buf, t_flags *f)
 	}
 	else if (f->flags & FLAG_HASH)
 	{
-		putchar_buff('0', buf, f);
+		//if (f->base != 8 || (f->base == 8 && f->flags & FLAG_PRECISION))
+		//if (f->base != 8 || (f->base == 8 && f->width))
+		if (f->base == 16 || (f->base == 8 && !(f->flags & FLAG_PRECISION)))
+			putchar_buff('0', buf, f);
 		if (f->flags & FLAG_UPPERCASE)
 			putchar_buff('X', buf, f);
 		else if (f->base == 16)

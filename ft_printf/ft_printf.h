@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:52:56 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/28 15:40:29 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/29 15:27:11 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdarg.h>
 # include <unistd.h>
+# include <float.h>
 # include "libft.h"
 # include "structs.h"
 
@@ -49,7 +50,7 @@ void	format_integer(char fmt, char *buf, t_flags *f, va_list ap);
 
 void	format_number(size_t nb, int negative, char *buf, t_flags *f);
 
-void	format_float(double value, char *buf, t_flags *f);
+void	format_float(long double value, char *buf, t_flags *f);
 
 void	format_address(char *buf, t_flags *f, va_list ap);
 

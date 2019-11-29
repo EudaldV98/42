@@ -1,5 +1,14 @@
 #include "ft_printf.h"
 #include <stdio.h>
+
+int main()
+{
+	printf("%#o\n", 789);
+	printf("%#.0o\n", 123);
+	printf("%#.0o\n", 0);
+	return (0);
+}
+
 /*
 int main()
 {
@@ -22,16 +31,11 @@ int main()
 /*
 int main()
 {
-	int r1 = ft_printf("%10s is a string", "this");
-	ft_printf("\n");
-	int r2 = printf("%10s is a string", "this");
-	
-	printf("\nMi printf devuelve %d\n", r1);
-	printf("El printf de vdad devuelve %d", r2);
+	printf("%#.5o\n", 21);
+	ft_printf("%#.5o\n", 21);
 	
 	return (0);
-}
-*/
+}*/
 /*
 int main()
 {
@@ -60,20 +64,20 @@ int main()
 }
 */
 
+/*
 int main()
 {
-	double fl = 456.78987654321;
+	long double fl = 456.78987654321;
 	int	ip = 0;
 	int	ia = 0;
 	int *p = &ip;
 	int *a = &ia;
 
-	printf("%13f, %n%.12f\n", fl, p, -2.5);
-	printf("%d\n", ip);
-	ft_printf("%13f, %n%.12f\n", fl, a, -2.5);
-	printf("%d\n", ia);
-	//ft_printf("%s", "abc");
-	//printf("%s", "abc");
+	printf("%p\n", NULL);
+	ft_printf("%p\n", NULL);
+	ft_printf("%f\n", 1.0/0.0);
+	printf("%f\n", 1.0/0.0);
 	
 	return (0);
 }
+*/
