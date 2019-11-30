@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 16:05:54 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/29 16:32:34 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/30 13:37:34 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,5 @@ long double		float_cast(t_flags *f, va_list ap)
 	if (f->flags & FLAG_LONG_DBL)
 		return (va_arg(ap, long double));
 	else
-		return (va_arg(ap, double));	
+		return (va_arg(ap, double));
 }

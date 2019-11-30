@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 11:51:44 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/29 18:51:13 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/30 19:03:30 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void			write_ptr(t_flags *f, va_list ap)
 
 void			format_address(char *buf, t_flags *f, va_list ap)
 {
-	f->flags |= HEX_ADDR;
+	f->flags |= FLAG_HEX_ADDR;
 	if (f->flags & FLAG_PRECISION || f->flags & FLAG_LEFT)
 		f->flags &= ~FLAG_ZEROPAD;
 	f->flags &= ~(FLAG_PLUS | FLAG_SPACE);

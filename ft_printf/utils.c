@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 16:22:38 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/28 15:22:14 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/30 19:28:13 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,6 @@ void		putnbr_buff(size_t nb, int len, char *buf, t_flags *f)
 	else
 		putchar_buff((
 			f->flags & FLAG_UPPERCASE ? 'A' : 'a') + nb % f->base - 10, buf, f);
+	//if (f->flags & FLAG_SEP && (len - 1) % 3 == 0 && len != 1)
+	//	putstr_buff(f->lc->thousands_sep, buf, f);
 }

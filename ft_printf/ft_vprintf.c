@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:38:23 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/29 13:08:47 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/30 19:22:11 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@ int				ft_vprintf(const char *format, va_list ap)
 	char		buf[BUFFSIZE];
 	t_flags		f;
 
-	f.i = 0;
+	setlocale(LC_NUMERIC, "");
+	f.lc = localeconv();
 	f.idx = 0;
+	f.i = 0;
 	while (*format)
 	{
 		if (*format != '%')

@@ -1,6 +1,6 @@
 NAME	= libftprintf.a
 
-FILES = ft_printf.c ft_vprintf.c flag_parsing.c text_format.c integer_format.c float_format.c conversions.c utils.c
+FILES = ft_printf.c ft_vprintf.c flag_parsing.c text_format.c integer_format.c float_format.c conversions.c utils.c float_utils.c
 
 BFILES = 
 
@@ -18,7 +18,7 @@ CC		= gcc
 
 RM		= rm -f
 
-CFLAGS	= -Wall -I ${INCLUDES}
+CFLAGS	= -Wall  -I ${INCLUDES}
 
 .c.o:
 		${CC} ${CFLAGS} -c $< -o ${<:.c=.o}

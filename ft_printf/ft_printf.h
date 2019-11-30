@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:52:56 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/29 15:27:11 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/11/30 18:55:35 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdarg.h>
 # include <unistd.h>
 # include <float.h>
+# include <locale.h>
 # include "libft.h"
 # include "structs.h"
 
@@ -79,5 +80,11 @@ void	putchar_buff(char c, char *buf, t_flags *f);
 void	putstr_buff(char *s, char *buf, t_flags *f);
 
 void	putnbr_buff(size_t nb, int len, char *buf, t_flags *f);
+
+size_t	pwr(int base, int exp);
+
+int		valid_double(long double value, char *buf, t_flags *f);
+
+void	set_fflags(long double *value, t_float *fl, t_flags *f);
 
 #endif
