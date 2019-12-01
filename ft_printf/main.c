@@ -3,10 +3,26 @@
 
 int main()
 {
+    printf("%"); printf("\n");
+    ft_printf("%"); printf("\n");
+    printf("%5"); printf("\n");
+    ft_printf("%5"); printf("\n");
+    printf("%05"); printf("\n");
+    ft_printf("%05"); printf("\n");
+    printf("%-05"); printf("\n");
+    ft_printf("%-05"); printf("\n");
+    printf("%-5"); printf("\n");
+    ft_printf("%-5"); printf("\n");
+    return (0);
+}
+
+
+
+/*
+int main()
+{
 	printf("%");
 	printf("\n");
-	ft_printf(NULL);
-	ft_printf("\n");
 	printf("{%.*s}\n", -5, "42");
 	ft_printf("{%.*s}\n", -5, "42");
 	printf("  printf  %%o      >> %o\n", 123);
@@ -34,7 +50,7 @@ int main()
 
 	return (0);
 }
-
+*/
 
 
 /*
