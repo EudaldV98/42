@@ -1,12 +1,14 @@
 NAME	= libftprintf.a
 
+SRCDIR = srcs/
+
 FILES = ft_printf.c ft_vprintf.c flag_parsing.c text_format.c integer_format.c float_format.c conversions.c utils.c float_utils.c
 
 BFILES = 
 
 INCLUDES = includes
 
-SRCS	=  $(FILES)
+SRCS	=  $(addprefix $(SRCDIR), $(FILES))
 
 BSRCS	= $(BFILES)
 
@@ -18,13 +20,13 @@ CC		= gcc
 
 RM		= rm -f
 
-CFLAGS	= -Wall  -I ${INCLUDES}
+CFLAGS	= -Wall -Werror -Wextra -I ${INCLUDES}
 
 .c.o:
 		${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
 ${NAME}:	${OBJS}
-			make bonus -C libft
+			make -C libft
 			ar rc ${NAME} ${OBJS} libft/*.o
 			ranlib ${NAME}
 
@@ -35,6 +37,7 @@ bonus:	     ${BOBJS} ${NAME}
 			ranlib ${NAME}
 
 clean:
+			make clean -C libft
 			${RM} ${OBJS}
 
 fclean:		clean

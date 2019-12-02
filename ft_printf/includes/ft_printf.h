@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:52:56 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/22 12:28:28 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/12/02 16:11:51 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,47 +15,78 @@
 
 # include <stdarg.h>
 # include <unistd.h>
+# include <float.h>
+# include <locale.h>
 # include "libft.h"
+# include "structs.h"
 
-# define FLAG_ZEROPAD   (1U << 0U)
-# define FLAG_LEFT      (1U << 1U)
-# define FLAG_PLUS      (1U << 2U)
-# define FLAG_SPACE     (1U << 3U)
-# define FLAG_HASH      (1U << 4U)
-# define FLAG_UPPERCASE (1U << 5U)
-# define FLAG_CHAR      (1U << 6U)
-# define FLAG_SHORT     (1U << 7U)
-# define FLAG_LONG      (1U << 8U)
-# define FLAG_LONG_LONG (1U << 9U)
-# define FLAG_PRECISION (1U << 10U)
-# define FLAG_ADAPT_EXP (1U << 11U)
+# include <stdio.h>
 
-typedef struct	s_flags
-{
-	size_t			idx;
-	unsigned int	flags;
-	int				width;
-	int				precision;
-}				t_flags;
+# define DEFAULT_FLOAT_PRECISION 6
+# define BUFFSIZE 64
 
-void			ft_putchar(char c);
+int		ft_printf(const char *format, ...) __attribute__((format(printf,1,2)));
 
-int				is_digit(char c);
+int		ft_vprintf(const char *format, va_list ap);
 
-int				_atoi(const char **str);
+/*
+**		argument parsing
+*/
 
-int				ft_printf(const char *format, ...);
+void	eval_flags(const char **format, t_flags *f);
 
-int				ft_vprintf(const char *format, va_list ap);
+void	eval_width(const char **format, t_flags *f, va_list ap);
 
-void			eval_flags(const char **format, t_flags *f);
+void	eval_precision(const char **format, t_flags *f, va_list ap);
 
-void			eval_width(const char **format, t_flags *f, va_list ap);
+void	eval_length(const char **format, t_flags *f);
 
-void			eval_precision(const char **format, t_flags *f, va_list ap);
+/*
+** 		format types functions
+*/
 
-void			eval_length(const char **format, t_flags *f);
+void	format_character(char c, char *buf, t_flags *f);
 
-void			format_string(t_flags *f, va_list ap);
+void	format_string(t_flags *f, char *buf, va_list ap);
+
+void	format_integer(char fmt, char *buf, t_flags *f, va_list ap);
+
+void	format_number(size_t nb, int negative, char *buf, t_flags *f);
+
+void	format_float(long double value, char *buf, t_flags *f);
+
+void	format_address(char *buf, t_flags *f, va_list ap);
+
+void	write_ptr(t_flags *f, va_list ap);
+
+/*
+**		Data type conversions
+*/
+
+ssize_t	signed_cast(t_flags *f, va_list ap);
+
+size_t	unsigned_cast(t_flags *f, va_list ap);
+
+void	*pointer_cast(t_flags *f, va_list ap);
+
+/*
+**      help functions
+*/
+
+int		stoi(const char **str);
+
+int		nbrlen(size_t nb, int base);
+
+void	putchar_buff(char c, char *buf, t_flags *f);
+
+void	putstr_buff(char *s, char *buf, t_flags *f);
+
+void	putnbr_buff(size_t nb, int len, char *buf, t_flags *f);
+
+size_t	pwr(int base, int exp);
+
+int		valid_double(long double value, char *buf, t_flags *f);
+
+void	set_fflags(long double *value, t_float *fl, t_flags *f);
 
 #endif

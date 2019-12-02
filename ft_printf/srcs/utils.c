@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 16:22:38 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/30 19:28:13 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/12/02 17:51:02 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int			nbrlen(size_t nb, int base)
 	int		len;
 
 	len = 1;
-	while (nb > (base - 1))
+	while (nb > (size_t)(base - 1))
 	{
 		nb /= base;
 		len++;
@@ -63,7 +63,7 @@ void		putstr_buff(char *s, char *buf, t_flags *f)
 
 void		putnbr_buff(size_t nb, int len, char *buf, t_flags *f)
 {
-	if (nb > (f->base - 1))
+	if (nb > (size_t)(f->base - 1))
 		putnbr_buff(nb / f->base, len + 1, buf, f);
 	else if (f->flags & FLAG_PRECISION)
 	{
@@ -75,6 +75,6 @@ void		putnbr_buff(size_t nb, int len, char *buf, t_flags *f)
 	else
 		putchar_buff((
 			f->flags & FLAG_UPPERCASE ? 'A' : 'a') + nb % f->base - 10, buf, f);
-	//if (f->flags & FLAG_SEP && (len - 1) % 3 == 0 && len != 1)
-	//	putstr_buff(f->lc->thousands_sep, buf, f);
+	if (f->flags & FLAG_SEP && (len - 1) % 3 == 0 && len != 1)
+		putstr_buff(f->lc->thousands_sep, buf, f);
 }

@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 11:51:44 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/30 19:03:30 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/12/02 15:46:44 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,13 @@ void			format_string(t_flags *f, char *buf, va_list ap)
 
 void			format_character(char c, char *buf, t_flags *f)
 {
+	char pad;
+
+	pad = f->flags & FLAG_ZEROPAD ? '0' : 32;
 	if (!(f->flags & FLAG_LEFT))
 	{
 		while (--(f->width) > 0)
-			putchar_buff(32, buf, f);
+			putchar_buff(pad, buf, f);
 	}
 	putchar_buff(c, buf, f);
 	if (f->flags & FLAG_LEFT)

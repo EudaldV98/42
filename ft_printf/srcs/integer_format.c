@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 15:41:58 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/30 19:28:13 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/12/02 17:45:16 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void		set_flags(size_t nb, int negative, int *len, t_flags *f)
 	}
 }
 
-static void		add_prefix(int len, int negative, char *buf, t_flags *f)
+static void		add_prefix(int negative, char *buf, t_flags *f)
 {
 	if (negative || f->flags & (FLAG_PLUS | FLAG_SPACE))
 	{
@@ -57,13 +57,11 @@ static void		add_prefix(int len, int negative, char *buf, t_flags *f)
 
 static void		add_padding(int len, char *buf, t_flags *f)
 {
+	char pad;
+
+	pad = f->flags & FLAG_ZEROPAD ? '0' : 32;
 	while (len++ < f->width)
-	{
-		if (f->flags & FLAG_ZEROPAD)
-			putchar_buff('0', buf, f);
-		else
-			putchar_buff(32, buf, f);
-	}
+		putchar_buff(pad, buf, f);
 }
 
 void			format_number(size_t nb, int negative, char *buf, t_flags *f)
@@ -74,11 +72,11 @@ void			format_number(size_t nb, int negative, char *buf, t_flags *f)
 	if (!(f->flags & FLAG_LEFT))
 	{
 		if (f->flags & FLAG_ZEROPAD)
-			add_prefix(len, negative, buf, f);
+			add_prefix(negative, buf, f);
 		add_padding(len, buf, f);
 	}
 	if (!(f->flags & FLAG_ZEROPAD))
-		add_prefix(len, negative, buf, f);
+		add_prefix(negative, buf, f);
 	if (nb || !(f->flags & FLAG_PRECISION) || f->precision != 0)
 		putnbr_buff(nb, 1, buf, f);
 	if (f->flags & FLAG_LEFT)

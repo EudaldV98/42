@@ -6,28 +6,28 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 15:06:15 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/11/30 19:22:13 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/12/02 17:43:41 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-# define FLAG_ZEROPAD   (1U << 0U)
-# define FLAG_LEFT      (1U << 1U)
-# define FLAG_PLUS      (1U << 2U)
-# define FLAG_SPACE     (1U << 3U)
-# define FLAG_HASH      (1U << 4U)
-# define FLAG_UPPERCASE (1U << 5U)
-# define FLAG_CHAR      (1U << 6U)
-# define FLAG_SHORT     (1U << 7U)
-# define FLAG_LONG      (1U << 8U)
-# define FLAG_LONG_LONG (1U << 9U)
-# define FLAG_PRECISION (1U << 10U)
-# define FLAG_ADAPT_EXP (1U << 11U)
-# define FLAG_LONG_DBL	(1U << 12U)
-# define FLAG_HEX_ADDR	(1U << 13U)
-# define FLAG_SEP		(1U << 14U)
+# define FLAG_ZEROPAD   1
+# define FLAG_LEFT      2
+# define FLAG_PLUS     	4
+# define FLAG_SPACE     8
+# define FLAG_HASH      16
+# define FLAG_UPPERCASE 32
+# define FLAG_CHAR      64
+# define FLAG_SHORT     128
+# define FLAG_LONG      256
+# define FLAG_LONG_LONG 512
+# define FLAG_PRECISION 1024
+# define FLAG_ADAPT_EXP 2048
+# define FLAG_LONG_DBL	4096
+# define FLAG_HEX_ADDR	8192
+# define FLAG_SEP		16384
 
 typedef struct	s_flags
 {
