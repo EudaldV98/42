@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 14:11:18 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/10/16 20:58:42 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/12/02 21:44:45 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int		ft_atoi(const char *str)
 {
 	long	nb;
-	int	neg;
-	int	ovf;
+	int		neg;
+	int		ovf;
 
 	nb = 0;
 	neg = 1;

@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 15:06:15 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/12/02 17:43:41 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/12/02 19:46:42 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,9 @@
 # define FLAG_LONG      256
 # define FLAG_LONG_LONG 512
 # define FLAG_PRECISION 1024
-# define FLAG_ADAPT_EXP 2048
-# define FLAG_LONG_DBL	4096
-# define FLAG_HEX_ADDR	8192
-# define FLAG_SEP		16384
+# define FLAG_LONG_DBL	2048
+# define FLAG_HEX_ADDR	4096
+# define FLAG_SEP		8192
 
 typedef struct	s_flags
 {

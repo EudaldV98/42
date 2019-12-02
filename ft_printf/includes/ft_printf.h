@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:52:56 by mgarcia-          #+#    #+#             */
-/*   Updated: 2019/12/02 16:11:51 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2019/12/02 21:14:39 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 # include <locale.h>
 # include "libft.h"
 # include "structs.h"
-
-# include <stdio.h>
 
 # define DEFAULT_FLOAT_PRECISION 6
 # define BUFFSIZE 64
