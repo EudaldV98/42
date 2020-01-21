@@ -51,7 +51,7 @@ int	    main()
     DrawCircle(mlx_ptr, win_ptr, 280, 140, 5, 360);
     DrawCircle(mlx_ptr, win_ptr, 320, 140, 5, 360);
     //	regular sonrisa
-    for (i = 0; i < 40; i++)
+    /*for (i = 0; i < 40; i++)
 	mlx_pixel_put(mlx_ptr, win_ptr, 280 + i, 170, 0xffffff);
     for (i = 0; i < 10; i++)
 	mlx_pixel_put(mlx_ptr, win_ptr, 280 - i, 170 - i, 0xffffff);
@@ -60,13 +60,13 @@ int	    main()
     for (i = 0; i < 10; i++)
 	mlx_pixel_put(mlx_ptr, win_ptr, 279 - i, 170 - i, 0xffffff);
     for (i = 0; i < 10; i++)
-	mlx_pixel_put(mlx_ptr, win_ptr, 321 + i, 170 - i, 0xffffff);
+	mlx_pixel_put(mlx_ptr, win_ptr, 321 + i, 170 - i, 0xffffff);*/
     
     //	colmillos
-    for (i = 0; i < 40; i++)
+    /*for (i = 0; i < 40; i++)
 	mlx_pixel_put(mlx_ptr, win_ptr, 280, 170 + i, 0xffffff);
     for (i = 0; i < 40; i++)
-	mlx_pixel_put(mlx_ptr, win_ptr, 320, 170 + i, 0xffffff);
+	mlx_pixel_put(mlx_ptr, win_ptr, 320, 170 + i, 0xffffff);*/
     
     //	falsa sonrisa
     /*for (i = 0; i < 21; i++)
@@ -79,7 +79,7 @@ int	    main()
 	mlx_pixel_put(mlx_ptr, win_ptr, 321 - i, 170 + i, 0xffffff);*/
 
     //sonrisa profident
-    //DrawCircle(mlx_ptr, win_ptr, 300, 160, 25, 180);
+    DrawCircle(mlx_ptr, win_ptr, 300, 160, 25, 180);
 
     mlx_loop(mlx_ptr);
 
