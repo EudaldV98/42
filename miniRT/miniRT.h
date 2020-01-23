@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 08:42:41 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/01/22 14:26:14 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/01/23 09:15:36 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct	s_scene
 	t_frame		fr;
 	double		al;
 	int			acl;
-	t_light		l;
+	t_light		*l;
 }				t_scn;
 
 t_p3			normalize(t_p3 p);
