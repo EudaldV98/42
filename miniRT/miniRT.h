@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 08:42:41 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/01/23 09:15:36 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/01/27 11:49:35 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@
 #include "figures.h"
 #include <stdlib.h>
 #include <math.h>
+
+#define SP (1 << 1)
+#define PL (1 << 2)
+#define SQ (1 << 3)
+#define CY (1 << 4)
+#define TR (1 << 5)
+
 
 /*
 typedef struct	s_p3
@@ -59,7 +66,8 @@ t_p3			normalize(t_p3 p);
 
 typedef struct	s_lst
 {
-	union figures	fig;
+	int				flag;
+	union			figures	fig;
 	struct s_lst	*next;
 }				t_lst;
 
