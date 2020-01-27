@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 11:31:29 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/01/27 11:49:29 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/01/27 15:19:33 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,6 @@ void		parse_camera(t_scn *data, char **str)
 {
 	next(str);
 	data->O.x = stof(str);
-	printf("\ndata->O.x == %.1f\n", data->O.x);
 	comma(str);
 	data->O.y = stof(str);
 	comma(str);
@@ -192,12 +191,14 @@ void		parse_cylinder(t_scn *data, t_lst **elem, t_lst **begin, char **str)
 	lst->fig.cy.color |= stoi(str) << 0;
 }
 
-void		parse_light(t_light **l, char **str)
+void		parse_light(t_scn **data, char **str)
 {
 	t_light	*elem;
 	t_light	*list;
+	t_light *begin;
 
-	list = *l;
+	begin = (*data)->l;
+	list = (*data)->l;
 	if (!(elem = malloc(sizeof(t_light))))
 	{
 		printf("goorbai\n");
@@ -211,30 +212,28 @@ void		parse_light(t_light **l, char **str)
 		list->next = elem;
 	}
 	else
+	{
 		list = elem;
+		begin = elem;
+	}
 	
 	list->color = 0;
 	next(str);
-	printf("%c ", **str);
 	list->o.x = stof(str);
 	comma(str);
-	printf("%c ", **str);
 	list->o.y = stof(str);
 	comma(str);
-	printf("%c ", **str);
 	list->o.z = stof(str);
 	next(str);
-	printf("%c ", **str);
 	list->br = stof(str);
 	next(str);
-	printf("%c ", **str);
 	list->color |= stoi(str) << 16;
 	comma(str);
-	printf("%c ", **str);
 	list->color |= stoi(str) << 8;
 	comma(str);
-	printf("%c ", **str);
 	list->color |= stoi(str) << 0;
+
+	(*data)->l = begin;
 }
 
 void		parse_sphere(t_scn *data, t_lst **elem, t_lst **begin, char **str)
@@ -255,7 +254,7 @@ void		parse_sphere(t_scn *data, t_lst **elem, t_lst **begin, char **str)
 	comma(str);
 	lst->fig.sp.c.z = stof(str);
 	next(str);
-	lst->fig.sp.r = stof(str);
+	lst->fig.sp.r = stof(str) / 2;
 	next(str);
 	lst->fig.sp.color |= stoi(str) << 16;
 	comma(str);
@@ -291,11 +290,11 @@ void		parse_square(t_scn *data, t_lst **elem, t_lst **begin, char **str)
 	next(str);
 	lst->fig.sq.size = stof(str);
 	next(str);
-	lst->fig.sp.color |= stoi(str) << 16;
+	lst->fig.sq.color |= stoi(str) << 16;
 	comma(str);
-	lst->fig.sp.color |= stoi(str) << 8;
+	lst->fig.sq.color |= stoi(str) << 8;
 	comma(str);
-	lst->fig.sp.color |= stoi(str) << 0;
+	lst->fig.sq.color |= stoi(str) << 0;
 }
 
 void		parse_plane(t_scn *data, t_lst **elem, t_lst **begin, char **str)
@@ -334,24 +333,7 @@ void		parse_triangle(t_scn *data, t_lst *lst, char *str)
 	a
 }
 */
-/*
-void		parse_c(t_scn *data, t_lst **lst, char **str)
-{
-	if (**str == 32 || **str == 9)
-		parse_camera(data, str);
-	else if (**str == 'y' && *((*str)++))
-		parse_cylinder(data, lst, str);
-}
-*/
-/*
-void		parse_s(t_scn *data, t_lst **lst, char **str)
-{
-	if (**str == 'p' && *((*str)++))
-		parse_sphere(data, lst, str);
-	else if (**str == 'q' && *((*str)++))
-		parse_square(data, lst, str);
-}
-*/
+
 void	parse_elems(t_scn *data, t_lst **lst, t_lst **begin, char *str)
 {
 	while (*str)
@@ -365,13 +347,16 @@ void	parse_elems(t_scn *data, t_lst **lst, t_lst **begin, char *str)
 		else if (*str == 'c' && *(str + 1) == 'y' && *(str++) && *(str++))
 			parse_cylinder(data, lst, begin, &str);
 		else if (*str == 'l' && (*(str + 1) == 32 || *(str + 1) == 9) && *(str++))
-			parse_light(&data->l, &str);
+			parse_light(&data, &str);
 		else if (*str == 's' && *(str + 1) == 'p' && *(str++) && *(str++))
 			parse_sphere(data, lst, begin, &str);
 		else if (*str == 's' && *(str + 1) == 'q' && *(str++) && *(str++))
 			parse_square(data, lst, begin, &str);
 		else if (*str == 'p' && *(str + 1) == 'l' && *(str++) && *(str++))
+		{
+			printf("Holaktalsoy un plano jajajajaj\n");
 			parse_plane(data, lst, begin, &str);
+		}
 		//else if (*str == 't')
 		//	parse_triangle(data, lst, str);
 		str++;
@@ -395,25 +380,65 @@ void	parse_scene(t_scn *data, t_lst *lst, int ac, char **av)
 	//printf("%s\n", str);
 
 	parse_elems(data, &lst, &begin, str);
-	lst = begin;
 
 	printf("%d, %d\n", data->xres, data->yres);
 	printf("ambient light is %.2f, and color is %d\n", data->al, data->acl);
 	printf("coords of camera origin are %.1f, %.1f, %.1f. Normalized vector coords are %.1f, %.1f, %.1f. Fov is %d\n", data->O.x, data->O.y, data->O.z, data->nv.x, data->nv.y, data->nv.z, data->fov);
 	
-	//printf("light crds are %.1f, %.1f, %.1f, bright is %.1f, and color is %d\n", data->l->o.x, data->l->o.y, data->l->o.z, data->l->br, data->l->color);
+	// AQUI PETAAAA
+
+	//data->l = data->begin;
+
+	printf("light crds are %.1f, %.1f, %.1f, bright is %.1f, and color is %d\n", data->l->o.x, data->l->o.y, data->l->o.z, data->l->br, data->l->color);
+	
+	//					^
+	//	SISI AHI MISMO ^|^
+	//					|
+
+	
+	lst = begin;
 	while (lst->next)
 		if (lst->flag & PL)
 			break;
 		else
 			lst = lst->next;
-
+	
 	printf("plane crds are %.1f, %.1f, %.1f, nv is %.1f, %.1f, %.1f, and color is %d\n",
 			lst->fig.pl.p.x, lst->fig.pl.p.y, lst->fig.pl.p.z, lst->fig.pl.nv.x, lst->fig.pl.nv.y, lst->fig.pl.nv.z, lst->fig.pl.color);
 
-	
+
+
+	lst = begin;
+	while (lst->next)
+		if (lst->flag & SP)
+			break;
+		else
+			lst = lst->next;
+
+	printf("sphere crds are %.1f, %.1f, %.1f, radius is %.5f and color is %d\n", lst->fig.sp.c.x,
+			lst->fig.sp.c.y, lst->fig.sp.c.z, lst->fig.sp.r, lst->fig.sp.color);
+
+	lst = begin;
+	while (lst->next)
+		if (lst->flag & SQ)
+			break;
+		else
+			lst = lst->next;
+
+	printf("square crds are %.1f, %.1f, %.1f, nv is %.1f, %.1f, %.1f, size is %.2f and color is %d\n", lst->fig.sq.c.x, lst->fig.sq.c.y, lst->fig.sq.c.z, lst->fig.sq.nv.x, lst->fig.sq.nv.y, lst->fig.sq.nv.z, lst->fig.sq.size, lst->fig.sq.color);
+
+
+
+	lst = begin;
+	while (lst->next)
+		if (lst->flag & CY)
+			break;
+		else
+			lst = lst->next;
+
 	printf("cylinder c crds are %.1f, %.1f, %.1f. nv crds are %.1f, %.1f, %.1f. Radius is %.1f. Height is %.1f. Color is %d", lst->fig.cy.c.x, lst->fig.cy.c.y, lst->fig.cy.c.z, lst->fig.cy.nv.x, lst->fig.cy.nv.y, lst->fig.cy.nv.z, lst->fig.cy.r, lst->fig.cy.h, lst->fig.cy.color);
 	printf("");
+
 
 }
 
