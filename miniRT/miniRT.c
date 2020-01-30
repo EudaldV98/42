@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 08:39:55 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/01/21 11:52:07 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/01/30 16:56:20 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,35 @@ void		set_camera(t_scn *data)
 	data->fr.ulcorner.z = 1;
 }
 
-void		define_line(int i, int j, double xratio, double yratio, t_scn *data)
+t_p3		trace_ray(int i, int j, t_scn *data)
 {
 	t_p3	p;
 
 	p.z = data->fr.ulcorner.z;
-	p.x = xratio * i + data->fr.ulcorner.x;
-	p.y = yratio * j - data->fr.ulcorner.y;
+	p.x = data->fr.x / data->xres * i + data->fr.ulcorner.x;
+	p.y = data->fr.y / data->yres * j - data->fr.ulcorner.y;
 	data->nv = normalize(p);
+	return (p);
 }
 
-void		sphere_intersection(void *mlx_ptr, void *win_ptr, int i, int j, t_scn data)
+void		sphere_intersection(void *mlx_ptr, void *win_ptr, int i, int j, t_p3 d, t_scn data, t_lst *lst)
 {
 	//return type int, 1 si corta loksea y 0 si no corta ni bakalaoo
 	double	disc;
+	double	k1;
+	double 	k2;
+	double	k3;
+	t_p3	oc;
 
-	disc = pow(scl_product(data.nv, vec_substract(data.O, data.sphere1.c)), 2) -
-		(scl_product(vec_substract(data.O, data.sphere1.c), vec_substract(data.O, data.sphere1.c)) - pow(data.sphere1.r, 2));
-	
+	oc = vec_substract(data.O, lst->fig.sp.c);
+
+	k1 = dot(d, d);
+	k2 = 2 * dot(data.nv, oc);
+	k3 = dot(oc, oc) - lst->fig.sp.r * lst->fig.sp.r;
+
+	disc = k2 * k2 - (dot(lst->fig.sp.c, lst->fig.sp.c) - lst->fig.sp.r * lst->fig.sp.r);
+	//disc = k2*k2 - (4*k1*k3);
+
 	//aqui no se pinta eh, asi que a ver si vamos quitando ya las mierdas estas hombre
 	
 	if (disc < 0)
@@ -52,30 +63,33 @@ void		sphere_intersection(void *mlx_ptr, void *win_ptr, int i, int j, t_scn data
 		mlx_pixel_put(mlx_ptr, win_ptr, i, j, 0xff0000);
 }
 
-void		render_scene(void *mlx_ptr, void *win_ptr, t_scn data)
+void		render_scene(void *mlx_ptr, void *win_ptr, t_scn data, t_lst *lst)
 {
 	int 	i = 1;
 	int 	j = 1;
-	double	xratio;
-	double	yratio;
+	int		color;
+	t_p3	d;
 
-	//parse_scene(&data);
+	color = 0x000000;
 	set_camera(&data);
-	
-	xratio = data.fr.x / data.xres;
-	yratio = data.fr.y / data.yres;
 
 	while (j < data.yres)
 	{
-		i = 0;
+		i = 1;
 		while (i < data.xres)
 		{
-			define_line(i, j, xratio, yratio, &data);
-			// Test intersection w/ all the elments of the scene
-			//pick the closer and calculate the color
-			sphere_intersection(mlx_ptr, win_ptr, i, j, data);
+			d = trace_ray(i, j, &data);
+			
+			//Test intersection w/ all the elments of the scene
+			
+			//pick the closest and calculate the color
+			
+			sphere_intersection(mlx_ptr, win_ptr, i, j, d, data, lst);
+			
 			//calculate_color
-			//putpiksel klk loko
+			
+			//mlx_pixel_put(mlx_ptr, win_ptr, i, j, color);
+
 			i++;
 		}
 		j++;
@@ -87,15 +101,26 @@ int main(int ac, char **av)
 	void	*mlx_ptr;
 	void	*win_ptr;
 	t_scn	data;
-	t_lst	lst;
+	t_lst	*lst;
+	t_lst	*begin;
+
+	lst = NULL;
+	data.l = NULL;
 
 	parse_scene(&data, &lst, ac, av);
-	//data.xres = 800;
-	//data.yres = 800;
+
+	/*printf("%d, %d\n", data.xres, data.yres);
+	printf("ambient light is %.2f, and color is %d\n", data.al, data.acl);
+	
+	printf("sphere crds are %.1f, %.1f, %.1f, radius is %.5f and color is %d\n", lst->fig.sp.c.x,
+			lst->fig.sp.c.y, lst->fig.sp.c.z, lst->fig.sp.r, lst->fig.sp.color);
+*/
 	mlx_ptr = mlx_init();
 	win_ptr = mlx_new_window(mlx_ptr, data.xres, data.yres, "miniRT v1");
 
-	render_scene(mlx_ptr, win_ptr, data);
+	render_scene(mlx_ptr, win_ptr, data, lst);
+
+	mlx_hook(win_ptr, 17, 1L << 17, exit, &data);
 
 	mlx_loop(mlx_ptr);
 

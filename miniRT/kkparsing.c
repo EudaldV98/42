@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 11:31:29 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/01/30 12:58:06 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/01/30 09:56:29 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void		comma(char **str)
 	if (**str != ',')
 	{
 		ft_putstr("Scene Error\naprende a hacer una escena en condiciones gilipollas\n");
+		printf("\nCuando ha hecho pum *str era %s\n", *str);
 		exit(0);
 	}	
 	(*str)++;
@@ -362,7 +363,7 @@ void	parse_elems(t_scn *data, t_lst **lst, t_lst **begin, char *str)
 	}
 }
 
-void	parse_scene(t_scn *data, t_lst **lst, int ac, char **av)
+void	parse_scene(t_scn *data, t_lst *lst, int ac, char **av)
 {
 	t_lst	*begin;
 	char	*str;
@@ -376,6 +377,78 @@ void	parse_scene(t_scn *data, t_lst **lst, int ac, char **av)
 	str = (char *)malloc(sizeof(char) * (BUFSIZE + 1));
 	fd = open(av[1], 0);
 	str = readfile(str, fd);
-	parse_elems(data, lst, &begin, str);
-	*lst = begin;
+	//printf("%s\n", str);
+
+	parse_elems(data, &lst, &begin, str);
+
+	printf("%d, %d\n", data->xres, data->yres);
+	printf("ambient light is %.2f, and color is %d\n", data->al, data->acl);
+	printf("coords of camera origin are %.1f, %.1f, %.1f. Normalized vector coords are %.1f, %.1f, %.1f. Fov is %d\n", data->O.x, data->O.y, data->O.z, data->nv.x, data->nv.y, data->nv.z, data->fov);
+	
+	// AQUI PETAAAA
+
+	//data->l = data->begin;
+
+	printf("light crds are %.1f, %.1f, %.1f, bright is %.1f, and color is %d\n", data->l->o.x, data->l->o.y, data->l->o.z, data->l->br, data->l->color);
+	
+	//					^
+	//	SISI AHI MISMO ^|^
+	//					|
+
+	
+	lst = begin;
+	while (lst->next)
+		if (lst->flag & PL)
+			break;
+		else
+			lst = lst->next;
+	
+	printf("plane crds are %.1f, %.1f, %.1f, nv is %.1f, %.1f, %.1f, and color is %d\n",
+			lst->fig.pl.p.x, lst->fig.pl.p.y, lst->fig.pl.p.z, lst->fig.pl.nv.x, lst->fig.pl.nv.y, lst->fig.pl.nv.z, lst->fig.pl.color);
+
+
+
+	lst = begin;
+	while (lst->next)
+		if (lst->flag & SP)
+			break;
+		else
+			lst = lst->next;
+
+	printf("sphere crds are %.1f, %.1f, %.1f, radius is %.5f and color is %d\n", lst->fig.sp.c.x,
+			lst->fig.sp.c.y, lst->fig.sp.c.z, lst->fig.sp.r, lst->fig.sp.color);
+
+	lst = begin;
+	while (lst->next)
+		if (lst->flag & SQ)
+			break;
+		else
+			lst = lst->next;
+
+	printf("square crds are %.1f, %.1f, %.1f, nv is %.1f, %.1f, %.1f, size is %.2f and color is %d\n", lst->fig.sq.c.x, lst->fig.sq.c.y, lst->fig.sq.c.z, lst->fig.sq.nv.x, lst->fig.sq.nv.y, lst->fig.sq.nv.z, lst->fig.sq.size, lst->fig.sq.color);
+
+
+
+	lst = begin;
+	while (lst->next)
+		if (lst->flag & CY)
+			break;
+		else
+			lst = lst->next;
+
+	printf("cylinder c crds are %.1f, %.1f, %.1f. nv crds are %.1f, %.1f, %.1f. Radius is %.1f. Height is %.1f. Color is %d", lst->fig.cy.c.x, lst->fig.cy.c.y, lst->fig.cy.c.z, lst->fig.cy.nv.x, lst->fig.cy.nv.y, lst->fig.cy.nv.z, lst->fig.cy.r, lst->fig.cy.h, lst->fig.cy.color);
+	printf("");
+
+
+}
+
+int main(int ac, char **av)
+{
+	t_scn	data;
+	t_lst	*lst;
+
+	lst = NULL;
+	data.l = NULL;
+	parse_scene(&data, lst, ac, av);
+	return (0);
 }

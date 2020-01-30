@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 08:42:41 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/01/27 15:19:33 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/01/30 12:58:07 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,6 @@ t_p3			vec_add(t_p3 a, t_p3 b);
 
 t_p3			vec_substract(t_p3 a, t_p3 b);
 
-void			parse_scene(t_scn *data, t_lst *lst, int ac, char **av);
+void			parse_scene(t_scn *data, t_lst **lst, int ac, char **av);
 
 #endif

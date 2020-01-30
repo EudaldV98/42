@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 13:29:36 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/01/20 14:22:20 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/01/30 16:56:21 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_p3		normalize(t_p3 p)
 	return (nv);
 }
 
-double		scl_product(t_p3 a, t_p3 b)
+double		dot(t_p3 a, t_p3 b)
 {
 	return (a.x * b.x + a.y * b.y + a.z * b.z);
 }
