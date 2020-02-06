@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 08:39:55 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/01/30 16:56:20 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/02/04 16:43:45 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,18 @@ void		set_camera(t_scn *data)
 	data->fr.ulcorner.z = 1;
 }
 
-t_p3		trace_ray(int i, int j, t_scn *data)
+t_p3		trace_ray(int i, int j, t_scn *data, double xratio, double yratio)
 {
 	t_p3	p;
 
 	p.z = data->fr.ulcorner.z;
-	p.x = data->fr.x / data->xres * i + data->fr.ulcorner.x;
-	p.y = data->fr.y / data->yres * j - data->fr.ulcorner.y;
+	p.x = xratio * i + data->fr.ulcorner.x;
+	p.y = yratio * j - data->fr.ulcorner.y;
 	data->nv = normalize(p);
-	return (p);
+	//return (p);
 }
 
-void		sphere_intersection(void *mlx_ptr, void *win_ptr, int i, int j, t_p3 d, t_scn data, t_lst *lst)
+void		sphere_intersection(void *mlx_ptr, void *win_ptr, int i, int j, /*t_p3 d, */t_scn data, t_lst *lst)
 {
 	//return type int, 1 si corta loksea y 0 si no corta ni bakalaoo
 	double	disc;
@@ -44,13 +44,17 @@ void		sphere_intersection(void *mlx_ptr, void *win_ptr, int i, int j, t_p3 d, t_
 	double	k3;
 	t_p3	oc;
 
-	oc = vec_substract(data.O, lst->fig.sp.c);
+	//oc = vec_substract(data.O, lst->fig.sp.c/*, data.O*/);
+	oc.x = data.O.x + lst->fig.sp.c.x;
+	oc.y = data.O.y + lst->fig.sp.c.y;
+	oc.z = data.O.z + lst->fig.sp.c.z;
 
-	k1 = dot(d, d);
-	k2 = 2 * dot(data.nv, oc);
-	k3 = dot(oc, oc) - lst->fig.sp.r * lst->fig.sp.r;
 
-	disc = k2 * k2 - (dot(lst->fig.sp.c, lst->fig.sp.c) - lst->fig.sp.r * lst->fig.sp.r);
+	/*k1 = dot(d, d);
+	k2 = dot(data.nv, oc);
+	k3 = dot(oc, oc) - lst->fig.sp.r * lst->fig.sp.r;*/
+
+	disc =  dot(data.nv, oc) * dot(data.nv, oc) - (dot(oc, oc) - (lst->fig.sp.r * lst->fig.sp.r));
 	//disc = k2*k2 - (4*k1*k3);
 
 	//aqui no se pinta eh, asi que a ver si vamos quitando ya las mierdas estas hombre
@@ -65,26 +69,35 @@ void		sphere_intersection(void *mlx_ptr, void *win_ptr, int i, int j, t_p3 d, t_
 
 void		render_scene(void *mlx_ptr, void *win_ptr, t_scn data, t_lst *lst)
 {
-	int 	i = 1;
-	int 	j = 1;
+	int 	i;
+	int 	j;
 	int		color;
 	t_p3	d;
+	
+	double xratio;
+	double yratio;
+
 
 	color = 0x000000;
 	set_camera(&data);
 
+	xratio = data.fr.x / data.xres;
+	yratio = data.fr.y / data.yres;
+
+
+	j = 0;
 	while (j < data.yres)
 	{
-		i = 1;
+		i = 0;
 		while (i < data.xres)
 		{
-			d = trace_ray(i, j, &data);
+			/*d = */trace_ray(i, j, &data, xratio, yratio);
 			
 			//Test intersection w/ all the elments of the scene
 			
 			//pick the closest and calculate the color
 			
-			sphere_intersection(mlx_ptr, win_ptr, i, j, d, data, lst);
+			sphere_intersection(mlx_ptr, win_ptr, i, j, /*d, */data, lst);
 			
 			//calculate_color
 			
