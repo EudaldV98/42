@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 08:42:41 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/01/30 12:58:07 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/02/06 11:02:57 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ typedef struct	s_lst
 	struct s_lst	*next;
 }				t_lst;
 
-double 			scl_product(t_p3 a, t_p3 b);
+double 			dot(t_p3 a, t_p3 b);
 
 t_p3			vec_add(t_p3 a, t_p3 b);
 
