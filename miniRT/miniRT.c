@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 08:39:55 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/02/06 11:02:56 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/02/06 15:48:08 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,10 @@ void		render_scene(void *mlx_ptr, void *win_ptr, t_scn data, t_lst *lst)
 	int 		i;
 	int 		j;
 	int			color;
+
 	t_sphere	*closest;
-	double		jeje = -1;
 	double		cerkita =  -1;
+
 	int			background;
 	t_p3		d;
 
@@ -104,22 +105,10 @@ void		render_scene(void *mlx_ptr, void *win_ptr, t_scn data, t_lst *lst)
 			lst = alst;	
 			while (lst->next)
 			{
-				if (!(lst->flag & SP))
-					lst = lst->next;
-				jeje = sphere_intersection(mlx_ptr, win_ptr, i, j, d, data, lst);
-				if (cerkita == -1)
-				{
-					closest = &lst->fig.sp;
-					cerkita = jeje;
-				}
-				else if (jeje < cerkita)
-				{
-					closest = &lst->fig.sp;
-					cerkita = jeje;
-				}
-				lst = lst->next;
+
+				// mannnnana vas a hacer el mejor miniRT del mundo
+
 			}
-			//printf("cerkita es %f\n", cerkita);
 			if (cerkita > 1)
 				mlx_pixel_put(mlx_ptr, win_ptr, i, j, closest->color);
 			else
