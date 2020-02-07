@@ -6,11 +6,26 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 13:29:36 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/02/06 09:49:29 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/02/07 12:50:07 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+t_p3		scal_x_vec(double n, t_p3 p)
+{
+	t_p3	v;
+
+	v.x = n * p.x;
+	v.y = n * p.y;
+	v.z = n * p.z;
+	return (v);
+}
+
+double		mod(t_p3 v)
+{
+	return (sqrt(dot(v, v)));
+}
 
 t_p3		normalize(t_p3 p)
 {

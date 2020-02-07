@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 11:31:29 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/01/30 12:58:06 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/02/07 11:01:07 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ void		parse_cylinder(t_scn *data, t_lst **elem, t_lst **begin, char **str)
 		lst = lst->next;
 	lst->flag = 0;
 	lst->flag |= CY;
-	lst->fig.cy.color = 0;
+	lst->color = 0;
 	next(str);
 	lst->fig.cy.c.x = stof(str);
 	comma(str);
@@ -183,11 +183,11 @@ void		parse_cylinder(t_scn *data, t_lst **elem, t_lst **begin, char **str)
 	next(str);
 	lst->fig.cy.h = stof(str);
 	next(str);
-	lst->fig.cy.color |= stoi(str) << 16;
+	lst->color |= stoi(str) << 16;
 	comma(str);
-	lst->fig.cy.color |= stoi(str) << 8;
+	lst->color |= stoi(str) << 8;
 	comma(str);
-	lst->fig.cy.color |= stoi(str) << 0;
+	lst->color |= stoi(str) << 0;
 }
 
 void		parse_light(t_scn **data, char **str)
@@ -245,7 +245,7 @@ void		parse_sphere(t_scn *data, t_lst **elem, t_lst **begin, char **str)
 		lst = lst->next;
 	lst->flag = 0;
 	lst->flag |= SP;
-	lst->fig.sp.color = 0;
+	lst->color = 0;
 	next(str);
 	lst->fig.sp.c.x = stof(str);
 	comma(str);
@@ -255,11 +255,11 @@ void		parse_sphere(t_scn *data, t_lst **elem, t_lst **begin, char **str)
 	next(str);
 	lst->fig.sp.r = stof(str) / 2;
 	next(str);
-	lst->fig.sp.color |= stoi(str) << 16;
+	lst->color |= stoi(str) << 16;
 	comma(str);
-	lst->fig.sp.color |= stoi(str) << 8;
+	lst->color |= stoi(str) << 8;
 	comma(str);
-	lst->fig.sp.color |= stoi(str) << 0;
+	lst->color |= stoi(str) << 0;
 
 }
 
@@ -271,7 +271,7 @@ void		parse_square(t_scn *data, t_lst **elem, t_lst **begin, char **str)
 	lst = *elem;
 	while (lst->next)
 		lst = lst->next;
-	lst->fig.sq.color = 0;
+	lst->color = 0;
 	lst->flag = 0;
 	lst->flag |= SQ;
 	next(str);
@@ -289,11 +289,11 @@ void		parse_square(t_scn *data, t_lst **elem, t_lst **begin, char **str)
 	next(str);
 	lst->fig.sq.size = stof(str);
 	next(str);
-	lst->fig.sq.color |= stoi(str) << 16;
+	lst->color |= stoi(str) << 16;
 	comma(str);
-	lst->fig.sq.color |= stoi(str) << 8;
+	lst->color |= stoi(str) << 8;
 	comma(str);
-	lst->fig.sq.color |= stoi(str) << 0;
+	lst->color |= stoi(str) << 0;
 }
 
 void		parse_plane(t_scn *data, t_lst **elem, t_lst **begin, char **str)
@@ -304,7 +304,7 @@ void		parse_plane(t_scn *data, t_lst **elem, t_lst **begin, char **str)
 	lst = *elem;
 	while (lst->next)
 		lst = lst->next;
-	lst->fig.pl.color = 0;
+	lst->color = 0;
 	lst->flag = 0;
 	lst->flag |= PL;
 	next(str);
@@ -320,11 +320,11 @@ void		parse_plane(t_scn *data, t_lst **elem, t_lst **begin, char **str)
 	comma(str);
 	lst->fig.pl.nv.z = stof(str);
 	next(str);
-	lst->fig.pl.color |= stoi(str) << 16;
+	lst->color |= stoi(str) << 16;
 	comma(str);
-	lst->fig.pl.color |= stoi(str) << 8;
+	lst->color |= stoi(str) << 8;
 	comma(str);
-	lst->fig.pl.color |= stoi(str) << 0;
+	lst->color |= stoi(str) << 0;
 }
 /*
 void		parse_triangle(t_scn *data, t_lst *lst, char *str)

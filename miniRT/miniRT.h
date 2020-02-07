@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 08:42:41 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/02/06 11:02:57 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/02/07 12:50:09 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct	s_scene
 {
 	int			xres;
 	int			yres;
+	int			background;
 	t_p3		O;
 	t_p3		nv;
 	char		fov;
@@ -66,12 +67,17 @@ t_p3			normalize(t_p3 p);
 
 typedef struct	s_lst
 {
+	int				color;
 	int				flag;
-	union			figures	fig;
+	union figures	fig;
 	struct s_lst	*next;
 }				t_lst;
 
 double 			dot(t_p3 a, t_p3 b);
+
+double			mod(t_p3 v);
+
+t_p3			scal_x_vec(double n, t_p3 p);
 
 t_p3			vec_add(t_p3 a, t_p3 b);
 
