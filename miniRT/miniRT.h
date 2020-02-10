@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 08:42:41 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/02/07 12:50:09 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/02/10 13:51:21 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,13 @@ t_p3			vec_add(t_p3 a, t_p3 b);
 t_p3			vec_substract(t_p3 a, t_p3 b);
 
 void			parse_scene(t_scn *data, t_lst **lst, int ac, char **av);
+
+double			sphere_intersection(t_p3 d, t_scn data, t_lst *lst);
+
+double			plane_intersection(t_p3 d, t_scn data, t_lst *lst);
+
+double			compute_light(t_p3 p, t_p3 normal, t_scn data);
+
+int				color_x_light(int color, double light);
 
 #endif
