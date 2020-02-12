@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 11:31:29 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/02/07 11:01:07 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/02/12 11:11:55 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -337,7 +337,12 @@ void	parse_elems(t_scn *data, t_lst **lst, t_lst **begin, char *str)
 {
 	while (*str)
 	{
-		if (*str == 'R' && *(str++))
+		if (*str == '#')
+		{
+			while (*str && *str != '\n')
+				str++;
+		}
+		else if (*str == 'R' && *(str++))
 			parse_res(data, &str);
 		else if (*str == 'A' && *(str++))
 			parse_alight(data, &str);

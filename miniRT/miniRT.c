@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 08:39:55 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/02/10 13:51:19 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/02/12 11:31:30 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_p3		trace_ray(int i, int j, t_scn *data, double xratio, double yratio)
 	return (p);
 }
 
-double		try_all_intersections(t_scn data, t_lst *lst, t_p3 d, t_lst *closest_figure, double *closest_intersection, t_p3 *n)
+void	try_all_intersections(t_scn data, t_lst *lst, t_p3 d, t_lst *closest_figure, double *closest_intersection)
 {
 	double	in;
 
@@ -56,13 +56,10 @@ double		try_all_intersections(t_scn data, t_lst *lst, t_p3 d, t_lst *closest_fig
 		{
 			*closest_figure = *lst;
 			*closest_intersection = in;
-			if (lst->flag & SP)
-				*n = lst->fig.sp.c;
 		}
 
 		lst = lst->next;
 	}
-	return (in);
 }
 
 void		render_scene(void *mlx_ptr, void *win_ptr, t_scn data, t_lst *lst)
@@ -75,10 +72,9 @@ void		render_scene(void *mlx_ptr, void *win_ptr, t_scn data, t_lst *lst)
 	double		closest_intersection;
 	
 	t_p3		d;
-	double		in;
 
-	t_p3		p;
-	t_p3		n;
+	t_p3		ip;
+	t_p3		normal;
 
 
 	double xratio;
@@ -108,24 +104,18 @@ void		render_scene(void *mlx_ptr, void *win_ptr, t_scn data, t_lst *lst)
 				
 			closest_intersection = INFINITY;
 			closest_figure.flag = 0;
-			in = try_all_intersections(data, lst, d, &closest_figure, &closest_intersection, &n);
+			try_all_intersections(data, lst, d, &closest_figure, &closest_intersection);
 			color = closest_figure.flag != 0 ? closest_figure.color : data.background;
 		
 			//printf("sample color = %d\n", color);
-			if (lst->flag & SP)
-			{
-				p = vec_add(data.O, scal_x_vec(closest_intersection, d));
-				//P = O + closest_t*D  # Compute intersection
-    
-				n.x = 0; n.y = 1; n.z = 5;	
+			ip = vec_add(data.O, scal_x_vec(closest_intersection, d));
+			//P = O + closest_t*D  # Compute intersection 	
 
-				n = vec_substract(p, n); //p - closest sphere center
-    			n = normalize(n);
+			normal = calc_normal(ip, closest_figure);
 	
-				color = color_x_light(color, compute_light(p, n, data));
+			color = color_x_light(color, compute_light(ip, normal, data));
 			
-				//printf("Treated color = %d\n", color);
-			}
+			//printf("Treated color = %d\n", color);
 			mlx_pixel_put(mlx_ptr, win_ptr, i, j, color);
 			i++;
 		}

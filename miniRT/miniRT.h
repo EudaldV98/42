@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 08:42:41 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/02/10 13:51:21 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/02/12 11:31:31 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,7 @@ double			plane_intersection(t_p3 d, t_scn data, t_lst *lst);
 double			compute_light(t_p3 p, t_p3 normal, t_scn data);
 
 int				color_x_light(int color, double light);
+
+t_p3			calc_normal(t_p3 p, t_lst lst);
 
 #endif

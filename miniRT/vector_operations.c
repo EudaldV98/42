@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 13:29:36 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/02/10 13:15:40 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/02/12 09:54:15 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,20 +62,4 @@ t_p3		vec_substract(t_p3 a, t_p3 b)
 	p.y = a.y - b.y;
 	p.z = a.z - b.z;
 	return (p);
-}
-
-int		color_x_light(int color, double light)
-{
-	int product = 0;
-	int mask = 255;
-	int r;
-	int	g;
-	int	b;
-
-	r = light * ((color & (mask << 16)) >> 16);
-	g = light * ((color & (mask << 8)) >> 8);
-	b = light * (color & mask);
-	product |= ((r << 16) | (g << 8) | b);
-
-	return (product);
 }
