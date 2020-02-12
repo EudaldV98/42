@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 13:06:14 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/02/12 11:31:29 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/02/12 14:21:05 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,27 @@ t_p3		calc_normal(t_p3 p, t_lst lst)
 	return (normal);
 }
 
+int		is_lit(t_p3 O, t_p3 d, t_scn data, t_lst *lst)
+{
+	double in;
+
+	while (lst)
+	{
+		if (lst->flag & SP)
+			in = sphere_intersection(O, d, lst);
+		else if (lst->flag & PL)
+			in = plane_intersection(O, d, lst);
+		/*else if (lst->flag & SQ)
+			in = sqare_intersection;*/
+		
+
+		if (in > 0.001 && in < 1)
+			return (0);
+		lst = lst->next;
+	}
+	return (1);
+}
+
 int		color_x_light(int color, double light)
 {
 	int mask = 255;
@@ -47,6 +68,14 @@ int		color_x_light(int color, double light)
 	r = light * ((color & (mask << 16)) >> 16);
 	g = light * ((color & (mask << 8)) >> 8);
 	b = light * (color & mask);
-	
+
+/*	r = pow(r, 1/2.2) * 10;
+	g = pow(g, 1/2.2) * 10;
+	b = pow(b, 1/2.2) * 10;
+
+	r = r > 255 ? 255 : r;
+	g = g > 255 ? 255 : g;
+	b = b > 255 ? 255 : b;
+*/
 	return ((r << 16) | (g << 8) | b);
 }

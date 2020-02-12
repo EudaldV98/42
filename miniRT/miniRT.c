@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 08:39:55 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/02/12 11:31:30 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/02/12 15:47:39 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,16 @@ t_p3		trace_ray(int i, int j, t_scn *data, double xratio, double yratio)
 	return (p);
 }
 
-void	try_all_intersections(t_scn data, t_lst *lst, t_p3 d, t_lst *closest_figure, double *closest_intersection)
+void	try_all_intersections(t_p3 O, t_p3 d, double min, double max, t_lst *lst, t_lst *closest_figure, double *closest_intersection)
 {
 	double	in;
 
 	while (lst)
 	{
 		if (lst->flag & SP)
-			in = sphere_intersection(d, data, lst);
+			in = sphere_intersection(O, d, lst);
 		else if (lst->flag & PL)
-			in = plane_intersection(d, data, lst);
+			in = plane_intersection(O, d, lst);
 		/*else if (lst->flag & SQ)
 			in = square_intersection;
 		else if (lst->flag & CY)
@@ -52,7 +52,7 @@ void	try_all_intersections(t_scn data, t_lst *lst, t_p3 d, t_lst *closest_figure
 		else if (lst->flag & TR)
 			in = triangle_intersection;
 		*/
-		if (/*in > 0 Origne de la cmaar &&*/ in < *closest_intersection)
+		if (in > min && in < *closest_intersection)
 		{
 			*closest_figure = *lst;
 			*closest_intersection = in;
@@ -76,23 +76,16 @@ void		render_scene(void *mlx_ptr, void *win_ptr, t_scn data, t_lst *lst)
 	t_p3		ip;
 	t_p3		normal;
 
-
 	double xratio;
 	double yratio;
 
-	//data.background = 0X202020;
 	data.background = 0xffffff;
-
 
 	color = 0x000000;
 	set_camera(&data);
 
 	xratio = data.fr.x / data.xres;
 	yratio = data.fr.y / data.yres;
-
-/*	closest_intersection.x = INFINITY;
-	closest_intersection.y = INFINITY;
-	closest_intersection.z = INFINITY;*/
 
 	j = 0;
 	while (j < data.yres)
@@ -104,18 +97,19 @@ void		render_scene(void *mlx_ptr, void *win_ptr, t_scn data, t_lst *lst)
 				
 			closest_intersection = INFINITY;
 			closest_figure.flag = 0;
-			try_all_intersections(data, lst, d, &closest_figure, &closest_intersection);
+			try_all_intersections(data.O, d, 1, INFINITY, lst, &closest_figure, &closest_intersection);	
 			color = closest_figure.flag != 0 ? closest_figure.color : data.background;
-		
-			//printf("sample color = %d\n", color);
-			ip = vec_add(data.O, scal_x_vec(closest_intersection, d));
-			//P = O + closest_t*D  # Compute intersection 	
+			ip = vec_add(data.O, scal_x_vec(closest_intersection, normalize(d)));
 
-			normal = calc_normal(ip, closest_figure);
-	
-			color = color_x_light(color, compute_light(ip, normal, data));
+			if (is_lit(ip, vec_substract(data.l->o, ip), data, lst))
+			{
+				normal = calc_normal(ip, closest_figure);
+				color = color_x_light(color, compute_light(ip, normal, data));
+			}
+			else
+				color = color_x_light(color, data.al);
+
 			
-			//printf("Treated color = %d\n", color);
 			mlx_pixel_put(mlx_ptr, win_ptr, i, j, color);
 			i++;
 		}

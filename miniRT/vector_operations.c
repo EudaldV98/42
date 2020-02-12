@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 13:29:36 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/02/12 09:54:15 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/02/12 14:10:02 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,14 @@ t_p3		normalize(t_p3 p)
 	nv.y = p.y / mod;
 	nv.z = p.z / mod;
 	return (nv);
+}
+
+double		distance(t_p3 p1, t_p3 p2)
+{
+	double d;
+
+	d = sqrt(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2) + pow(p2.z - p1.z, 2));
+	return (d);
 }
 
 double		dot(t_p3 a, t_p3 b)

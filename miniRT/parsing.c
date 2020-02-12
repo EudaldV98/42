@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 11:31:29 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/02/12 11:11:55 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/02/12 12:58:54 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -357,10 +357,7 @@ void	parse_elems(t_scn *data, t_lst **lst, t_lst **begin, char *str)
 		else if (*str == 's' && *(str + 1) == 'q' && *(str++) && *(str++))
 			parse_square(data, lst, begin, &str);
 		else if (*str == 'p' && *(str + 1) == 'l' && *(str++) && *(str++))
-		{
-			printf("Holaktalsoy un plano jajajajaj\n");
 			parse_plane(data, lst, begin, &str);
-		}
 		//else if (*str == 't')
 		//	parse_triangle(data, lst, str);
 		str++;

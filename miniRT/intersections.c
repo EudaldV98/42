@@ -6,13 +6,13 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 13:02:52 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/02/12 11:31:28 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/02/12 15:47:37 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-double		plane_intersection(t_p3 d, t_scn data, t_lst *lst)
+double		plane_intersection(t_p3 O, t_p3 d, t_lst *lst)
 {
 	double	x;
 	double	denom;
@@ -23,12 +23,12 @@ double		plane_intersection(t_p3 d, t_scn data, t_lst *lst)
 		return (INFINITY);
 
 	//x = (dot(lst->fig.pl.nv, lst->fig.pl.p) - dot(lst->fig.pl.nv, d)) / denom;
-	x = (dot(lst->fig.pl.nv, vec_substract(lst->fig.pl.p, data.O))) / denom;
+	x = (dot(lst->fig.pl.nv, vec_substract(lst->fig.pl.p, O))) / denom;
 
 	return (x > 0 ? x : INFINITY);
 }
 
-double		sphere_intersection(t_p3 d, t_scn data, t_lst *lst)
+double		sphere_intersection(t_p3 O, t_p3 d, t_lst *lst)
 {
 	//return type int, 1 si corta loksea y 0 si no corta ni bakalaoo
 	double	disc;
@@ -39,7 +39,7 @@ double		sphere_intersection(t_p3 d, t_scn data, t_lst *lst)
 	double	x2;
 	t_p3	oc;
 
-	oc = vec_substract(data.O, lst->fig.sp.c);
+	oc = vec_substract(O, lst->fig.sp.c);
 
 	k1 = dot(d, d);
 	k2 = 2 * dot(d, oc);
