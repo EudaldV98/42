@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 11:31:29 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/02/12 12:58:54 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/02/13 08:57:47 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,7 +238,7 @@ void		parse_light(t_scn **data, char **str)
 void		parse_sphere(t_scn *data, t_lst **elem, t_lst **begin, char **str)
 {
 	t_lst	*lst;
-	
+
 	ft_addnewlst_back(elem, begin);
 	lst = *elem;
 	while (lst->next)
@@ -260,7 +260,6 @@ void		parse_sphere(t_scn *data, t_lst **elem, t_lst **begin, char **str)
 	lst->color |= stoi(str) << 8;
 	comma(str);
 	lst->color |= stoi(str) << 0;
-
 }
 
 void		parse_square(t_scn *data, t_lst **elem, t_lst **begin, char **str)

@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 08:39:55 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/02/14 12:55:49 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/02/14 10:55:31 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void		render_scene(void *mlx_ptr, void *win_ptr, t_scn data, t_lst *lst, int t /
 	yratio = data.fr.y / data.yres;
 
 	j = n * t;
-	while (/*j < data.yres */   j < (n * (t + 1)))
+	while (/*j < data.yres /**/   j < n * (t + 1))
 	{
 		i = 0;
 		while (i < data.xres)
@@ -164,13 +164,13 @@ int main () {
 void		*do_the_thing(void *jeje)
 {
 	t_thngs		*cosas;
-	int			n;
 
 	cosas = (t_thngs*)jeje;
-	n = cosas->i;
-	printf("entrando con thread id %d\n", cosas->i);
+	printf("emtrando con thread id %d\n", cosas->i);
 	render_scene(cosas->mlx_ptr, cosas->win_ptr, cosas->data, cosas->lst, cosas->i);
-	printf("saliendoo con thread id %d\n", cosas->i);
+	printf("A is %f\n", cosas->data.al);
+	printf("lst object is %d\n", cosas->lst->flag);
+	printf("saliendoo\n");
 }
 
 int main(int ac, char **av)
@@ -184,7 +184,7 @@ int main(int ac, char **av)
 	t_scn		data;
 	t_lst		*lst;
 	t_lst		*begin;
-	t_thngs		cosas[NUM_THREADS];
+	t_thngs		*cosas = malloc(sizeof(t_thngs));
 
 	lst = NULL;
 	data.l = NULL;
@@ -199,39 +199,30 @@ int main(int ac, char **av)
 */
 	mlx_ptr = mlx_init();
 	win_ptr = mlx_new_window(mlx_ptr, data.xres, data.yres, "miniRT v1");
-
-	i = 0;
-	while (i < NUM_THREADS)
-	{	
-		cosas[i].mlx_ptr = mlx_ptr;
-		cosas[i].win_ptr = win_ptr;
-		cosas[i].data = data;
-		cosas[i].lst = lst;
-		cosas[i].i = i;
-		i++;
-	}
-	//cosas->i = i;
+	
+	cosas->mlx_ptr = mlx_ptr;
+	cosas->win_ptr = win_ptr;
+	cosas->data = data;
+	cosas->lst = lst;
+	cosas->i = i;
+	printf("data.al = %f\n", data.al);
+	printf("Cosas->data.al = %f\n", cosas->data.al);
+	printf("cosas->lst object is %d\n", cosas->lst->flag);
 	//do_the_thing(cosas);
 	//render_scene(mlx_ptr, win_ptr, data, lst);
 
-	i = 0;
-	while (i < NUM_THREADS)
+
+	for (cosas->i = 0; cosas->i < NUM_THREADS; cosas->i++)
 	{
-		//printf("i = %d and cosas->i =%d\n", i, cosas->i);
-		rc = pthread_create(&threads[i], NULL, do_the_thing, (&cosas[i]));
+		//cosas->i = i;
+		rc = pthread_create(&threads[cosas->i], NULL, do_the_thing, (cosas));
 		if (rc) {
 			printf("Error:unable to create thread, %d\n", rc);
 			exit(-1);
 		}
-		i++;
 	}
-	i = 0;
-	while (i < NUM_THREADS)
-	{
-		pthread_join(threads[i], NULL);
-		printf("thread %d ended\n", i);
-		i++;
-	}
+	for (cosas->i = 0; cosas->i < NUM_THREADS; cosas->i++)
+		pthread_join(threads[cosas->i], NULL);
 	//sleep(10);
 	//pthread_exit(NULL);
 
