@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 08:42:41 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/02/14 12:29:58 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/02/15 12:23:28 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 #define SQ (1 << 3)
 #define CY (1 << 4)
 #define TR (1 << 5)
-#define	NUM_THREADS 2
+#define	NUM_THREADS 1
 
 /*
 typedef struct	s_p3
@@ -81,6 +81,7 @@ typedef struct	s_thngs
 	t_scn		data;
 	t_lst		*lst;
 	int			i;
+	int			**img;
 }				t_thngs;
 
 double 			dot(t_p3 a, t_p3 b);

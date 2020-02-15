@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 08:39:55 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/02/14 12:55:49 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/02/15 12:41:15 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ void	try_all_intersections(t_p3 O, t_p3 d, double min, double max, t_lst *lst, t
 	}
 }
 
-void		render_scene(void *mlx_ptr, void *win_ptr, t_scn data, t_lst *lst, int t /*void * t*/)
+int		**render_scene(void *mlx_ptr, void *win_ptr, t_scn data, t_lst *lst,
+			int **img, int t /*void * t*/)
 {
 	int			n = data.yres / NUM_THREADS;
 
@@ -110,66 +111,31 @@ void		render_scene(void *mlx_ptr, void *win_ptr, t_scn data, t_lst *lst, int t /
 			}
 			else
 				color = color_x_light(color, data.al);
-
+				
 			
-			mlx_pixel_put(mlx_ptr, win_ptr, i, j, color);
+			//mlx_pixel_put(mlx_ptr, win_ptr, i, j, color);
+			img[i][j % n] = color;
 			i++;
 		}
 		j++;
 	}
-}
-/*
-void *myThreadFun(void *vargp) 
-{ 
-    sleep(1); 
-    printf("Printing GeeksQuiz from Thread \n"); 
-    return NULL; 
-} 
-   
-int main() 
-{ 
-    pthread_t thread_id; 
-    printf("Before Thread\n"); 
-    pthread_create(&thread_id, NULL, myThreadFun, NULL); 
-    pthread_join(thread_id, NULL); 
-    printf("After Thread\n"); 
-    exit(0); 
-}
-*/
-
-/*
-void *PrintHello(void *threadid) {
-   long tid;
-   tid = (long)threadid;
-   printf("Hello World! Thread ID, %d\n", tid);
-   pthread_exit(NULL);
+	return (img);
 }
 
-int main () {
-   pthread_t threads[NUM_THREADS];
-   int rc;
-   int i;
-   for( i = 0; i < NUM_THREADS; i++ ) {
-      cout << "main() : creating thread, " << i << endl;
-      rc = pthread_create(&threads[i], NULL, PrintHello, (void *)i);
-      if (rc) {
-         printf("Error:unable to create thread, %d\n", rc);
-         exit(-1);
-      }
-   }
-   pthread_exit(NULL);
-}
-*/
 
 void		*do_the_thing(void *jeje)
 {
 	t_thngs		*cosas;
 	int			n;
+	int			i = 0;
 
 	cosas = (t_thngs*)jeje;
 	n = cosas->i;
 	printf("entrando con thread id %d\n", cosas->i);
-	render_scene(cosas->mlx_ptr, cosas->win_ptr, cosas->data, cosas->lst, cosas->i);
+	cosas->img = malloc(sizeof(int*) * cosas->data.xres);
+	while (i < cosas->data.xres)
+		cosas->img[i++] = malloc(sizeof(int) * (cosas->data.yres / NUM_THREADS));
+	cosas->img = render_scene(cosas->mlx_ptr, cosas->win_ptr, cosas->data, cosas->lst, cosas->img, cosas->i);
 	printf("saliendoo con thread id %d\n", cosas->i);
 }
 
@@ -178,6 +144,8 @@ int main(int ac, char **av)
 	pthread_t	threads[NUM_THREADS];
 	int			rc;
 	int			i = 0;
+	int			x;
+	int			y;
 
 	void		*mlx_ptr;
 	void		*win_ptr;
@@ -234,7 +202,23 @@ int main(int ac, char **av)
 	}
 	//sleep(10);
 	//pthread_exit(NULL);
-
+	i = 0;
+	while (i < NUM_THREADS)
+	{
+		y = 0;
+		while (y < data.yres / NUM_THREADS)
+		{
+			x = 0;
+			while (x < data.xres)
+			{
+				//mlx_pixel_put(mlx_ptr, win_ptr, i, j, color);
+				mlx_pixel_put(mlx_ptr, win_ptr, x, y + (i * (data.yres / NUM_THREADS)), cosas[i].img[x][y]);
+				x++;
+			}
+			y++;
+		}
+		i++;
+	}
 
 	mlx_hook(win_ptr, 17, 1L << 17, exit, &data);
 
