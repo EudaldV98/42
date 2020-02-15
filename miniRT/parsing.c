@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 11:31:29 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/02/13 08:57:47 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/02/15 16:20:25 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -374,6 +374,8 @@ void	parse_scene(t_scn *data, t_lst **lst, int ac, char **av)
 		printf("Error\n");
 		exit(0);
 	}
+	*lst = NULL;
+	data->l = NULL;
 	str = (char *)malloc(sizeof(char) * (BUFSIZE + 1));
 	fd = open(av[1], 0);
 	str = readfile(str, fd);

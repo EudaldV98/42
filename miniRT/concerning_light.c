@@ -6,13 +6,13 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 13:06:14 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/02/15 12:41:14 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/02/15 17:05:01 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-double		compute_light(t_p3 p, t_p3 normal, t_scn data)
+double		compute_light(t_p3 p, t_p3 normal, t_scn data, t_lst *lst)
 {
 	double	light;
 	t_p3	direction;
@@ -22,7 +22,7 @@ double		compute_light(t_p3 p, t_p3 normal, t_scn data)
 	while (data.l)
 	{
     	direction = vec_substract(data.l->o, p);
-		if (dot(normal, direction) > 0)
+		if (is_lit(p, direction, data, lst) && dot(normal, direction) > 0)
 			light += (data.l->br * dot(normal, direction)) / (mod(normal) * mod(direction));
 		data.l = data.l->next;
 	}
@@ -76,10 +76,10 @@ int		color_x_light(int color, double light)
 /*	r = pow(r, 1/2.2) * 10;
 	g = pow(g, 1/2.2) * 10;
 	b = pow(b, 1/2.2) * 10;
-
+*/
 	r = r > 255 ? 255 : r;
 	g = g > 255 ? 255 : g;
 	b = b > 255 ? 255 : b;
-*/
+
 	return ((r << 16) | (g << 8) | b);
 }

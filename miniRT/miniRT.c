@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 08:39:55 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/02/15 12:41:15 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/02/15 16:47:49 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ void	try_all_intersections(t_p3 O, t_p3 d, double min, double max, t_lst *lst, t
 	}
 }
 
-int		**render_scene(void *mlx_ptr, void *win_ptr, t_scn data, t_lst *lst,
-			int **img, int t /*void * t*/)
+void	render_scene(void *mlx_ptr, void *win_ptr, t_scn data, t_lst *lst,
+			int *pixel_tab, int t /*void * t*/)
 {
 	int			n = data.yres / NUM_THREADS;
 
@@ -104,69 +104,63 @@ int		**render_scene(void *mlx_ptr, void *win_ptr, t_scn data, t_lst *lst,
 			color = closest_figure.flag != 0 ? closest_figure.color : data.background;
 			ip = vec_add(data.O, scal_x_vec(closest_intersection, normalize(d)));
 
-			if (is_lit(ip, vec_substract(data.l->o, ip), data, lst))
+			/*if (is_lit(ip, vec_substract(data.l->o, ip), data, lst))
 			{
 				normal = calc_normal(ip, closest_figure);
 				color = color_x_light(color, compute_light(ip, normal, data));
 			}
 			else
 				color = color_x_light(color, data.al);
-				
+			*/
+			normal = calc_normal(ip, closest_figure);
+			color = color_x_light(color, compute_light(ip, normal, data, lst));
 			
 			//mlx_pixel_put(mlx_ptr, win_ptr, i, j, color);
-			img[i][j % n] = color;
+			pixel_tab[i + (j * data.xres)] = color;
 			i++;
 		}
 		j++;
 	}
-	return (img);
 }
 
 
 void		*do_the_thing(void *jeje)
 {
 	t_thngs		*cosas;
-	int			n;
-	int			i = 0;
 
 	cosas = (t_thngs*)jeje;
-	n = cosas->i;
-	printf("entrando con thread id %d\n", cosas->i);
-	cosas->img = malloc(sizeof(int*) * cosas->data.xres);
-	while (i < cosas->data.xres)
-		cosas->img[i++] = malloc(sizeof(int) * (cosas->data.yres / NUM_THREADS));
-	cosas->img = render_scene(cosas->mlx_ptr, cosas->win_ptr, cosas->data, cosas->lst, cosas->img, cosas->i);
-	printf("saliendoo con thread id %d\n", cosas->i);
+	render_scene(cosas->mlx_ptr, cosas->win_ptr, cosas->data, cosas->lst, cosas->pixel_tab, cosas->i);
+
 }
 
 int main(int ac, char **av)
 {
 	pthread_t	threads[NUM_THREADS];
-	int			rc;
-	int			i = 0;
-	int			x;
-	int			y;
+	int			i;
 
 	void		*mlx_ptr;
 	void		*win_ptr;
+	void		*img_ptr;
+	
+	int			bits_per_pixel;
+	int			size_line;
+	int			endian;
+	int			*pixel_tab;
+
 	t_scn		data;
 	t_lst		*lst;
 	t_lst		*begin;
 	t_thngs		cosas[NUM_THREADS];
 
-	lst = NULL;
-	data.l = NULL;
-
-	parse_scene(&data, &lst, ac, av);
-
-	/*printf("%d, %d\n", data.xres, data.yres);
-	printf("ambient light is %.2f, and color is %d\n", data.al, data.acl);
 	
-	printf("sphere crds are %.1f, %.1f, %.1f, radius is %.5f and color is %d\n", lst->fig.sp.c.x,
-			lst->fig.sp.c.y, lst->fig.sp.c.z, lst->fig.sp.r, lst->fig.sp.color);
-*/
+	parse_scene(&data, &lst, ac, av);
+	
 	mlx_ptr = mlx_init();
 	win_ptr = mlx_new_window(mlx_ptr, data.xres, data.yres, "miniRT v1");
+	
+	img_ptr = mlx_new_image (mlx_ptr, data.xres, data.yres);
+		
+	pixel_tab = (int *)mlx_get_data_addr(img_ptr, &bits_per_pixel, &size_line, &endian);
 
 	i = 0;
 	while (i < NUM_THREADS)
@@ -176,55 +170,24 @@ int main(int ac, char **av)
 		cosas[i].data = data;
 		cosas[i].lst = lst;
 		cosas[i].i = i;
+		cosas[i].pixel_tab = pixel_tab;
 		i++;
 	}
-	//cosas->i = i;
-	//do_the_thing(cosas);
-	//render_scene(mlx_ptr, win_ptr, data, lst);
+	i = 0;
+	while (i < NUM_THREADS)
+	{
+		pthread_create(&threads[i], NULL, do_the_thing, (&cosas[i]));
+		i++;
+	}
+	i = 0;
+	while (i < NUM_THREADS)
+		pthread_join(threads[i++], NULL);
 
-	i = 0;
-	while (i < NUM_THREADS)
-	{
-		//printf("i = %d and cosas->i =%d\n", i, cosas->i);
-		rc = pthread_create(&threads[i], NULL, do_the_thing, (&cosas[i]));
-		if (rc) {
-			printf("Error:unable to create thread, %d\n", rc);
-			exit(-1);
-		}
-		i++;
-	}
-	i = 0;
-	while (i < NUM_THREADS)
-	{
-		pthread_join(threads[i], NULL);
-		printf("thread %d ended\n", i);
-		i++;
-	}
-	//sleep(10);
-	//pthread_exit(NULL);
-	i = 0;
-	while (i < NUM_THREADS)
-	{
-		y = 0;
-		while (y < data.yres / NUM_THREADS)
-		{
-			x = 0;
-			while (x < data.xres)
-			{
-				//mlx_pixel_put(mlx_ptr, win_ptr, i, j, color);
-				mlx_pixel_put(mlx_ptr, win_ptr, x, y + (i * (data.yres / NUM_THREADS)), cosas[i].img[x][y]);
-				x++;
-			}
-			y++;
-		}
-		i++;
-	}
-
+	mlx_put_image_to_window (mlx_ptr, win_ptr, img_ptr, 0, 0);
+	
 	mlx_hook(win_ptr, 17, 1L << 17, exit, &data);
-
 	mlx_loop(mlx_ptr);
 	
-	//pthread_join(threads[i - 1], NULL);
 	pthread_exit(NULL);
 
 	return (0);

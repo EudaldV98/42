@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 08:42:41 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/02/15 12:23:28 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/02/15 17:15:43 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
 #include <math.h>
 #include <pthread.h>
 
-#define SP (1 << 1)
-#define PL (1 << 2)
-#define SQ (1 << 3)
-#define CY (1 << 4)
-#define TR (1 << 5)
+#define SP (1 << 0)
+#define PL (1 << 1)
+#define SQ (1 << 2)
+#define CY (1 << 3)
+#define TR (1 << 4)
 #define	NUM_THREADS 1
 
 /*
@@ -81,7 +81,7 @@ typedef struct	s_thngs
 	t_scn		data;
 	t_lst		*lst;
 	int			i;
-	int			**img;
+	int			*pixel_tab;
 }				t_thngs;
 
 double 			dot(t_p3 a, t_p3 b);
@@ -100,7 +100,7 @@ double			sphere_intersection(t_p3 O, t_p3 d, t_lst *lst);
 
 double			plane_intersection(t_p3 O, t_p3 d, t_lst *lst);
 
-double			compute_light(t_p3 p, t_p3 normal, t_scn data);
+double			compute_light(t_p3 p, t_p3 normal, t_scn data, t_lst *lst);
 
 int				color_x_light(int color, double light);
 
