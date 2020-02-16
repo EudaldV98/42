@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 11:31:29 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/02/15 16:20:25 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/02/16 10:27:32 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,16 +199,14 @@ void		parse_light(t_scn **data, char **str)
 	begin = (*data)->l;
 	list = (*data)->l;
 	if (!(elem = malloc(sizeof(t_light))))
-	{
-		printf("goorbai\n");
 		exit (1);
-	}
 	elem->next = NULL;
 	if (list)
 	{
 		while (list->next)
 			list = list->next;
 		list->next = elem;
+		list = list->next;
 	}
 	else
 	{
@@ -254,6 +252,8 @@ void		parse_sphere(t_scn *data, t_lst **elem, t_lst **begin, char **str)
 	lst->fig.sp.c.z = stof(str);
 	next(str);
 	lst->fig.sp.r = stof(str) / 2;
+	next(str);
+	lst->fig.sp.specular = stoi(str);
 	next(str);
 	lst->color |= stoi(str) << 16;
 	comma(str);

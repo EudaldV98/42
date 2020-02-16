@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 08:39:55 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/02/15 16:47:49 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/02/16 14:30:32 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,24 @@ void	try_all_intersections(t_p3 O, t_p3 d, double min, double max, t_lst *lst, t
 	}
 }
 
+int		average_color(int col_a, int col_b)
+{
+	int mask = 255;
+	int	r;
+	int	g;
+	int	b;
+
+	r = (((col_a & (mask << 16)) + (col_b & (mask << 16))) / 2) >> 16;
+	g = (((col_a & (mask << 8)) + (col_b & (mask << 8))) / 2) >> 8;
+	b = ((col_a & mask) + (col_b & mask)) / 2;
+	
+	r = r > 255 ? 255 : r;
+	g = g > 255 ? 255 : g;
+	b = b > 255 ? 255 : b;
+
+	return ((r << 16) | (g << 8) | b);
+}
+
 void	render_scene(void *mlx_ptr, void *win_ptr, t_scn data, t_lst *lst,
 			int *pixel_tab, int t /*void * t*/)
 {
@@ -82,7 +100,7 @@ void	render_scene(void *mlx_ptr, void *win_ptr, t_scn data, t_lst *lst,
 	double xratio;
 	double yratio;
 
-	data.background = 0xffffff;
+	data.background = 0x000000;
 
 	color = 0x000000;
 	set_camera(&data);
@@ -104,19 +122,18 @@ void	render_scene(void *mlx_ptr, void *win_ptr, t_scn data, t_lst *lst,
 			color = closest_figure.flag != 0 ? closest_figure.color : data.background;
 			ip = vec_add(data.O, scal_x_vec(closest_intersection, normalize(d)));
 
-			/*if (is_lit(ip, vec_substract(data.l->o, ip), data, lst))
-			{
-				normal = calc_normal(ip, closest_figure);
-				color = color_x_light(color, compute_light(ip, normal, data));
-			}
-			else
-				color = color_x_light(color, data.al);
-			*/
 			normal = calc_normal(ip, closest_figure);
 			color = color_x_light(color, compute_light(ip, normal, data, lst));
 			
 			//mlx_pixel_put(mlx_ptr, win_ptr, i, j, color);
-			pixel_tab[i + (j * data.xres)] = color;
+			/*if (i % TIMES_RES == 0 && j % TIMES_RES == 0)
+				pixel_tab[i/TIMES_RES + (j/TIMES_RES * data.xres/TIMES_RES)] = color;
+			else
+				pixel_tab[i/TIMES_RES + (j/TIMES_RES * data.xres/TIMES_RES)] = average_color(color,
+						pixel_tab[i/TIMES_RES + (j/TIMES_RES * data.xres/TIMES_RES)]);
+			*/	
+				pixel_tab[i + (j * data.xres)] = color;
+
 			i++;
 		}
 		j++;
@@ -157,10 +174,13 @@ int main(int ac, char **av)
 	
 	mlx_ptr = mlx_init();
 	win_ptr = mlx_new_window(mlx_ptr, data.xres, data.yres, "miniRT v1");
-	
+
 	img_ptr = mlx_new_image (mlx_ptr, data.xres, data.yres);
 		
 	pixel_tab = (int *)mlx_get_data_addr(img_ptr, &bits_per_pixel, &size_line, &endian);
+
+	//data.xres *= TIMES_RES;
+	//data.yres *= TIMES_RES;
 
 	i = 0;
 	while (i < NUM_THREADS)

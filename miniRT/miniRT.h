@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 08:42:41 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/02/15 17:15:43 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/02/16 14:30:34 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@
 #define SQ (1 << 2)
 #define CY (1 << 3)
 #define TR (1 << 4)
-#define	NUM_THREADS 1
+#define	NUM_THREADS 4
+#define TIMES_RES	4
 
 /*
 typedef struct	s_p3

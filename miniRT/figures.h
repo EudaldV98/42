@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 10:48:18 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/02/13 08:57:41 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/02/16 10:27:27 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct	s_sphere
 {
 	t_p3	c;
 	double	r;
+	int		specular;
 }				t_sphere;
 
 typedef struct	s_plane

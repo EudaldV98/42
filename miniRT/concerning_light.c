@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/10 13:06:14 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/02/15 17:05:01 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/02/16 13:14:45 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ double		compute_light(t_p3 p, t_p3 normal, t_scn data, t_lst *lst)
 {
 	double	light;
 	t_p3	direction;
+	t_p3	p_to_cam;
+	t_p3	reflected;
 
 	light = 0;
 	light += data.al;
@@ -24,6 +26,15 @@ double		compute_light(t_p3 p, t_p3 normal, t_scn data, t_lst *lst)
     	direction = vec_substract(data.l->o, p);
 		if (is_lit(p, direction, data, lst) && dot(normal, direction) > 0)
 			light += (data.l->br * dot(normal, direction)) / (mod(normal) * mod(direction));
+		if (lst->flag & SP && lst->fig.sp.specular != -1)
+		{
+			p_to_cam = vec_substract(data.O, p);
+			reflected = vec_substract(scal_x_vec(2 * dot(normal, direction), normal), direction);
+			if (dot(reflected, p_to_cam) > 0)
+			{
+				light += data.l->br * pow((dot(reflected, p_to_cam) / (mod(reflected) * mod(p_to_cam))), lst->fig.sp.specular);
+			}
+		}
 		data.l = data.l->next;
 	}
 	return (light);
