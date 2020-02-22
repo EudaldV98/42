@@ -26,13 +26,13 @@ double		compute_light(t_p3 p, t_p3 normal, t_scn data, t_lst *lst)
     	direction = vec_substract(data.l->o, p);
 		if (is_lit(p, direction, data, lst) && dot(normal, direction) > 0)
 			light += (data.l->br * dot(normal, direction)) / (mod(normal) * mod(direction));
-		if (lst->flag & SP && lst->fig.sp.specular != -1)
+		if (lst->specular != -1)
 		{
 			p_to_cam = vec_substract(data.O, p);
-			reflected = vec_substract(scal_x_vec(2 * dot(normal, direction), normal), direction);
+			reflected = reflect_ray(direction, normal);
 			if (dot(reflected, p_to_cam) > 0)
 			{
-				light += data.l->br * pow((dot(reflected, p_to_cam) / (mod(reflected) * mod(p_to_cam))), lst->fig.sp.specular);
+				light += data.l->br * pow((dot(reflected, p_to_cam) / (mod(reflected) * mod(p_to_cam))), lst->specular);
 			}
 		}
 		data.l = data.l->next;

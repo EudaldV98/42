@@ -71,3 +71,8 @@ t_p3		vec_substract(t_p3 a, t_p3 b)
 	p.z = a.z - b.z;
 	return (p);
 }
+
+t_p3		reflect_ray(t_p3 ray, t_p3 normal)
+{
+    return (vec_substract(scal_x_vec(2 * dot(normal, ray), normal), ray));
+}

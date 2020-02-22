@@ -24,7 +24,7 @@ void		set_camera(t_scn *data)
 	data->fr.ulcorner.z = 1;
 }
 
-t_p3		trace_ray(int i, int j, t_scn *data, double xratio, double yratio)
+t_p3		define_vector(int i, int j, t_scn *data, double xratio, double yratio)
 {
 	t_p3	p;
 
@@ -80,6 +80,43 @@ int		average_color(int col_a, int col_b)
 	return ((r << 16) | (g << 8) | b);
 }
 
+int	trace_ray(t_p3 O, t_p3 d, double min, t_scn data, t_lst *lst, int depth)
+{
+    int	    local_color;
+    int	    reflected_color;
+    t_lst   closest_figure;
+    double  closest_intersection;
+    t_p3    normal;
+    t_p3    ip;
+    t_p3    reflected;
+    double  r;
+
+
+    data.background = 0x000000;
+    local_color = 0x000000;
+    reflected_color = 0x000000;
+
+    closest_intersection = INFINITY;
+    closest_figure.flag = 0;
+    try_all_intersections(O, d, min, INFINITY, lst, &closest_figure, &closest_intersection);	
+    local_color = closest_figure.flag != 0 ? closest_figure.color : data.background;
+    ip = vec_add(data.O, scal_x_vec(closest_intersection, normalize(d)));
+
+    normal = calc_normal(ip, closest_figure);
+    
+    local_color = color_x_light(local_color, compute_light(ip, normal, data, lst));
+
+    r = closest_figure.reflective;
+    if (depth <= 0 || r <= 0.0)
+	return (local_color);
+
+    reflected = reflect_ray(scal_x_vec(-1, d), normal);
+    reflected_color = trace_ray(ip, reflected, 0.001, data, lst, depth - 1);
+
+    return (color_x_light(local_color, (1 - r)) + color_x_light(reflected_color, r));
+}
+
+
 void	render_scene(void *mlx_ptr, void *win_ptr, t_scn data, t_lst *lst,
 			int *pixel_tab, int t /*void * t*/)
 {
@@ -87,22 +124,14 @@ void	render_scene(void *mlx_ptr, void *win_ptr, t_scn data, t_lst *lst,
 
 	int 		i;
 	int 		j;
-	int			color;
+	int		color;
 
-	t_lst		closest_figure;
-	double		closest_intersection;
 	
 	t_p3		d;
-
-	t_p3		ip;
-	t_p3		normal;
 
 	double xratio;
 	double yratio;
 
-	data.background = 0x000000;
-
-	color = 0x000000;
 	set_camera(&data);
 
 	xratio = data.fr.x / data.xres;
@@ -114,25 +143,18 @@ void	render_scene(void *mlx_ptr, void *win_ptr, t_scn data, t_lst *lst,
 		i = 0;
 		while (i < data.xres)
 		{
-			d = trace_ray(i, j, &data, xratio, yratio);
-				
-			closest_intersection = INFINITY;
-			closest_figure.flag = 0;
-			try_all_intersections(data.O, d, 1, INFINITY, lst, &closest_figure, &closest_intersection);	
-			color = closest_figure.flag != 0 ? closest_figure.color : data.background;
-			ip = vec_add(data.O, scal_x_vec(closest_intersection, normalize(d)));
-
-			normal = calc_normal(ip, closest_figure);
-			color = color_x_light(color, compute_light(ip, normal, data, lst));
+			d = define_vector(i, j, &data, xratio, yratio);
+			
+			color = trace_ray(data.O, d, 1, data, lst, 3);
 			
 			//mlx_pixel_put(mlx_ptr, win_ptr, i, j, color);
-			/*if (i % TIMES_RES == 0 && j % TIMES_RES == 0)
+			if (i % TIMES_RES == 0 && j % TIMES_RES == 0)
 				pixel_tab[i/TIMES_RES + (j/TIMES_RES * data.xres/TIMES_RES)] = color;
 			else
 				pixel_tab[i/TIMES_RES + (j/TIMES_RES * data.xres/TIMES_RES)] = average_color(color,
 						pixel_tab[i/TIMES_RES + (j/TIMES_RES * data.xres/TIMES_RES)]);
-			*/	
-				pixel_tab[i + (j * data.xres)] = color;
+				
+			//	pixel_tab[i + (j * data.xres)] = color;
 
 			i++;
 		}
@@ -179,8 +201,8 @@ int main(int ac, char **av)
 		
 	pixel_tab = (int *)mlx_get_data_addr(img_ptr, &bits_per_pixel, &size_line, &endian);
 
-	//data.xres *= TIMES_RES;
-	//data.yres *= TIMES_RES;
+	data.xres *= TIMES_RES;
+	data.yres *= TIMES_RES;
 
 	i = 0;
 	while (i < NUM_THREADS)

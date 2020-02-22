@@ -253,7 +253,9 @@ void		parse_sphere(t_scn *data, t_lst **elem, t_lst **begin, char **str)
 	next(str);
 	lst->fig.sp.r = stof(str) / 2;
 	next(str);
-	lst->fig.sp.specular = stoi(str);
+	lst->specular = stoi(str);
+	next(str);
+	lst->reflective = stof(str);
 	next(str);
 	lst->color |= stoi(str) << 16;
 	comma(str);
@@ -318,6 +320,10 @@ void		parse_plane(t_scn *data, t_lst **elem, t_lst **begin, char **str)
 	lst->fig.pl.nv.y = stof(str);
 	comma(str);
 	lst->fig.pl.nv.z = stof(str);
+	next(str);
+	lst->specular = stoi(str);
+	next(str);
+	lst->reflective = stof(str);
 	next(str);
 	lst->color |= stoi(str) << 16;
 	comma(str);

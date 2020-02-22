@@ -25,8 +25,8 @@
 #define SQ (1 << 2)
 #define CY (1 << 3)
 #define TR (1 << 4)
-#define	NUM_THREADS 4
-#define TIMES_RES	4
+#define	NUM_THREADS 1
+#define TIMES_RES   1
 
 /*
 typedef struct	s_p3
@@ -69,9 +69,11 @@ t_p3			normalize(t_p3 p);
 
 typedef struct	s_lst
 {
-	int				color;
-	int				flag;
+	int		flag;
 	union figures	fig;
+	int		color;
+	int		specular;
+	double		reflective;
 	struct s_lst	*next;
 }				t_lst;
 
@@ -103,13 +105,14 @@ double			plane_intersection(t_p3 O, t_p3 d, t_lst *lst);
 
 double			compute_light(t_p3 p, t_p3 normal, t_scn data, t_lst *lst);
 
-int				color_x_light(int color, double light);
+int 			color_x_light(int color, double light);
 
 t_p3			calc_normal(t_p3 p, t_lst lst);
 
 double			distance(t_p3 p1, t_p3 p2);
 
-int				is_lit(t_p3 O, t_p3 d, t_scn data, t_lst *lst);
+int			is_lit(t_p3 O, t_p3 d, t_scn data, t_lst *lst);
 
+t_p3			reflect_ray(t_p3 ray, t_p3 normal);
 
 #endif

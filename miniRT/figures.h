@@ -26,7 +26,6 @@ typedef struct	s_sphere
 {
 	t_p3	c;
 	double	r;
-	int		specular;
 }				t_sphere;
 
 typedef struct	s_plane
