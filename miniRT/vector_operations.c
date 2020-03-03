@@ -6,11 +6,22 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 13:29:36 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/02/12 14:10:02 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/03/03 13:35:04 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+t_p3		cross_product(t_p3 a, t_p3 b)
+{
+	t_p3	cp;
+
+	cp.x = a.y * b.z - a.z * b.y;
+	cp.y = a.z * b.x - a.x * b.z;
+	cp.z = a.x * b.y - a.y * b.x;
+
+	return (cp);
+}
 
 t_p3		scal_x_vec(double n, t_p3 p)
 {

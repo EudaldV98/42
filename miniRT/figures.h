@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/21 10:48:18 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/02/16 10:27:27 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/03/03 11:51:57 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,14 @@ typedef struct	s_p3
 	double y;
 	double z;
 }				t_p3;
+
+/*typedef struct	s_v3
+{
+	double	x;
+	double	y;
+	double	z;
+	t_p3	o;
+}*/
 
 typedef struct	s_sphere
 {

@@ -6,7 +6,7 @@
 /*   By: mgarcia- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 08:42:41 by mgarcia-          #+#    #+#             */
-/*   Updated: 2020/02/16 14:30:34 by mgarcia-         ###   ########.fr       */
+/*   Updated: 2020/03/03 11:57:08 by mgarcia-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,15 @@
 #include <math.h>
 #include <pthread.h>
 
+#define PI 3.14159265
+
 #define SP (1 << 0)
 #define PL (1 << 1)
 #define SQ (1 << 2)
 #define CY (1 << 3)
 #define TR (1 << 4)
-#define	NUM_THREADS 1
+
+#define	NUM_THREADS 4
 #define TIMES_RES   1
 
 /*
@@ -57,8 +60,9 @@ typedef struct	s_scene
 	int			yres;
 	int			background;
 	t_p3		O;
+	t_p3		cam;
 	t_p3		nv;
-	char		fov;
+	int			fov;
 	t_frame		fr;
 	double		al;
 	int			acl;
@@ -111,8 +115,11 @@ t_p3			calc_normal(t_p3 p, t_lst lst);
 
 double			distance(t_p3 p1, t_p3 p2);
 
-int			is_lit(t_p3 O, t_p3 d, t_scn data, t_lst *lst);
+int				is_lit(t_p3 O, t_p3 d, t_scn data, t_lst *lst);
+
+t_p3			cross_product(t_p3 a, t_p3 b);
 
 t_p3			reflect_ray(t_p3 ray, t_p3 normal);
+
 
 #endif
