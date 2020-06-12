@@ -20,7 +20,7 @@ void			format_string(t_flags *f, char *buf, va_list ap)
 
 	str = va_arg(ap, char *);
 	if (!str)
-		str = "(null)";
+	    str = "(null)";
 	len = ft_strlen(str);
 	if (f->flags & FLAG_PRECISION)
 		len = f->precision > len ? len : f->precision;
