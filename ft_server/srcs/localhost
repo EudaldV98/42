@@ -1,13 +1,17 @@
 server {
-  listen 80;
-  listen [::]:80;
+  listen 443;
+  listen [::]:443;
+  ssl on;
+  ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
+  ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
+
   server_name localhost;
   root /usr/share/nginx/;
   index index.php index.html index.htm index.nginx-debian.html;
 
   location / {
     autoindex on;
-    try_files $uri $uri/ /index.php;
+	try_files $uri $uri/ /index.php;
   }
 
   location ~ \.php$ {
@@ -16,18 +20,11 @@ server {
     include fastcgi_params;
     include snippets/fastcgi-php.conf;
   }
+}
 
- # A long browser cache lifetime can speed up repeat visits to your page
-  location ~* \.(jpg|jpeg|gif|png|webp|svg|woff|woff2|ttf|css|js|ico|xml)$ {
-       access_log        off;
-       log_not_found     off;
-       expires           360d;
-  }
-
-  # disable access to hidden files
-  location ~ /\.ht {
-      access_log off;
-      log_not_found off;
-      deny all;
-  }
+server {
+	listen 80;
+	listen [::]:80;
+	server_name localhost;
+	return https://$server_name;
 }

@@ -1,4 +1,4 @@
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost';
 CREATE DATABASE wordpress;
-GRANT ALL PRIVILEGES ON wordpress.* TO 'root'@'localhost';
+update mysql.user set plugin = 'mysql_native_password' where user='root';
 FLUSH PRIVILEGES;
-UPDATE mysql.user SET plugin = 'mysql_native_password', authentication_string = PASSWORD('root') WHERE User = 'root';
