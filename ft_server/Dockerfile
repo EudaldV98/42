@@ -48,6 +48,6 @@ EXPOSE 443
 
 CMD service mysql start \
 		&& service php7.3-fpm start \
-		&& sh /tmp/autoindex.sh \
+		&& /tmp/autoindex.sh \
 		&& bash
 

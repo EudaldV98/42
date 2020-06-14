@@ -15,4 +15,8 @@ then
 	sed -i 's/autoindex on/autoindex off/' /etc/nginx/conf.d/default.conf
 	service nginx restart
 	echo "Autoindex is off"
+else
+	sed -i 's/autoindex off/autoindex on/' /etc/nginx/conf.d/default.conf
+	service nginx restart
+	echo "Autoindex is activated by default"
 fi
