@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   namespace: metallb-system
-  name: config
+  name: local-config
 data:
   config: |
     address-pools:
@@ -15,7 +15,7 @@ data:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-service
+  name: local-nginx-service
 spec:
   type: LoadBalancer
   ports:
@@ -27,26 +27,27 @@ spec:
     protocol: TCP
     name: https
   selector:
-    app: nginx
+    app: local-nginx
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: local-nginx-deployment
   labels:
-    app: nginx
+    app: local-nginx
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: nginx
+      app: local-nginx
   template:
     metadata:
       labels:
-        app: nginx
+        app: local-nginx
     spec:
       containers:
-      - name: nginx
-        image: nginx:alpine
+      - name: local-nginx
+        image: local-nginx
+        imagePullPolicy: Never
         ports:
         - containerPort: 80

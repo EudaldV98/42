@@ -1,0 +1,10 @@
+server {
+	listen 172.17.0.8:80;
+	server_name localhost;
+	root /home/www;
+	access_log  /var/log/nginx/www.cyberciti.biz_access.log;
+     	error_log   /var/log/nginx/www.cyberciti.biz_error.log;
+	location ~* ^.+\.(ogg|ogv|svg|svgz|eot|otf|woff|mp4|ttf|rss|atom|jpg|jpeg|gif|png|ico|zip|tgz|gz|rar|bz2|doc|xls|exe|ppt|tar|mid|midi|wav|bmp|rtf)$ {
+        access_log off; log_not_found off; expires max;
+     }
+}
