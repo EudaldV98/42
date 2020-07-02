@@ -1,7 +1,0 @@
-server {
-listen 80;
-root /var/lib/nginx/www;
-index index.html;
-server_name localhost;
-
-}

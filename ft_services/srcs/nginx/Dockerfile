@@ -4,8 +4,8 @@ RUN apk update \
 		&& apk upgrade \
 		&& apk add \
 		nginx \
-		openrc \
-		vim 
+#		openrc \
+		openssl 
 
 RUN adduser -D -g 'www' www \
 		&& mkdir /www \
@@ -16,14 +16,16 @@ RUN mkdir -p /run/nginx/
 
 RUN rm -rf etc/nginx/conf.d/default.conf
 
-COPY srcs/localhost5 /etc/nginx/conf.d/nginx.conf
+#RUN yes "" | openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+#		-keyout /etc/ssl/private/nginx-selfsigned.key \
+#		-out /etc/ssl/certs/nginx-selfsigned.crt
 
+COPY localhost /etc/nginx/conf.d/nginx.conf
 
-#COPY srcs/index.html /var/lib/nginx/html/index.html
-COPY srcs/index.html /usr/share/nginx/html/
-#COPY srcs/index.html /www/
+COPY index.html /usr/share/nginx/html/
 
 EXPOSE 80
 
-#CMD /etc/init.d/nginx start
+EXPOSE 443
+
 CMD ["nginx", "-g", "daemon off;"]
