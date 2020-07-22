@@ -13,8 +13,8 @@ spec:
     targetPort: 21
     nodePort: 30021
     name: ftps
-  - port: 20
-    targetPort: 20
+  - port: 31000
+    targetPort: 31000
     nodePort: 31000
     name: ftps-data
 

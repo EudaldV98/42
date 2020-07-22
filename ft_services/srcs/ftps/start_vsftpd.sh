@@ -38,17 +38,16 @@ for i in $USERS ; do
   unset NAME PASS FOLDER UID
 done
 
-
 if [ -z "$MIN_PORT" ]; then
-  MIN_PORT=21000
+  MIN_PORT=20
 fi
 
 if [ -z "$MAX_PORT" ]; then
-  MAX_PORT=21000
+  MAX_PORT=20
 fi
 
 if [ ! -z "$ADDRESS" ]; then
-  	ADDR_OPT="-opasv_address=192.168.99.110"
+  	ADDR_OPT="-opasv_address=$(minikube ip)"
 fi
 
 # Used to run custom commands inside container
@@ -57,4 +56,3 @@ if [ ! -z "$1" ]; then
 else
   exec /usr/sbin/vsftpd -opasv_min_port=$MIN_PORT -opasv_max_port=$MAX_PORT $ADDR_OPT /etc/vsftpd/vsftpd.conf
 fi
-
