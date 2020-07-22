@@ -48,7 +48,7 @@ if [ -z "$MAX_PORT" ]; then
 fi
 
 if [ ! -z "$ADDRESS" ]; then
-  ADDR_OPT="-opasv_address=$ADDRESS"
+  	ADDR_OPT="-opasv_address=192.168.99.110"
 fi
 
 # Used to run custom commands inside container
