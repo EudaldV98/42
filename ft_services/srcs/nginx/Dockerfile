@@ -4,28 +4,36 @@ RUN apk update \
 		&& apk upgrade \
 		&& apk add \
 		nginx \
-#		openrc \
-		openssl 
+		openssl \
+		openssh
 
 RUN adduser -D -g 'www' www \
 		&& mkdir /www \
 		&& chown -R www:www /var/lib/nginx \
 		&& chown -R www:www /www
 
+
+RUN adduser -D user
+#RUN echo "www:www"| chpasswd
+RUN echo "user:user" | chpasswd
+RUN ssh-keygen -A
+
 RUN mkdir -p /run/nginx/
 
 RUN rm -rf etc/nginx/conf.d/default.conf
+
+#RUN yes "" | openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt
 
 #RUN yes "" | openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 #		-keyout /etc/ssl/private/nginx-selfsigned.key \
 #		-out /etc/ssl/certs/nginx-selfsigned.crt
 
-COPY localhost /etc/nginx/conf.d/nginx.conf
+COPY localhost2 /etc/nginx/conf.d/nginx.conf
 
 COPY index.html /usr/share/nginx/html/
 
 EXPOSE 80
+EXPOSE 22
+#EXPOSE 443
 
-EXPOSE 443
-
-CMD ["nginx", "-g", "daemon off;"]
+CMD /usr/sbin/sshd && nginx -g 'daemon off;'
