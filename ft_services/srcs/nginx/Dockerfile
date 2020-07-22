@@ -15,7 +15,7 @@ RUN adduser -D -g 'www' www \
 
 RUN adduser -D user
 #RUN echo "www:www"| chpasswd
-RUN echo "user:user" | chpasswd
+RUN echo "user:password" | chpasswd
 RUN ssh-keygen -A
 
 RUN mkdir -p /run/nginx/
@@ -31,6 +31,8 @@ RUN rm -rf etc/nginx/conf.d/default.conf
 COPY localhost2 /etc/nginx/conf.d/nginx.conf
 
 COPY index.html /usr/share/nginx/html/
+
+COPY ssh-message /etc/motd
 
 EXPOSE 80
 EXPOSE 22

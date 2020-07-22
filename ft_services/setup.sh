@@ -2,8 +2,6 @@
 
 #minikube start
 
-#eval $(minikube docker-env)
-
 #printf '\e[1;34m%-6s\e[m' "\ninstalling metallb... \n\n"
 
 printf "installing metallb... \n\n"
@@ -13,12 +11,15 @@ printf "installing metallb... \n\n"
 
 printf "\n building images... \n\n"
 
-docker build -t local-nginx ./srcs/nginx
+eval $(minikube docker-env)
+
+docker build -t nginx srcs/nginx
 
 printf "\n running kubernetes cluster... \n\n"
 
-kubectl apply -f ./srcs/nginx.yaml
+#kubectl apply -f srcs/nginx.yaml
+kubectl delete -f srcs/nginx.yaml && kubectl create -f srcs/nginx.yaml
 
 printf "\nopening dashboard... \n\n"
 
-#minikube dashboard
+minikube dashboard &
