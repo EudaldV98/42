@@ -40,3 +40,11 @@ spec:
       - name: ftps
         image: ftps
         imagePullPolicy: Never
+        volumeMounts:
+        - mountPath: /ftp/user
+          name: ftps-volume
+      volumes:
+      - name: ftps-volume
+        hostPath:
+          path: /data
+          type: DirectoryOrCreate
