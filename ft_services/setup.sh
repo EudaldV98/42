@@ -14,6 +14,7 @@ printf "\n building images... \n\n"
 eval $(minikube docker-env)
 
 IP=$(minikube ip)
+#IP=$(kubectl get node -o=custom-columns='DATA:status.addresses[0].address' | sed -n 2p)
 
 docker build -t nginx srcs/nginx
 docker build -t ftps --build-arg IP=${IP} srcs/ftps
@@ -22,9 +23,9 @@ printf "\n running kubernetes cluster... \n\n"
 
 #kubectl apply -f srcs/nginx.yaml
 
-kubectl delete -f srcs/nginx/nginx.yaml
+#kubectl delete -f srcs/nginx/nginx.yaml
 kubectl create -f srcs/nginx/nginx.yaml
-kubectl delete -f srcs/ftps/ftps.yaml
+#kubectl delete -f srcs/ftps/ftps.yaml
 kubectl create -f srcs/ftps/ftps.yaml
 
 printf "\nopening dashboard... \n\n"
