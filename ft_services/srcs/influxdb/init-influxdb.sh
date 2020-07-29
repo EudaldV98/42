@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+$INFLUXDB_DB="influx_db"
+$INFLUXDB_ADMIN_USER="influx_user"
+$INFLUXDB_ADMIN_PASSWORD="influx_password"
+
 AUTH_ENABLED="$INFLUXDB_HTTP_AUTH_ENABLED"
 
 if [ -z "$AUTH_ENABLED" ]; then
