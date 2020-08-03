@@ -34,8 +34,11 @@ COPY index.html /usr/share/nginx/html/
 
 COPY ssh-message /etc/motd
 
+RUN mkdir -p /etc/telegraf
+COPY ./telegraf.conf /etc/telegraf/telegraf.conf
+
 EXPOSE 80
 EXPOSE 22
 #EXPOSE 443
 
-CMD /usr/sbin/sshd && nginx -g 'daemon off;'
+CMD /usr/sbin/sshd && telegraf & && nginx -g 'daemon off;'

@@ -4,7 +4,7 @@
 
 #printf '\e[1;34m%-6s\e[m' "\ninstalling metallb... \n\n"
 
-printf "installing metallb... \n\n"
+#printf "installing metallb... \n\n"
 
 #kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/namespace.yaml
 #kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/metallb.yaml
@@ -18,23 +18,23 @@ IP=$(minikube ip)
 
 docker build -t nginx srcs/nginx
 docker build -t ftps --build-arg IP=${IP} srcs/ftps
-docker build -t influxdb srcs/_influxdb
-docker build -t telegraf srcs/telegraf
+docker build -t influxdb srcs/influxdb
+#docker build -t telegraf srcs/telegraf
 docker build -t grafana srcs/grafana
 
 printf "\n running kubernetes cluster... \n\n"
 
 #kubectl apply -f srcs/nginx.yaml
 
-#kubectl delete -f srcs/nginx/nginx.yaml
+kubectl delete -f srcs/nginx/nginx.yaml
 kubectl create -f srcs/nginx/nginx.yaml
-#kubectl delete -f srcs/ftps/ftps.yaml
+kubectl delete -f srcs/ftps/ftps.yaml
 kubectl create -f srcs/ftps/ftps.yaml
-#kubectl delete -f srcs/influxdb/influxdb.yaml
+kubectl delete -f srcs/influxdb/influxdb.yaml
 kubectl create -f srcs/influxdb/influxdb.yaml
 #kubectl delete -f srcs/telegraf/telegraf.yaml
-kubectl create -f srcs/telegraf/telegraf.yaml
-#kubectl delete -f srcs/grafana/grafana.yaml
+#kubectl create -f srcs/telegraf/telegraf.yaml
+kubectl delete -f srcs/grafana/grafana.yaml
 kubectl create -f srcs/grafana/grafana.yaml
 
 printf "\nopening dashboard... \n\n"

@@ -8,7 +8,7 @@ spec:
   ports:
   - port: 8086
     targetPort: 8086
-    nodePort: 8086
+    nodePort: 30086
     protocol: TCP
     name: http
   selector:
@@ -52,6 +52,8 @@ spec:
         volumeMounts:
         - name: influxdb
           mountPath: /var/lib/influxdb
+        ports:
+        - containerPort: 8086
       volumes:
       - name: influxdb
         persistentVolumeClaim:

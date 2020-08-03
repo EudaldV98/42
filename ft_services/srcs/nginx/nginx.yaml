@@ -28,7 +28,7 @@ metadata:
   labels:
     app: nginx
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: nginx
@@ -41,7 +41,15 @@ spec:
       - name: nginx
         image: nginx
         imagePullPolicy: Never
+        livenessProbe:
+          exec:
+            command:
+            - /bin/ash
+            - -c
+            - 'ps aux | egrep [s]shd'
+          initialDelaySeconds: 10
+          periodSeconds: 5
         ports:
         - containerPort: 80
-#        - containerPort: 443
+        - containerPort: 443
         - containerPort: 22
