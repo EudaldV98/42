@@ -11,8 +11,13 @@ RUN echo $IP > ip
 #RUN chown user:user /ftp/user
 #RUN chmod 777 /ftp/user
 
+RUN apk add telegraf --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted --no-cache
+
 COPY vsftpd.conf /etc/vsftpd/vsftpd.conf
 COPY start_vsftpd.sh /bin/start_vsftpd.sh
+
+RUN mkdir -p /etc/telegraf
+COPY ./telegraf.conf /etc/telegraf/telegraf.conf
 
 #RUN echo pasv_address=$IP >> /etc/vsftpd/vsftpd.conf
 
