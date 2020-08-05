@@ -4,11 +4,10 @@ kind: Service
 metadata:
   name: influxdb-service
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
   - port: 8086
     targetPort: 8086
-    nodePort: 8086
     protocol: TCP
     name: http
   selector:

@@ -4,23 +4,24 @@ minikube config unset vm-driver
 # Detect the platform (similar to $OSTYPE)
 OS="`uname`"
 
-case $OS in
-	"Linux")
-		minikube start
-		sed -i -e "s/xxxx-xxxx/172.17.0.10-172.17.0.15/g" srcs/configmap.yml
-	;;
-	"Darwin")
-		minikube start --driver=virtualbox --extra-config=apiserver.service-node-port-range=1-35000
-		sed -i -e "s/xxxx-xxxx/192.168.99.110-192.168.99.110/g" srcs/configmap.yml
-	;;
-	*) ;;
-esac
+#case $OS in
+#	"Linux")
+#		minikube start
+#		sed -i -e "s/xxxx-xxxx/172.17.0.10-172.17.0.15/g" srcs/configmap.yml
+#	;;
+#	"Darwin")
+#		minikube start --driver=virtualbox --extra-config=apiserver.service-node-port-range=1-35000
+#		sed -i -e "s/xxxx-xxxx/192.168.99.110-192.168.99.110/g" srcs/configmap.yml
+#	;;
+#	*) ;;
+#esac
 
-#minikube start --driver=virtualbox --extra-config=apiserver.service-node-port-range=1-35000
+minikube start --driver=virtualbox --extra-config=apiserver.service-node-port-range=1-35000
 
 #IP=$(kubectl get node -o=custom-columns='DATA:status.addresses[0].address' | sed -n 2p)
 
-IP=$(minikube ip)
+#IP=$(minikube ip)
+IP=192.168.99.110
 
 eval $(minikube docker-env)
 
