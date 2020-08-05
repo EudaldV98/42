@@ -1,7 +1,7 @@
 FROM alpine:3.12.0
 
 RUN apk update && apk add influxdb
-RUN apk add telegraf --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted --no-cache
+RUN apk add telegraf --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ --allow-untrusted --no-cache
 
 RUN mkdir -p /etc/telegraf
 
@@ -12,4 +12,3 @@ EXPOSE 8086
 COPY ./init-influxdb.sh /init-influxdb.sh
 
 ENTRYPOINT ["/init-influxdb.sh"]
-

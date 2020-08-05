@@ -5,7 +5,7 @@ RUN apk update \
 	&& apk add nginx \
 	&& apk add openssl openssh
 
-RUN apk add telegraf --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted --no-cache
+RUN apk add telegraf --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ --allow-untrusted --no-cache
 
 COPY srcs/sano.sh /etc/init.d/sano.sh
 RUN chmod 777 /etc/init.d/sano.sh

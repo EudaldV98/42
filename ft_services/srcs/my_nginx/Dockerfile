@@ -12,7 +12,7 @@ RUN adduser -D -g 'www' www \
 		&& chown -R www:www /var/lib/nginx \
 		&& chown -R www:www /www
 
-RUN apk add telegraf --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted --no-cache
+RUN apk add telegraf --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ --allow-untrusted --no-cache
 
 RUN adduser -D user
 #RUN echo "www:www"| chpasswd

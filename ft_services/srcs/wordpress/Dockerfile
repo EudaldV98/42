@@ -5,7 +5,7 @@ RUN apk update \
 	&& apk add nginx
 RUN apk add php-fpm php-cli php7-mysqli php7 php7-openssl php7-cgi php7-xml php7-pdo php7-mcrypt php7-session php7-mysqli php7-zlib php7-json
 
-RUN apk add telegraf --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted --no-cache
+RUN apk add telegraf --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ --allow-untrusted --no-cache
 
 RUN rm /etc/nginx/conf.d/default.conf
 ADD srcs/default.conf /etc/nginx/conf.d/default.conf

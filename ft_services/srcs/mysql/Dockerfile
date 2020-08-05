@@ -3,7 +3,7 @@ FROM alpine:latest
 RUN apk update
 RUN apk add mysql mysql-client openrc
 
-RUN apk add telegraf --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted --no-cache
+RUN apk add telegraf --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ --allow-untrusted --no-cache
 
 RUN mkdir -p /run/mysqld && openrc \
 	&& touch /run/openrc/softlevel

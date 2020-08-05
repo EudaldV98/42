@@ -4,16 +4,14 @@ kind: Service
 metadata:
   name: nginx-service
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
   - port: 80
     targetPort: 80
-    nodePort: 30080
     protocol: TCP
     name: http
   - port: 22
     targetPort: 22
-    nodePort: 30022
     name: ssh
 #  - port: 443
 #    protocol: TCP

@@ -9,7 +9,7 @@ RUN wget http://files.directadmin.com/services/all/phpMyAdmin/phpMyAdmin-5.0.2-a
 	&& mv phpMyAdmin-5.0.2-all-languages /usr/share/phpmyadmin \
 	&& rm -rf /var/cache/apk/*
 
-RUN apk add telegraf --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted --no-cache
+RUN apk add telegraf --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ --allow-untrusted --no-cache
 
 COPY srcs/config.inc.php /usr/share/phpmyadmin/config.inc.php
 
