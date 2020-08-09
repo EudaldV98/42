@@ -16,11 +16,8 @@ OS="`uname`"
 #	*) ;;
 #esac
 
-minikube start --driver=virtualbox --extra-config=apiserver.service-node-port-range=1-35000
+minikube start --driver=virtualbox
 
-#IP=$(kubectl get node -o=custom-columns='DATA:status.addresses[0].address' | sed -n 2p)
-
-#IP=$(minikube ip)
 IP=192.168.99.110
 
 eval $(minikube docker-env)
@@ -30,22 +27,22 @@ kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.8.1/manifes
 kubectl create -f srcs/configmap.yml
 
 #builds
-#docker build -t mysql_alpine srcs/mysql
-#kubectl apply -f srcs/k8s/mysql.yaml
-#docker build -t nginx_alpine srcs/nginx
-#docker build -t mysql_alpine srcs/mysql
-#docker build -t phpmyadmin_alpine srcs/phpmyadmin
-#docker build -t wordpress_alpine srcs/wordpress
+docker build -t mysql_alpine srcs/mysql
+kubectl apply -f srcs/k8s/mysql.yaml
+docker build -t nginx_alpine srcs/nginx
+docker build -t mysql_alpine srcs/mysql
+docker build -t phpmyadmin_alpine srcs/phpmyadmin
+docker build -t wordpress_alpine srcs/wordpress
 
-docker build -t nginx srcs/my_nginx
+#docker build -t nginx srcs/my_nginx
 docker build -t ftps --build-arg IP=${IP} srcs/ftps
 docker build -t influxdb srcs/influxdb
 docker build -t grafana srcs/grafana
 
 
 #deploys
-#kubectl apply -f srcs/k8s/nginx.yaml
-kubectl apply -f srcs/k8s/my_nginx.yaml
+kubectl apply -f srcs/k8s/nginx.yaml
+#kubectl apply -f srcs/k8s/my_nginx.yaml
 kubectl apply -f srcs/k8s/ftps.yaml
 kubectl apply -f srcs/k8s/influxdb.yaml
 kubectl apply -f srcs/k8s/grafana.yaml
@@ -53,11 +50,10 @@ kubectl apply -f srcs/k8s/grafana.yaml
 minikube dashboard &
 
 
-#sleep 20s
-#kubectl exec -i $(kubectl get pods | grep mysql | cut -d" " -f1) -- mysql -u root -e 'CREATE DATABASE wordpress;' > /dev/null
-#kubectl exec -i $(kubectl get pods | grep mysql | cut -d" " -f1) -- mysql wordpress -u root < srcs/mysql/srcs/wordpress.sql
+sleep 20s
+kubectl exec -i $(kubectl get pods | grep mysql | cut -d" " -f1) -- mysql -u root -e 'CREATE DATABASE wordpress;' > /dev/null
+kubectl exec -i $(kubectl get pods | grep mysql | cut -d" " -f1) -- mysql wordpress -u root < srcs/mysql/srcs/wordpress.sql
 
 
-#kubectl apply -f srcs/k8s/wordpress.yaml
-#kubectl apply -f srcs/k8s/phpmyadmin.yaml
-
+kubectl apply -f srcs/k8s/wordpress.yaml
+kubectl apply -f srcs/k8s/phpmyadmin.yaml
