@@ -8,12 +8,12 @@ case $OS in
 	"Linux")
 		minikube start
 		IP=172.17.0.10
-		sed -i -e "s/xxxx-xxxx/172.17.0.10-172.17.0.11/g" srcs/configmap.yml
+		sed -i -e "s/xxxx-xxxx/172.17.0.10-172.17.0.10/g" srcs/configmap.yml
 	;;
 	"Darwin")
 		minikube start --driver=virtualbox
 		IP=192.168.99.110
-		sed -i -e "s/xxxx-xxxx/192.168.99.110-192.168.99.111/g" srcs/configmap.yml
+		sed -i -e "s/xxxx-xxxx/192.168.99.110-192.168.99.110/g" srcs/configmap.yml
 	;;
 	*) ;;
 esac
@@ -49,3 +49,5 @@ kubectl apply -f srcs/k8s/grafana.yaml
 
 kubectl apply -f srcs/k8s/wordpress.yaml
 kubectl apply -f srcs/k8s/phpmyadmin.yaml
+
+minikube dashboard &
