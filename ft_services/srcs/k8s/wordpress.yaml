@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: wordpress
   annotations:
-    metallb.universe.tf/allow-shared-ip: ceip
+    metallb.universe.tf/address-pool: wordpress-ip
 spec:
   type: LoadBalancer
   ports:
@@ -14,7 +14,7 @@ spec:
   selector:
     app: wordpress
 ---
-apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wordpress
