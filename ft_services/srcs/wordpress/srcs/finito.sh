@@ -1,4 +1,3 @@
-/etc/init.d/sano.sh &
+#/etc/init.d/sano.sh &
 telegraf &
-php-fpm7
-nginx -g 'daemon off;'
+php -S 0.0.0.0:5050 -t /usr/share/wordpress
