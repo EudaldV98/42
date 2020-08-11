@@ -7,14 +7,14 @@ OS="`uname`"
 case $OS in
 	"Linux")
 		minikube start
-		sed -e "s/xxxx-xxxx/172.17.0.10-172.17.0.20/g" srcs/configmap.yml
-		sed -e "s/yyyy-yyyy/172.17.0.21-172.17.0.21/g" srcs/configmap.yml
+		sed -i "s/xxxx-xxxx/172.17.0.10-172.17.0.20/g" srcs/configmap.yml
+		sed -i "s/yyyy-yyyy/172.17.0.21-172.17.0.21/g" srcs/configmap.yml
 		FTPSIP=172.17.0.21
 	;;
 	"Darwin")
 		minikube start --driver=virtualbox
-		sed -e "s/xxxx-xxxx/192.168.99.110-192.168.99.120/g" srcs/configmap.yml
-		sed -e "s/yyyy-yyyy/192.168.99.121-192.168.99.121/g" srcs/configmap.yml
+		sed -i "s/xxxx-xxxx/192.168.99.110-192.168.99.120/g" srcs/configmap.yml
+		sed -i "s/yyyy-yyyy/192.168.99.121-192.168.99.121/g" srcs/configmap.yml
 		FTPSIP=192.168.99.121
 	;;
 	*) ;;
