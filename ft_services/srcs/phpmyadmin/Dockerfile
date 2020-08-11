@@ -20,4 +20,3 @@ COPY ./srcs/start.sh /start.sh
 EXPOSE 5000
 
 CMD ["/start.sh"]
-#CMD telegraf & ; php -S 0.0.0.0:5000 -t /usr/share/phpmyadmin
