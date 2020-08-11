@@ -30,7 +30,7 @@ kubectl apply -f srcs/k8s/mysql.yaml
 docker build -t nginx_alpine srcs/nginx
 docker build -t phpmyadmin_alpine srcs/phpmyadmin
 docker build -t wordpress_alpine srcs/wordpress
-docker build -t ftps --build-arg FTPSIP=${IP} srcs/ftps
+docker build -t ftps --build-arg IP=${FTPSIP} srcs/ftps
 docker build -t influxdb srcs/influxdb
 docker build -t grafana srcs/grafana
 
