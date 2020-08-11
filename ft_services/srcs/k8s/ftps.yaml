@@ -4,7 +4,6 @@ metadata:
   name: ftps-service
   annotations:
     metallb.universe.tf/allow-shared-ip: ceip
-    metallb.universe.tf/address-pool: default
 spec:
   type: LoadBalancer
   ports:

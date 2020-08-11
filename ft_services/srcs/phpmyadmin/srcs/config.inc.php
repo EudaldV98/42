@@ -28,7 +28,7 @@ $i++;
 /* Authentication type */
 //$cfg['Servers'][$i]['verbose'] = 'mysql wampserver';
 //$cfg['Servers'][$i]['auth_type'] = 'cookie';
-$cfg['Servers'][$i]['auth_type'] = 'config';
+//$cfg['Servers'][$i]['auth_type'] = 'config';
 $cfg['Servers'][$i]['user'] = 'root';
 $cfg['Servers'][$i]['password'] = 'root';
 /* Server parameters */

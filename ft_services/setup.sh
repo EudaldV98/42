@@ -8,14 +8,12 @@ case $OS in
 	"Linux")
 		minikube start
 		IP=172.17.0.10
-		sed  -e "s/xxxx-xxxx/172.17.0.10-172.17.0.10/g" srcs/configmap.yml
-		sed  -e "s/yyyy-yyyy/172.17.0.11-172.17.0.11/g" srcs/configmap.yml
+		sed -i -e "s/xxxx-xxxx/172.17.0.10-172.17.0.11/g" srcs/configmap.yml
 	;;
 	"Darwin")
-		#minikube start --driver=virtualbox
+		minikube start --driver=virtualbox
 		IP=192.168.99.110
-		sed  -e "s/xxxx-xxxx/192.168.99.110-192.168.99.110/g" srcs/configmap.yml
-		sed  -e "s/yyyy-yyyy/192.168.99.111-192.168.99.111/g" srcs/configmap.yml
+		sed -i -e "s/xxxx-xxxx/192.168.99.110-192.168.99.111/g" srcs/configmap.yml
 	;;
 	*) ;;
 esac
@@ -36,16 +34,15 @@ docker build -t ftps --build-arg IP=${IP} srcs/ftps
 docker build -t influxdb srcs/influxdb
 docker build -t grafana srcs/grafana
 
-#deploys
-
 kubectl exec -i $(kubectl get pods | grep mysql | cut -d" " -f1) -- mysql wordpress -u root < srcs/mysql/srcs/wordpress.sql
 
+#deploys
 kubectl apply -f srcs/k8s/nginx.yaml
 kubectl apply -f srcs/k8s/ftps.yaml
 kubectl apply -f srcs/k8s/influxdb.yaml
 kubectl apply -f srcs/k8s/grafana.yaml
-
 kubectl apply -f srcs/k8s/wordpress.yaml
 kubectl apply -f srcs/k8s/phpmyadmin.yaml
 
-minikube dashboard &
+
+#minikube dashboard &
