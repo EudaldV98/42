@@ -2,17 +2,15 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mysql
-  annotations:
-    metallb.universe.tf/allow-shared-ip: ceip
   labels:
     app: mysql
 spec:
+  type: ClusterIP
   ports:
     - port: 3306
   selector:
     app: mysql
     tier: mysql
-  clusterIP: None
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

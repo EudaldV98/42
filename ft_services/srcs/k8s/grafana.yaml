@@ -2,8 +2,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: grafana-service
-  annotations:
-    metallb.universe.tf/allow-shared-ip: ceip
 spec:
   type: LoadBalancer
   ports:

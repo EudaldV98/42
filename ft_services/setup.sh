@@ -1,4 +1,4 @@
-#minikube delete
+minikube delete
 minikube config unset vm-driver
 
 # Detect the platform (similar to $OSTYPE)
@@ -7,13 +7,13 @@ OS="`uname`"
 case $OS in
 	"Linux")
 		minikube start
-		IP=172.17.0.10
-		sed -i -e "s/xxxx-xxxx/172.17.0.10-172.17.0.11/g" srcs/configmap.yml
+		sed -i -e "s/xxxx-xxxx/172.17.0.10-172.17.0.20/g" srcs/configmap.yml
+		FTPSIP=172.17.0.21
 	;;
 	"Darwin")
-	#	minikube start --driver=virtualbox
-		IP=192.168.99.110
-		sed -i -e "s/xxxx-xxxx/192.168.99.110-192.168.99.111/g" srcs/configmap.yml
+		minikube start --driver=virtualbox
+		sed -i -e "s/xxxx-xxxx/192.168.99.110-192.168.99.120/g" srcs/configmap.yml
+		FTPSIP=192.168.99.121
 	;;
 	*) ;;
 esac
@@ -30,7 +30,7 @@ kubectl apply -f srcs/k8s/mysql.yaml
 docker build -t nginx_alpine srcs/nginx
 docker build -t phpmyadmin_alpine srcs/phpmyadmin
 docker build -t wordpress_alpine srcs/wordpress
-docker build -t ftps --build-arg IP=${IP} srcs/ftps
+docker build -t ftps --build-arg FTPSIP=${IP} srcs/ftps
 docker build -t influxdb srcs/influxdb
 docker build -t grafana srcs/grafana
 
