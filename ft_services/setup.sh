@@ -51,4 +51,4 @@ kubectl apply -f srcs/k8s/grafana.yaml
 kubectl apply -f srcs/k8s/phpmyadmin.yaml
 
 
-#minikube dashboard &
+minikube dashboard &
