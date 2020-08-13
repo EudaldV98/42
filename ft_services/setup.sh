@@ -9,7 +9,7 @@ case $OS in
 		minikube start
 		sed -i "s/xxxx-xxxx/172.17.0.10-172.17.0.19/g" srcs/configmap.yml
 		sed -i "s/zzzz-zzzz/172.17.0.20-172.17.0.20/g" srcs/configmap.yml
-		sed -i "s/192.168.99.111:5050/172.17.0.20:5050/g" srcs/mysql/srcs/wordpress.sql
+		sed -i "s/192.168.99.120:5050/172.17.0.20:5050/g" srcs/mysql/srcs/wordpress.sql
 		sed -i "s/yyyy-yyyy/172.17.0.21-172.17.0.21/g" srcs/configmap.yml
 		FTPSIP=172.17.0.21
 	;;
@@ -17,7 +17,7 @@ case $OS in
 		minikube start --driver=virtualbox
 		sed -i '' "s/xxxx-xxxx/192.168.99.110-192.168.99.119/g" srcs/configmap.yml
 		sed -i '' "s/zzzz-zzzz/192.168.99.120-192.168.99.120/g" srcs/configmap.yml
-		sed -i '' "s/192.168.99.111:5050/192.168.99.120:5050/g" srcs/mysql/srcs/wordpress.sql
+		sed -i '' "s/192.168.99.120:5050/192.168.99.120:5050/g" srcs/mysql/srcs/wordpress.sql
 		sed -i '' "s/yyyy-yyyy/192.168.99.121-192.168.99.121/g" srcs/configmap.yml
 		FTPSIP=192.168.99.121
 	;;
