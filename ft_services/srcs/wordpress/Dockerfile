@@ -22,4 +22,3 @@ RUN chmod 755 /finito.sh
 EXPOSE 5050
 
 CMD sh ./finito.sh
-

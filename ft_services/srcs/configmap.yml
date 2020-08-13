@@ -9,13 +9,13 @@ data:
     - name: default
       protocol: layer2
       addresses:
-      - xxxx-xxxx
+      - 192.168.99.110-192.168.99.119
     - name: ftps-ip
       protocol: layer2
       addresses:
-      - yyyy-yyyy
+      - 192.168.99.121-192.168.99.121
     - name: wordpress-ip
       protocol: layer2
       addresses:
-      - zzzz-zzzz
+      - 192.168.99.120-192.168.99.120
 
