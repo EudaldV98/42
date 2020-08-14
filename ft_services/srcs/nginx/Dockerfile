@@ -3,7 +3,9 @@ FROM alpine:latest
 RUN apk update \
 	&& apk upgrade \
 	&& apk add nginx \
-	&& apk add openssl openssh
+	&& apk add openssl \
+	&& apk add openssh \
+	&& apk add vim
 
 RUN apk add telegraf --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ --allow-untrusted --no-cache
 
@@ -30,5 +32,4 @@ COPY ./srcs/telegraf.conf /etc/telegraf/telegraf.conf
 
 EXPOSE 80 443 2222
 
-#CMD /usr/sbin/sshd ;  sh /start.sh ;
 CMD ["/start.sh"]
