@@ -9,7 +9,7 @@ data:
     - name: default
       protocol: layer2
       addresses:
-      - xxxx-xxxx 
+      - xxxx-xxxx
     - name: ftps-ip
       protocol: layer2
       addresses:
@@ -17,4 +17,4 @@ data:
     - name: wordpress-ip
       protocol: layer2
       addresses:
-      - zzzz-zzzz 
+      - zzzz-zzzz
